@@ -7,8 +7,9 @@ namespace MGNamespace
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
-                game.Run();
+            using (Game1 game = new Game1())
+
+            game.Run();
         }
     }
 }

@@ -20,10 +20,10 @@
     "preferNameDirectory": "true",
     "description": "A MonoGame game project for Windows, Linux and macOS using OpenGL.",
     "symbols": {
-        "framework": {
-            "type": "parameter",
-            "defaultValue": "netcoreapp3.1",
-            "replaces": "netcoreapp3.1"
-        }
+      "framework": {
+        "type": "parameter",
+        "defaultValue": "net5.0-windows",
+        "replaces": "net5.0-windows"
+      }
     }
 }
