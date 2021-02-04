@@ -233,7 +233,7 @@ namespace MonoGame.Tests.Components {
 		public bool Remove (IFrameComparer comparer)
 		{
 			for (int i = 0; i < _frameComparers.Count; ++i) {
-				if (object.Equals (_frameComparers [i], comparer)) {
+				if (Equals (_frameComparers [i], comparer)) {
 					_frameComparers.RemoveAt (i);
 					return true;
 				}

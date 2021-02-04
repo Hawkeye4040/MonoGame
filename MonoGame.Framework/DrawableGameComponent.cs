@@ -21,7 +21,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Graphics.GraphicsDevice GraphicsDevice
         {
-            get { return this.Game.GraphicsDevice; } 
+            get { return Game.GraphicsDevice; } 
         }
 
         public int DrawOrder

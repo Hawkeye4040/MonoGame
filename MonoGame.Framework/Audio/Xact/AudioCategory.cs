@@ -49,8 +49,8 @@ namespace Microsoft.Xna.Framework.Audio
             maxInstances = reader.ReadByte ();
             instanceLimit = maxInstances != 0xff;
 
-            fadeIn = (reader.ReadUInt16 () / 1000f);
-            fadeOut = (reader.ReadUInt16 () / 1000f);
+            fadeIn = reader.ReadUInt16 () / 1000f;
+            fadeOut = reader.ReadUInt16 () / 1000f;
 
             byte instanceFlags = reader.ReadByte ();
             fadeType = (CrossfadeType)(instanceFlags & 0x7);

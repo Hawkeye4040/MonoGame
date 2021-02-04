@@ -56,7 +56,7 @@ namespace MonoGame.Framework
 
         public override IntPtr Handle { get { return Form.Handle; } }
 
-        public override string ScreenDeviceName { get { return String.Empty; } }
+        public override string ScreenDeviceName { get { return string.Empty; } }
 
         public override Rectangle ClientBounds
         {
@@ -146,7 +146,7 @@ namespace MonoGame.Framework
             ChangeClientSize(new Size(GraphicsDeviceManager.DefaultBackBufferWidth, GraphicsDeviceManager.DefaultBackBufferHeight));
 
             SetIcon();
-            Title = MonoGame.Framework.Utilities.AssemblyHelper.GetDefaultWindowTitle();
+            Title = Utilities.AssemblyHelper.GetDefaultWindowTitle();
 
             Form.MaximizeBox = false;
             Form.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -184,7 +184,7 @@ namespace MonoGame.Framework
         private static extern IntPtr ExtractIcon(IntPtr hInst, string exeFileName, int iconIndex);
         
         [DllImport("user32.dll", ExactSpelling=true, CharSet=CharSet.Auto)]
-        [return: MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.Bool)]
+        [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool GetCursorPos(out POINTSTRUCT pt);
         
         [DllImport("user32.dll", ExactSpelling=true, CharSet=CharSet.Auto)]
@@ -278,7 +278,7 @@ namespace MonoGame.Framework
             POINTSTRUCT pos;
             GetCursorPos(out pos);
             MapWindowPoints(new HandleRef(null, IntPtr.Zero), new HandleRef(Form, Form.Handle), out pos, 1);
-            var clientPos = new System.Drawing.Point(pos.X, pos.Y);
+            var clientPos = new Point(pos.X, pos.Y);
             var withinClient = Form.ClientRectangle.Contains(clientPos);
             var buttons = Control.MouseButtons;
 
@@ -511,7 +511,7 @@ namespace MonoGame.Framework
             public IntPtr wParam;
             public IntPtr lParam;
             public uint time;
-            public System.Drawing.Point p;
+            public Point p;
         }
 
         internal void ChangeClientSize(Size clientBounds)
@@ -520,8 +520,8 @@ namespace MonoGame.Framework
             // make sure we don't see the events from this as a user resize
             Form.IsResizing = true;
 
-            if(this.Form.ClientSize != clientBounds)
-                this.Form.ClientSize = clientBounds;
+            if(Form.ClientSize != clientBounds)
+                Form.ClientSize = clientBounds;
 
             // if the window wasn't moved manually and it's resized, it should be centered
             if (!_wasMoved)

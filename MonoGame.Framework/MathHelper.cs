@@ -97,10 +97,10 @@ namespace Microsoft.Xna.Framework
         public static float Clamp(float value, float min, float max)
         {
             // First we check to see if we're greater than the max
-            value = (value > max) ? max : value;
+            value = value > max ? max : value;
 
             // Then we check to see if we're less than the min.
-            value = (value < min) ? min : value;
+            value = value < min ? min : value;
 
             // There's no check to see if min > max.
             return value;
@@ -115,8 +115,8 @@ namespace Microsoft.Xna.Framework
         /// <returns>The clamped value.</returns>
         public static int Clamp(int value, int min, int max)
         { 
-            value = (value > max) ? max : value; 
-            value = (value < min) ? min : value; 
+            value = value > max ? max : value; 
+            value = value < min ? min : value; 
             return value;
         }
         
@@ -201,7 +201,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public static float LerpPrecise(float value1, float value2, float amount)
         {
-            return ((1 - amount) * value1) + (value2 * amount);
+            return (1 - amount) * value1 + value2 * amount;
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace Microsoft.Xna.Framework
             // It is expected that 0 < amount < 1
             // If amount < 0, return value1
             // If amount > 1, return value2
-            float result = MathHelper.Clamp(amount, 0f, 1f);
-            result = MathHelper.Hermite(value1, 0f, value2, 0f, result);
+            float result = Clamp(amount, 0f, 1f);
+            result = Hermite(value1, 0f, value2, 0f, result);
 
             return result;
         }
@@ -303,7 +303,7 @@ namespace Microsoft.Xna.Framework
         /// <returns>The new angle, in radians.</returns>
         public static float WrapAngle(float angle)
         {
-            if ((angle > -Pi) && (angle <= Pi))
+            if (angle > -Pi && angle <= Pi)
                 return angle;
             angle %= TwoPi;
             if (angle <= -Pi)
@@ -320,7 +320,7 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if <c>value</c> is powered by two; otherwise <c>false</c>.</returns>
 	public static bool IsPowerOfTwo(int value)
 	{
-	     return (value > 0) && ((value & (value - 1)) == 0);
+	     return value > 0 && (value & (value - 1)) == 0;
 	}
     }
 }

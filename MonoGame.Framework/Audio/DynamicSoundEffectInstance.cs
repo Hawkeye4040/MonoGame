@@ -79,9 +79,9 @@ namespace Microsoft.Xna.Framework.Audio
             if (SoundEffect._systemState != SoundEffect.SoundSystemState.Initialized)
                 throw new NoAudioHardwareException("Audio has failed to initialize. Call SoundEffect.Initialize() before sound operation to get more specific errors.");
 
-            if ((sampleRate < 8000) || (sampleRate > 48000))
+            if (sampleRate < 8000 || sampleRate > 48000)
                 throw new ArgumentOutOfRangeException("sampleRate");
-            if ((channels != AudioChannels.Mono) && (channels != AudioChannels.Stereo))
+            if (channels != AudioChannels.Mono && channels != AudioChannels.Stereo)
                 throw new ArgumentOutOfRangeException("channels");
 
             _sampleRate = sampleRate;
@@ -247,11 +247,11 @@ namespace Microsoft.Xna.Framework.Audio
         {
             AssertNotDisposed();
             
-            if ((buffer == null) || (buffer.Length == 0))
+            if (buffer == null || buffer.Length == 0)
                 throw new ArgumentException("Buffer may not be null or empty.");
             if (count <= 0)
                 throw new ArgumentException("Number of bytes must be greater than zero.");
-            if ((offset + count) > buffer.Length)
+            if (offset + count > buffer.Length)
                 throw new ArgumentException("Buffer is shorter than the specified number of bytes from the offset.");
 
             // Ensure that the buffer length and start position match alignment.
@@ -282,7 +282,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         private void CheckBufferCount()
         {
-            if ((PendingBufferCount < TargetPendingBufferCount) && (_state == SoundState.Playing))
+            if (PendingBufferCount < TargetPendingBufferCount && _state == SoundState.Playing)
                 _buffersNeeded++;
         }
 
@@ -296,7 +296,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             if (bufferNeededHandler != null)
             {
-                int eventCount = (_buffersNeeded < 3) ? _buffersNeeded : 3;
+                int eventCount = _buffersNeeded < 3 ? _buffersNeeded : 3;
                 for (int i = 0; i < eventCount; i++)
                 {
                     bufferNeededHandler(this, EventArgs.Empty);

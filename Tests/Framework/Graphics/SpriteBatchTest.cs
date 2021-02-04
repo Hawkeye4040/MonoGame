@@ -15,7 +15,7 @@ namespace MonoGame.Tests.Graphics {
         private Texture2D _texture2;
         private Texture2D _texture3;
         private BasicEffect _effect;
-        private Microsoft.Xna.Framework.Graphics.Effect _effect2;
+        private Effect _effect2;
 
 		[SetUp]
 		public override void SetUp ()
@@ -33,7 +33,7 @@ namespace MonoGame.Tests.Graphics {
                 View = Matrix.Identity,
                 World = Matrix.Identity
             };
-            _effect2 = content.Load<Microsoft.Xna.Framework.Graphics.Effect>(Paths.CompiledEffect("Grayscale"));            
+            _effect2 = content.Load<Effect>(Paths.CompiledEffect("Grayscale"));            
 		}
 
 	    [TearDown]
@@ -440,7 +440,7 @@ namespace MonoGame.Tests.Graphics {
             var vp = gd.Viewport; 
             var lvp = new Viewport (vp.X, vp.Y, vp.Width/3, vp.Height); //Left
             var mvp = new Viewport(vp.X + vp.Width / 3, vp.Y, vp.Width / 3, vp.Height); //middle
-            var rvp = new Viewport(vp.X+(vp.Width /3)*2, vp.Y, vp.Width / 3, vp.Height); //Right
+            var rvp = new Viewport(vp.X+vp.Width /3*2, vp.Y, vp.Width / 3, vp.Height); //Right
 
             // Test viewport change
             gd.Viewport = rvp;

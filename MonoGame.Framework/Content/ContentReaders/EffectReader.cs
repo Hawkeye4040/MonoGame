@@ -17,7 +17,7 @@ namespace Microsoft.Xna.Framework.Content
             int dataSize = input.ReadInt32();
             byte[] data = ContentManager.ScratchBufferPool.Get(dataSize);
             input.Read(data, 0, dataSize);
-            var effect = new Effect(input.GetGraphicsDevice(), data, 0, dataSize);
+            Effect effect = new Effect(input.GetGraphicsDevice(), data, 0, dataSize);
             ContentManager.ScratchBufferPool.Return(data);
             effect.Name = input.AssetName;
             return effect;

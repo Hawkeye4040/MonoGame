@@ -16,7 +16,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			_short2Packed = PackInTwo (vector.X, vector.Y);
 		}
 
-		public Short2 (Single x,Single y)
+		public Short2 (float x,float y)
 		{
 			_short2Packed = PackInTwo (x, y);
 		}
@@ -88,7 +88,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		void IPackedVector.PackFromVector4 (Vector4 vector)
 		{
-			_short2Packed = Short2.PackInTwo (vector.X, vector.Y);
+			_short2Packed = PackInTwo (vector.X, vector.Y);
 		}
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				throw new ArgumentNullException ("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
 			}	
 
-			this.GraphicsDevice = graphicsDevice;
+			GraphicsDevice = graphicsDevice;
 
             _spriteEffect = new SpriteEffect(graphicsDevice);
             _spritePass = _spriteEffect.CurrentTechnique.Passes[0];
@@ -575,7 +575,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(spriteFont, text);
             
-            float sortKey = (_sortMode == SpriteSortMode.Texture) ? spriteFont.Texture.SortingKey : 0;
+            float sortKey = _sortMode == SpriteSortMode.Texture ? spriteFont.Texture.SortingKey : 0;
 
             var offset = Vector2.Zero;
             var firstGlyphOfLine = true;
@@ -727,10 +727,10 @@ namespace Microsoft.Xna.Framework.Graphics
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
-                transformation.M11 = (flippedHorz ? -scale.X : scale.X);
-                transformation.M22 = (flippedVert ? -scale.Y : scale.Y);
-                transformation.M41 = ((flipAdjustment.X - origin.X) * transformation.M11) + position.X;
-                transformation.M42 = ((flipAdjustment.Y - origin.Y) * transformation.M22) + position.Y;
+                transformation.M11 = flippedHorz ? -scale.X : scale.X;
+                transformation.M22 = flippedVert ? -scale.Y : scale.Y;
+                transformation.M41 = (flipAdjustment.X - origin.X) * transformation.M11 + position.X;
+                transformation.M42 = (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y;
             }
             else
             {
@@ -738,10 +738,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 sin = (float)Math.Sin(rotation);
                 transformation.M11 = (flippedHorz ? -scale.X : scale.X) * cos;
                 transformation.M12 = (flippedHorz ? -scale.X : scale.X) * sin;
-                transformation.M21 = (flippedVert ? -scale.Y : scale.Y) * (-sin);
+                transformation.M21 = (flippedVert ? -scale.Y : scale.Y) * -sin;
                 transformation.M22 = (flippedVert ? -scale.Y : scale.Y) * cos;
-                transformation.M41 = (((flipAdjustment.X - origin.X) * transformation.M11) + (flipAdjustment.Y - origin.Y) * transformation.M21) + position.X;
-                transformation.M42 = (((flipAdjustment.X - origin.X) * transformation.M12) + (flipAdjustment.Y - origin.Y) * transformation.M22) + position.Y; 
+                transformation.M41 = (flipAdjustment.X - origin.X) * transformation.M11 + (flipAdjustment.Y - origin.Y) * transformation.M21 + position.X;
+                transformation.M42 = (flipAdjustment.X - origin.X) * transformation.M12 + (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y; 
             }
 
             var offset = Vector2.Zero;
@@ -858,7 +858,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(spriteFont, text);
             
-            float sortKey =  (_sortMode == SpriteSortMode.Texture) ? spriteFont.Texture.SortingKey : 0;
+            float sortKey =  _sortMode == SpriteSortMode.Texture ? spriteFont.Texture.SortingKey : 0;
 
             var offset = Vector2.Zero;
             var firstGlyphOfLine = true;
@@ -1009,10 +1009,10 @@ namespace Microsoft.Xna.Framework.Graphics
             float cos = 0, sin = 0;
             if (rotation == 0)
             {
-                transformation.M11 = (flippedHorz ? -scale.X : scale.X);
-                transformation.M22 = (flippedVert ? -scale.Y : scale.Y);
-                transformation.M41 = ((flipAdjustment.X - origin.X) * transformation.M11) + position.X;
-                transformation.M42 = ((flipAdjustment.Y - origin.Y) * transformation.M22) + position.Y;
+                transformation.M11 = flippedHorz ? -scale.X : scale.X;
+                transformation.M22 = flippedVert ? -scale.Y : scale.Y;
+                transformation.M41 = (flipAdjustment.X - origin.X) * transformation.M11 + position.X;
+                transformation.M42 = (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y;
             }
             else
             {
@@ -1020,10 +1020,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 sin = (float)Math.Sin(rotation);
                 transformation.M11 = (flippedHorz ? -scale.X : scale.X) * cos;
                 transformation.M12 = (flippedHorz ? -scale.X : scale.X) * sin;
-                transformation.M21 = (flippedVert ? -scale.Y : scale.Y) * (-sin);
+                transformation.M21 = (flippedVert ? -scale.Y : scale.Y) * -sin;
                 transformation.M22 = (flippedVert ? -scale.Y : scale.Y) * cos;
-                transformation.M41 = (((flipAdjustment.X - origin.X) * transformation.M11) + (flipAdjustment.Y - origin.Y) * transformation.M21) + position.X;
-                transformation.M42 = (((flipAdjustment.X - origin.X) * transformation.M12) + (flipAdjustment.Y - origin.Y) * transformation.M22) + position.Y; 
+                transformation.M41 = (flipAdjustment.X - origin.X) * transformation.M11 + (flipAdjustment.Y - origin.Y) * transformation.M21 + position.X;
+                transformation.M42 = (flipAdjustment.X - origin.X) * transformation.M12 + (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y; 
             }
 
             var offset = Vector2.Zero;

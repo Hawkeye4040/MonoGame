@@ -200,7 +200,7 @@ namespace Microsoft.Xna.Framework.Graphics
             _targetBlendState[3] = new TargetBlendState(this);
 
 			_blendFactor = Color.White;
-            _multiSampleMask = Int32.MaxValue;
+            _multiSampleMask = int.MaxValue;
             _independentBlendEnable = false;
         }
 
@@ -256,6 +256,10 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             base.Dispose(disposing);
         }
+    }
+}
+
+}
     }
 }
 

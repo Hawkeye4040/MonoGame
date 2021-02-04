@@ -33,7 +33,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             get
             {
-				return new Rectangle(0, 0, this.width, this.height);
+				return new Rectangle(0, 0, width, height);
             }
         }
 
@@ -102,15 +102,15 @@ namespace Microsoft.Xna.Framework.Graphics
             if (arraySize > 1 && !graphicsDevice.GraphicsCapabilities.SupportsTextureArrays)
                 throw new ArgumentException("Texture arrays are not supported on this graphics device", "arraySize");
 
-            this.GraphicsDevice = graphicsDevice;
+            GraphicsDevice = graphicsDevice;
             this.width = width;
             this.height = height;
-            this.TexelWidth = 1f / (float)width;
-            this.TexelHeight = 1f / (float)height;
+            TexelWidth = 1f / (float)width;
+            TexelHeight = 1f / (float)height;
 
-            this._format = format;
-            this._levelCount = mipmap ? CalculateMipLevels(width, height) : 1;
-            this.ArraySize = arraySize;
+            _format = format;
+            _levelCount = mipmap ? CalculateMipLevels(width, height) : 1;
+            ArraySize = arraySize;
 
             // Texture will be assigned by the swap chain.
 		    if (type == SurfaceType.SwapChainRenderTarget)
@@ -237,7 +237,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="elementCount">Number of pixels to read</param>
         public void GetData<T>(int level, Rectangle? rect, T[] data, int startIndex, int elementCount) where T : struct
         {
-            this.GetData(level, 0, rect, data, startIndex, elementCount);
+            GetData(level, 0, rect, data, startIndex, elementCount);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="elementCount">Number of pixels to read</param>
 		public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
 		{
-			this.GetData(0, null, data, startIndex, elementCount);
+			GetData(0, null, data, startIndex, elementCount);
 		}
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 		    if (data == null)
 		        throw new ArgumentNullException("data");
-			this.GetData(0, null, data, 0, data.Length);
+			GetData(0, null, data, 0, data.Length);
 		}
 
         /// <summary>

@@ -28,13 +28,13 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options) where T : struct
         {
-            base.SetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, vertexStride, options);
+            SetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, vertexStride, options);
         }
 
         public void SetData<T>(T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
         {
             var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
-            base.SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, options);
+            SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, options);
         }
     }
 }

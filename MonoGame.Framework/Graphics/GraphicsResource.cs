@@ -157,7 +157,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		
 		public string Name { get; set; }
 		
-		public Object Tag { get; set; }
+		public object Tag { get; set; }
 
         public override string ToString()
         {

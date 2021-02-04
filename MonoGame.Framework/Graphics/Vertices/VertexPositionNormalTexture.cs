@@ -11,9 +11,9 @@ namespace Microsoft.Xna.Framework.Graphics
         public static readonly VertexDeclaration VertexDeclaration;
         public VertexPositionNormalTexture(Vector3 position, Vector3 normal, Vector2 textureCoordinate)
         {
-            this.Position = position;
-            this.Normal = normal;
-            this.TextureCoordinate = textureCoordinate;
+            Position = position;
+            Normal = normal;
+            TextureCoordinate = textureCoordinate;
         }
 
         VertexDeclaration IVertexType.VertexDeclaration
@@ -37,12 +37,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override string ToString()
         {
-            return "{{Position:" + this.Position + " Normal:" + this.Normal + " TextureCoordinate:" + this.TextureCoordinate + "}}";
+            return "{{Position:" + Position + " Normal:" + Normal + " TextureCoordinate:" + TextureCoordinate + "}}";
         }
 
         public static bool operator ==(VertexPositionNormalTexture left, VertexPositionNormalTexture right)
         {
-            return (((left.Position == right.Position) && (left.Normal == right.Normal)) && (left.TextureCoordinate == right.TextureCoordinate));
+            return left.Position == right.Position && left.Normal == right.Normal && left.TextureCoordinate == right.TextureCoordinate;
         }
 
         public static bool operator !=(VertexPositionNormalTexture left, VertexPositionNormalTexture right)
@@ -56,11 +56,11 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 return false;
             }
-            if (obj.GetType() != base.GetType())
+            if (obj.GetType() != GetType())
             {
                 return false;
             }
-            return (this == ((VertexPositionNormalTexture)obj));
+            return this == (VertexPositionNormalTexture)obj;
         }
 
         static VertexPositionNormalTexture()

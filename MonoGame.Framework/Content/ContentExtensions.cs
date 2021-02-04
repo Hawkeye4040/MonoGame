@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace Microsoft.Xna.Framework.Content
             var ctor = typeInfo.DeclaredConstructors.FirstOrDefault(c => !c.IsStatic && c.GetParameters().Length == 0);
             return ctor;
 #else
-            var attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+            BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
             return type.GetConstructor(attrs, null, new Type[0], null);
 #endif
         }
@@ -35,8 +36,8 @@ namespace Microsoft.Xna.Framework.Content
             return nonStaticPropertyInfos.ToArray();
 #else
             const BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-            var allProps = type.GetProperties(attrs).ToList();
-            var props = allProps.FindAll(p => p.GetGetMethod(true) != null && p.GetGetMethod(true) == p.GetGetMethod(true).GetBaseDefinition()).ToArray();
+            List<PropertyInfo> allProps = type.GetProperties(attrs).ToList();
+            PropertyInfo[] props = allProps.FindAll(p => p.GetGetMethod(true) != null && p.GetGetMethod(true) == p.GetGetMethod(true).GetBaseDefinition()).ToArray();
             return props;
 #endif
         }
@@ -51,7 +52,7 @@ namespace Microsoft.Xna.Framework.Content
                     select field;
             return nonStaticFields.ToArray();
 #else
-            var attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+            BindingFlags attrs = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
             return type.GetFields(attrs);
 #endif
         }

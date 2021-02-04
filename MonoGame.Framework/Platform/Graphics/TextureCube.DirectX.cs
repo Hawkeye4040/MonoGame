@@ -128,7 +128,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     }
                     finally
                     {
-                        SharpDX.Utilities.Dispose(ref stream);
+                        Utilities.Dispose(ref stream);
                     }
                 }
             }

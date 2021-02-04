@@ -72,7 +72,7 @@ namespace Microsoft.Xna.Framework.Graphics
             SwapChainRenderTargetConstruct(depthFormat, ref dxgiFormat, ref multisampleDesc);
         }
 
-        private SharpDX.Direct3D11.Texture2D CreateSwaipChainTexture(SharpDX.DXGI.Format dxgiFormat, SharpDX.DXGI.SampleDescription multisampleDesc)
+        private SharpDX.Direct3D11.Texture2D CreateSwaipChainTexture(Format dxgiFormat, SampleDescription multisampleDesc)
         {
             var d3dDevice = GraphicsDevice._d3dDevice;
 
@@ -109,7 +109,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return _backBuffer;
         }
         
-        private void SwapChainRenderTargetConstruct(DepthFormat depthFormat, ref SharpDX.DXGI.Format dxgiFormat, ref SharpDX.DXGI.SampleDescription multisampleDesc)
+        private void SwapChainRenderTargetConstruct(DepthFormat depthFormat, ref Format dxgiFormat, ref SampleDescription multisampleDesc)
         {
             var backBuffer = CreateSwaipChainTexture(dxgiFormat, multisampleDesc);
 
@@ -151,7 +151,7 @@ namespace Microsoft.Xna.Framework.Graphics
         
         internal override SharpDX.Direct3D11.Resource CreateTexture()
         {
-            return (MultiSampleCount > 1) ? base.CreateTexture() : _backBuffer;
+            return MultiSampleCount > 1 ? base.CreateTexture() : _backBuffer;
         }
 
         internal override void ResolveSubresource()

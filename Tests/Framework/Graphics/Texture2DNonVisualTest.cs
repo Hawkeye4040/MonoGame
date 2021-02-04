@@ -31,7 +31,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase("Assets/Textures/32bit.png")]
         public void FromStreamShouldWorkTest(string filename)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader(filename))
+            using (StreamReader reader = new StreamReader(filename))
             {
                 Assert.DoesNotThrow(() => _texture = Texture2D.FromStream(gd, reader.BaseStream));
             }
@@ -56,7 +56,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase("Assets/Textures/SampleCube64DXT1Mips.dds")]
         public void FromStreamShouldFailTest(string filename)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader(filename))
+            using (StreamReader reader = new StreamReader(filename))
             {
                 Assert.Throws<InvalidOperationException>(() => _texture = Texture2D.FromStream(gd, reader.BaseStream));
             }
@@ -196,7 +196,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(25, 23, 2, 2, 1, 4)]
         public void PlatformGetDataWithOffsetTest(int rx, int ry, int rw, int rh, int startIndex, int elementsToRead)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Rectangle toReadArea = new Rectangle(rx, ry, rw, rh);
                 Texture2D t = Texture2D.FromStream(gd, reader.BaseStream);
@@ -218,7 +218,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(25, 23, 2, 2, 1, 2)]
         public void GetDataException(int rx, int ry, int rw, int rh, int startIndex, int elementsToRead)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Rectangle toReadArea = new Rectangle(rx, ry, rw, rh);
                 Texture2D t = Texture2D.FromStream(gd, reader.BaseStream);
@@ -236,7 +236,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(4096)]
         public void SetData1ParameterGoodTest(int arraySize)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Color[] data = new Color[arraySize];
                 Color[] reference = new Color[4096];
@@ -277,7 +277,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(4097)]
         public void SetData1ParameterExceptionTest(int arraySize)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Color[] data = new Color[arraySize];
                 Color[] reference = new Color[4096];
@@ -410,7 +410,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(4096, 0, 4096)]
         public void SetData3ParameterGoodTest(int arraySize, int startIndex, int elements)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Color[] data = new Color[arraySize];
                 Color[] written = new Color[4096];
@@ -460,7 +460,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(4096, 0, 4095)]
         public void SetData3ParameterExceptionTest(int arraySize, int startIndex, int elements)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Color[] data = new Color[arraySize];
                 Color[] written = new Color[4096];
@@ -494,7 +494,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(4097, 1, 4096, 0, 0, 64, 64)]
         public void SetData5ParameterGoodTest(int arraySize, int startIndex, int elements, int x, int y, int w, int h)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Rectangle area = new Rectangle(x, y, w, h);
                 int areaLength = w * h;
@@ -545,7 +545,7 @@ namespace MonoGame.Tests.Graphics
         [TestCase(3970, 1, 4096, 1, 1, 63, 63)]
         public void SetData5ParameterExceptionTest(int arraySize, int startIndex, int elements, int x, int y, int w, int h)
         {
-            using (System.IO.StreamReader reader = new System.IO.StreamReader("Assets/Textures/LogoOnly_64px.png"))
+            using (StreamReader reader = new StreamReader("Assets/Textures/LogoOnly_64px.png"))
             {
                 Rectangle area = new Rectangle(x, y, w, h);
                 int areaLength = w * h;

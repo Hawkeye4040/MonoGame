@@ -139,7 +139,7 @@ namespace Microsoft.Xna.Framework.Audio
             wavebankdata.Flags = reader.ReadInt32();
             wavebankdata.EntryCount = reader.ReadInt32();
 
-            if ((wavebankheader.Version == 2) || (wavebankheader.Version == 3))
+            if (wavebankheader.Version == 2 || wavebankheader.Version == 3)
             {
                 wavebankdata.BankName = Encoding.UTF8.GetString(reader.ReadBytes(16),0,16).Replace("\0", "");
             }
@@ -173,14 +173,14 @@ namespace Microsoft.Xna.Framework.Audio
             {
                 _playRegionOffset =
                     wavebank_offset +
-                    (wavebankdata.EntryCount * wavebankdata.EntryMetaDataElementSize);
+                    wavebankdata.EntryCount * wavebankdata.EntryMetaDataElementSize;
             }
             
             int segidx_entry_name = 2;
             if (wavebankheader.Version >= 42) segidx_entry_name = 3;
             
-            if ((wavebankheader.Segments[segidx_entry_name].Offset != 0) &&
-                (wavebankheader.Segments[segidx_entry_name].Length != 0))
+            if (wavebankheader.Segments[segidx_entry_name].Offset != 0 &&
+                wavebankheader.Segments[segidx_entry_name].Length != 0)
             {
                 if (wavebankdata.EntryNameElementSize == -1) wavebankdata.EntryNameElementSize = 0;
                 byte[] entry_name = new byte[wavebankdata.EntryNameElementSize + 1];
@@ -208,7 +208,7 @@ namespace Microsoft.Xna.Framework.Audio
                 for (int i = 0; i < wavebankdata.EntryCount; i++)
                 {
                     int nextOffset;
-                    if (i == (wavebankdata.EntryCount - 1))
+                    if (i == wavebankdata.EntryCount - 1)
                         nextOffset = wavebankheader.Segments[last_segment].Length;
                     else
                         nextOffset = _streams[i + 1].FileOffset;
@@ -300,8 +300,8 @@ namespace Microsoft.Xna.Framework.Audio
                 // | wBlockAlign
                 // wBitsPerSample
 
-                codec = (MiniFormatTag)((format) & ((1 << 1) - 1));
-                channels = (format >> (1)) & ((1 << 3) - 1);
+                codec = (MiniFormatTag)(format & ((1 << 1) - 1));
+                channels = (format >> 1) & ((1 << 3) - 1);
                 rate = (format >> (1 + 3 + 1)) & ((1 << 18) - 1);
                 alignment = (format >> (1 + 3 + 1 + 18)) & ((1 << 8) - 1);
                 //bits = (format >> (1 + 3 + 1 + 18 + 8)) & ((1 << 1) - 1);
@@ -337,8 +337,8 @@ namespace Microsoft.Xna.Framework.Audio
                 // | wBlockAlign
                 // wBitsPerSample
 
-                codec = (MiniFormatTag)((format) & ((1 << 2) - 1));
-                channels = (format >> (2)) & ((1 << 3) - 1);
+                codec = (MiniFormatTag)(format & ((1 << 2) - 1));
+                channels = (format >> 2) & ((1 << 3) - 1);
                 rate = (format >> (2 + 3)) & ((1 << 18) - 1);
                 alignment = (format >> (2 + 3 + 18)) & ((1 << 8) - 1);
                 //bits = (info.Format >> (2 + 3 + 18 + 8)) & ((1 << 1) - 1);

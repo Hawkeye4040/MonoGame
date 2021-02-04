@@ -130,7 +130,7 @@ namespace Microsoft.Xna.Framework.Audio
                     continue;
                 }
 
-                if (inst.IsDisposed || inst.State == SoundState.Stopped || (inst._effect == null && !inst._isDynamic))
+                if (inst.IsDisposed || inst.State == SoundState.Stopped || inst._effect == null && !inst._isDynamic)
                 {
 #if OPENAL
                     if (!inst.IsDisposed)
@@ -184,6 +184,15 @@ namespace Microsoft.Xna.Framework.Audio
                     continue;
 
                 // Re-applying the volume to itself will update
+                // the sound with the current master volume.
+                inst.Volume = inst.Volume;
+            }
+        }
+
+        } // lock (_locker)
+    }
+}
+l update
                 // the sound with the current master volume.
                 inst.Volume = inst.Volume;
             }

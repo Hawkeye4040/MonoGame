@@ -206,7 +206,7 @@ namespace Microsoft.Xna.Framework
         {
             if ((alpha & 0xFFFFFF00) != 0)
             {
-                var clampedA = (uint)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+                var clampedA = (uint)MathHelper.Clamp(alpha, byte.MinValue, byte.MaxValue);
 
                 _packedValue = (color._packedValue & 0x00FFFFFF) | (clampedA << 24);
             }
@@ -261,15 +261,15 @@ namespace Microsoft.Xna.Framework
 
             if (((r | g | b) & 0xFFFFFF00) != 0)
             {
-                var clampedR = (uint)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-                var clampedG = (uint)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-                var clampedB = (uint)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
+                var clampedR = (uint)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+                var clampedG = (uint)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+                var clampedB = (uint)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
 
-                _packedValue |= (clampedB << 16) | (clampedG << 8) | (clampedR);
+                _packedValue |= (clampedB << 16) | (clampedG << 8) | clampedR;
             }
             else
             {
-                _packedValue |= ((uint)b << 16) | ((uint)g << 8) | ((uint)r);
+                _packedValue |= ((uint)b << 16) | ((uint)g << 8) | (uint)r;
             }
         }
 
@@ -284,16 +284,16 @@ namespace Microsoft.Xna.Framework
         {
             if (((r | g | b | alpha) & 0xFFFFFF00) != 0)
             {
-                var clampedR = (uint)MathHelper.Clamp(r, Byte.MinValue, Byte.MaxValue);
-                var clampedG = (uint)MathHelper.Clamp(g, Byte.MinValue, Byte.MaxValue);
-                var clampedB = (uint)MathHelper.Clamp(b, Byte.MinValue, Byte.MaxValue);
-                var clampedA = (uint)MathHelper.Clamp(alpha, Byte.MinValue, Byte.MaxValue);
+                var clampedR = (uint)MathHelper.Clamp(r, byte.MinValue, byte.MaxValue);
+                var clampedG = (uint)MathHelper.Clamp(g, byte.MinValue, byte.MaxValue);
+                var clampedB = (uint)MathHelper.Clamp(b, byte.MinValue, byte.MaxValue);
+                var clampedA = (uint)MathHelper.Clamp(alpha, byte.MinValue, byte.MaxValue);
 
-                _packedValue = (clampedA << 24) | (clampedB << 16) | (clampedG << 8) | (clampedR);
+                _packedValue = (clampedA << 24) | (clampedB << 16) | (clampedG << 8) | clampedR;
             }
             else
             {
-                _packedValue = ((uint)alpha << 24) | ((uint)b << 16) | ((uint)g << 8) | ((uint)r);
+                _packedValue = ((uint)alpha << 24) | ((uint)b << 16) | ((uint)g << 8) | (uint)r;
             }
         }
 
@@ -309,7 +309,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="alpha"></param>
         public Color(byte r, byte g, byte b, byte alpha)
         {
-            _packedValue = ((uint)alpha << 24) | ((uint)b << 16) | ((uint)g << 8) | (r);
+            _packedValue = ((uint)alpha << 24) | ((uint)b << 16) | ((uint)g << 8) | r;
         }
 
         /// <summary>
@@ -322,12 +322,12 @@ namespace Microsoft.Xna.Framework
             {
                 unchecked
                 {
-                    return (byte) (this._packedValue >> 16);
+                    return (byte) (_packedValue >> 16);
                 }
             }
             set
             {
-                this._packedValue = (this._packedValue & 0xff00ffff) | ((uint)value << 16);
+                _packedValue = (_packedValue & 0xff00ffff) | ((uint)value << 16);
             }
         }
 
@@ -341,12 +341,12 @@ namespace Microsoft.Xna.Framework
             {
                 unchecked
                 {
-                    return (byte)(this._packedValue >> 8);
+                    return (byte)(_packedValue >> 8);
                 }
             }
             set
             {
-                this._packedValue = (this._packedValue & 0xffff00ff) | ((uint)value << 8);
+                _packedValue = (_packedValue & 0xffff00ff) | ((uint)value << 8);
             }
         }
 
@@ -360,12 +360,12 @@ namespace Microsoft.Xna.Framework
             {
                 unchecked
                 {
-                    return (byte) this._packedValue;
+                    return (byte) _packedValue;
                 }
             }
             set
             {
-                this._packedValue = (this._packedValue & 0xffffff00) | value;
+                _packedValue = (_packedValue & 0xffffff00) | value;
             }
         }
 
@@ -379,12 +379,12 @@ namespace Microsoft.Xna.Framework
             {
                 unchecked
                 {
-                    return (byte)(this._packedValue >> 24);
+                    return (byte)(_packedValue >> 24);
                 }
             }
             set
             {
-                this._packedValue = (this._packedValue & 0x00ffffff) | ((uint)value << 24);
+                _packedValue = (_packedValue & 0x00ffffff) | ((uint)value << 24);
             }
         }
 		
@@ -396,7 +396,7 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public static bool operator ==(Color a, Color b)
         {
-            return (a._packedValue == b._packedValue);
+            return a._packedValue == b._packedValue;
         }
 	
 	/// <summary>
@@ -407,7 +407,7 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>	
         public static bool operator !=(Color a, Color b)
         {
-            return (a._packedValue != b._packedValue);
+            return a._packedValue != b._packedValue;
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Microsoft.Xna.Framework
         /// <returns>Hash code of this <see cref="Color"/>.</returns>
         public override int GetHashCode()
         {
-            return this._packedValue.GetHashCode();
+            return _packedValue.GetHashCode();
         }
 	
         /// <summary>
@@ -426,7 +426,7 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return ((obj is Color) && this.Equals((Color)obj));
+            return obj is Color && Equals((Color)obj);
         }
 
         #region Color Bank
@@ -1724,7 +1724,7 @@ namespace Microsoft.Xna.Framework
         /// <param name="value2">Destination <see cref="Color"/>.</param>
         /// <param name="amount">Interpolation factor.</param>
         /// <returns>Interpolated <see cref="Color"/>.</returns>
-        public static Color Lerp(Color value1, Color value2, Single amount)
+        public static Color Lerp(Color value1, Color value2, float amount)
         {
 			amount = MathHelper.Clamp(amount, 0, 1);
             return new Color(   
@@ -1739,7 +1739,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         /// <returns>Interpolated <see cref="Color"/>.</returns>
         [Obsolete("Color.Lerp should be used instead of this function.")]
-        public static Color LerpPrecise(Color value1, Color value2, Single amount)
+        public static Color LerpPrecise(Color value1, Color value2, float amount)
         {
             amount = MathHelper.Clamp(amount, 0, 1);
             return new Color(
@@ -1798,7 +1798,7 @@ namespace Microsoft.Xna.Framework
         /// Gets or sets packed value of this <see cref="Color"/>.
         /// </summary>
         [CLSCompliant(false)]
-        public UInt32 PackedValue
+        public uint PackedValue
         {
             get { return _packedValue; }
             set { _packedValue = value; }
@@ -1810,10 +1810,10 @@ namespace Microsoft.Xna.Framework
             get
             {
                 return string.Concat(
-                    this.R.ToString(), "  ",
-                    this.G.ToString(), "  ",
-                    this.B.ToString(), "  ",
-                    this.A.ToString()
+                    R.ToString(), "  ",
+                    G.ToString(), "  ",
+                    B.ToString(), "  ",
+                    A.ToString()
                 );
             }
         }
@@ -1871,7 +1871,7 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Color other)
         {
-	    return this.PackedValue == other.PackedValue;
+	    return PackedValue == other.PackedValue;
         }
 
         #endregion

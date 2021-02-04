@@ -37,7 +37,7 @@ namespace Microsoft.Xna.Framework.Media
 		public void Dispose()
 		{
 		    PlatformDispose();
-		    this.IsDisposed = true;
+		    IsDisposed = true;
 		}
 	}
 }

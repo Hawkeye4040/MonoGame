@@ -102,20 +102,20 @@ namespace Microsoft.Xna.Framework
 
             if (_keys.Count == 0)
             {
-                this._keys.Add(item);
+                _keys.Add(item);
                 return;
             }
 
-            for (int i = 0; i < this._keys.Count; i++)
+            for (int i = 0; i < _keys.Count; i++)
             {
-                if (item.Position < this._keys[i].Position)
+                if (item.Position < _keys[i].Position)
                 {
-                    this._keys.Insert(i, item);
+                    _keys.Insert(i, item);
                     return;
                 }
             }
 
-            this._keys.Add(item);
+            _keys.Add(item);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Xna.Framework
         public CurveKeyCollection Clone()
         {
             CurveKeyCollection ckc = new CurveKeyCollection();
-            foreach (CurveKey key in this._keys)
+            foreach (CurveKey key in _keys)
                 ckc.Add(key);
             return ckc;
         }

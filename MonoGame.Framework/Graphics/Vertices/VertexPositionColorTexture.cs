@@ -38,12 +38,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override string ToString()
         {
-            return "{{Position:" + this.Position + " Color:" + this.Color + " TextureCoordinate:" + this.TextureCoordinate + "}}";
+            return "{{Position:" + Position + " Color:" + Color + " TextureCoordinate:" + TextureCoordinate + "}}";
         }
 
         public static bool operator ==(VertexPositionColorTexture left, VertexPositionColorTexture right)
         {
-            return (((left.Position == right.Position) && (left.Color == right.Color)) && (left.TextureCoordinate == right.TextureCoordinate));
+            return left.Position == right.Position && left.Color == right.Color && left.TextureCoordinate == right.TextureCoordinate;
         }
 
         public static bool operator !=(VertexPositionColorTexture left, VertexPositionColorTexture right)
@@ -56,10 +56,10 @@ namespace Microsoft.Xna.Framework.Graphics
             if (obj == null)
                 return false;
 
-            if (obj.GetType() != base.GetType())
+            if (obj.GetType() != GetType())
                 return false;
 
-            return (this == ((VertexPositionColorTexture)obj));
+            return this == (VertexPositionColorTexture)obj;
         }
 
         static VertexPositionColorTexture()

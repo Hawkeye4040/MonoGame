@@ -15,7 +15,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public List<ModelMesh> Meshes {
 			get {
-				return this.meshes;
+				return meshes;
 			}
 			private set {
 				meshes = value;
@@ -44,8 +44,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		internal Matrix transform;
 		public Matrix Transform 
 		{ 
-			get { return this.transform; } 
-			set { this.transform = value; }
+			get { return transform; } 
+			set { transform = value; }
 		}
 		
 		/// <summary>

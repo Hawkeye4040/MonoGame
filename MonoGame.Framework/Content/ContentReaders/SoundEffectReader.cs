@@ -35,20 +35,20 @@ namespace Microsoft.Xna.Framework.Content
             // We let the sound effect deal with parsing this based
             // on what format the audio data actually is.
 
-		    var headerSize = input.ReadInt32();
-            var header = input.ReadBytes(headerSize);
+		    int headerSize = input.ReadInt32();
+            byte[] header = input.ReadBytes(headerSize);
 
             // Read the audio data buffer.
-            var dataSize = input.ReadInt32();
-            var data = ContentManager.ScratchBufferPool.Get(dataSize);
+            int dataSize = input.ReadInt32();
+            byte[] data = ContentManager.ScratchBufferPool.Get(dataSize);
             input.Read(data, 0, dataSize);
 
-            var loopStart = input.ReadInt32();
-            var loopLength = input.ReadInt32();
-            var durationMs = input.ReadInt32();
+            int loopStart = input.ReadInt32();
+            int loopLength = input.ReadInt32();
+            int durationMs = input.ReadInt32();
 
             // Create the effect.
-            var effect = new SoundEffect(header, data, dataSize, durationMs, loopStart, loopLength);
+            SoundEffect effect = new SoundEffect(header, data, dataSize, durationMs, loopStart, loopLength);
 
             // Store the original asset name for debugging later.
             effect.Name = input.AssetName;

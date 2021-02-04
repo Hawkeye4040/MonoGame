@@ -48,8 +48,8 @@ namespace Microsoft.Xna.Framework
         /// <param name="max">The maximum extent of the <see cref="BoundingBox"/>.</param>
         public BoundingBox(Vector3 min, Vector3 max)
         {
-            this.Min = min;
-            this.Max = max;
+            Min = min;
+            Max = max;
         }
 
         #endregion Public Constructors
@@ -120,7 +120,7 @@ namespace Microsoft.Xna.Framework
             // First we check if frustum is in box
             for (i = 0; i < corners.Length; i++)
             {
-                this.Contains(ref corners[i], out contained);
+                Contains(ref corners[i], out contained);
                 if (contained == ContainmentType.Disjoint)
                     break;
             }
@@ -138,7 +138,7 @@ namespace Microsoft.Xna.Framework
             i++;
             for (; i < corners.Length; i++)
             {
-                this.Contains(ref corners[i], out contained);
+                Contains(ref corners[i], out contained);
                 if (contained != ContainmentType.Contains)
                     return ContainmentType.Intersects;
 
@@ -250,7 +250,7 @@ namespace Microsoft.Xna.Framework
         /// </param>
         public void Contains(ref BoundingSphere sphere, out ContainmentType result)
         {
-            result = this.Contains(sphere);
+            result = Contains(sphere);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Microsoft.Xna.Framework
         public ContainmentType Contains(Vector3 point)
         {
             ContainmentType result;
-            this.Contains(ref point, out result);
+            Contains(ref point, out result);
             return result;
         }
 
@@ -279,12 +279,12 @@ namespace Microsoft.Xna.Framework
         public void Contains(ref Vector3 point, out ContainmentType result)
         {
             //first we get if point is out of box
-            if (point.X < this.Min.X
-                || point.X > this.Max.X
-                || point.Y < this.Min.Y
-                || point.Y > this.Max.Y
-                || point.Z < this.Min.Z
-                || point.Z > this.Max.Z)
+            if (point.X < Min.X
+                || point.X > Max.X
+                || point.Y < Min.Y
+                || point.Y > Max.Y
+                || point.Z < Min.Z
+                || point.Z > Max.Z)
             {
                 result = ContainmentType.Disjoint;
             }
@@ -318,13 +318,13 @@ namespace Microsoft.Xna.Framework
             var maxVec = MinVector3;
             for (int i = index; i < count; i++)
             {                
-                minVec.X = (minVec.X < points[i].X) ? minVec.X : points[i].X;
-                minVec.Y = (minVec.Y < points[i].Y) ? minVec.Y : points[i].Y;
-                minVec.Z = (minVec.Z < points[i].Z) ? minVec.Z : points[i].Z;
+                minVec.X = minVec.X < points[i].X ? minVec.X : points[i].X;
+                minVec.Y = minVec.Y < points[i].Y ? minVec.Y : points[i].Y;
+                minVec.Z = minVec.Z < points[i].Z ? minVec.Z : points[i].Z;
 
-                maxVec.X = (maxVec.X > points[i].X) ? maxVec.X : points[i].X;
-                maxVec.Y = (maxVec.Y > points[i].Y) ? maxVec.Y : points[i].Y;
-                maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
+                maxVec.X = maxVec.X > points[i].X ? maxVec.X : points[i].X;
+                maxVec.Y = maxVec.Y > points[i].Y ? maxVec.Y : points[i].Y;
+                maxVec.Z = maxVec.Z > points[i].Z ? maxVec.Z : points[i].Z;
             }
 
             return new BoundingBox(minVec, maxVec);
@@ -351,13 +351,13 @@ namespace Microsoft.Xna.Framework
             var maxVec = MinVector3;
             for (int i = index; i < count; i++)
             {
-                minVec.X = (minVec.X < points[i].X) ? minVec.X : points[i].X;
-                minVec.Y = (minVec.Y < points[i].Y) ? minVec.Y : points[i].Y;
-                minVec.Z = (minVec.Z < points[i].Z) ? minVec.Z : points[i].Z;
+                minVec.X = minVec.X < points[i].X ? minVec.X : points[i].X;
+                minVec.Y = minVec.Y < points[i].Y ? minVec.Y : points[i].Y;
+                minVec.Z = minVec.Z < points[i].Z ? minVec.Z : points[i].Z;
 
-                maxVec.X = (maxVec.X > points[i].X) ? maxVec.X : points[i].X;
-                maxVec.Y = (maxVec.Y > points[i].Y) ? maxVec.Y : points[i].Y;
-                maxVec.Z = (maxVec.Z > points[i].Z) ? maxVec.Z : points[i].Z;
+                maxVec.X = maxVec.X > points[i].X ? maxVec.X : points[i].X;
+                maxVec.Y = maxVec.Y > points[i].Y ? maxVec.Y : points[i].Y;
+                maxVec.Z = maxVec.Z > points[i].Z ? maxVec.Z : points[i].Z;
             }
 
             return new BoundingBox(minVec, maxVec);
@@ -380,13 +380,13 @@ namespace Microsoft.Xna.Framework
             var maxVec = MinVector3;
             foreach (var ptVector in points)
             {
-                minVec.X = (minVec.X < ptVector.X) ? minVec.X : ptVector.X;
-                minVec.Y = (minVec.Y < ptVector.Y) ? minVec.Y : ptVector.Y;
-                minVec.Z = (minVec.Z < ptVector.Z) ? minVec.Z : ptVector.Z;
+                minVec.X = minVec.X < ptVector.X ? minVec.X : ptVector.X;
+                minVec.Y = minVec.Y < ptVector.Y ? minVec.Y : ptVector.Y;
+                minVec.Z = minVec.Z < ptVector.Z ? minVec.Z : ptVector.Z;
 
-                maxVec.X = (maxVec.X > ptVector.X) ? maxVec.X : ptVector.X;
-                maxVec.Y = (maxVec.Y > ptVector.Y) ? maxVec.Y : ptVector.Y;
-                maxVec.Z = (maxVec.Z > ptVector.Z) ? maxVec.Z : ptVector.Z;
+                maxVec.X = maxVec.X > ptVector.X ? maxVec.X : ptVector.X;
+                maxVec.Y = maxVec.Y > ptVector.Y ? maxVec.Y : ptVector.Y;
+                maxVec.Z = maxVec.Z > ptVector.Z ? maxVec.Z : ptVector.Z;
 
                 empty = false;
             }
@@ -463,7 +463,7 @@ namespace Microsoft.Xna.Framework
         /// </returns>
         public bool Equals(BoundingBox other)
         {
-            return (this.Min == other.Min) && (this.Max == other.Max);
+            return Min == other.Min && Max == other.Max;
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Microsoft.Xna.Framework
         /// </returns>
         public override bool Equals(object obj)
         {
-            return (obj is BoundingBox) && this.Equals((BoundingBox)obj);
+            return obj is BoundingBox && Equals((BoundingBox)obj);
         }
 
         /// <summary>
@@ -486,14 +486,14 @@ namespace Microsoft.Xna.Framework
         public Vector3[] GetCorners()
         {
             return new Vector3[] {
-                new Vector3(this.Min.X, this.Max.Y, this.Max.Z), 
-                new Vector3(this.Max.X, this.Max.Y, this.Max.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Max.Y, this.Min.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Min.Z),
-                new Vector3(this.Min.X, this.Min.Y, this.Min.Z)
+                new Vector3(Min.X, Max.Y, Max.Z), 
+                new Vector3(Max.X, Max.Y, Max.Z),
+                new Vector3(Max.X, Min.Y, Max.Z), 
+                new Vector3(Min.X, Min.Y, Max.Z), 
+                new Vector3(Min.X, Max.Y, Min.Z),
+                new Vector3(Max.X, Max.Y, Min.Z),
+                new Vector3(Max.X, Min.Y, Min.Z),
+                new Vector3(Min.X, Min.Y, Min.Z)
             };
         }
 
@@ -516,30 +516,30 @@ namespace Microsoft.Xna.Framework
             {
                 throw new ArgumentOutOfRangeException("corners", "Not Enought Corners");
             }
-            corners[0].X = this.Min.X;
-            corners[0].Y = this.Max.Y;
-            corners[0].Z = this.Max.Z;
-            corners[1].X = this.Max.X;
-            corners[1].Y = this.Max.Y;
-            corners[1].Z = this.Max.Z;
-            corners[2].X = this.Max.X;
-            corners[2].Y = this.Min.Y;
-            corners[2].Z = this.Max.Z;
-            corners[3].X = this.Min.X;
-            corners[3].Y = this.Min.Y;
-            corners[3].Z = this.Max.Z;
-            corners[4].X = this.Min.X;
-            corners[4].Y = this.Max.Y;
-            corners[4].Z = this.Min.Z;
-            corners[5].X = this.Max.X;
-            corners[5].Y = this.Max.Y;
-            corners[5].Z = this.Min.Z;
-            corners[6].X = this.Max.X;
-            corners[6].Y = this.Min.Y;
-            corners[6].Z = this.Min.Z;
-            corners[7].X = this.Min.X;
-            corners[7].Y = this.Min.Y;
-            corners[7].Z = this.Min.Z;
+            corners[0].X = Min.X;
+            corners[0].Y = Max.Y;
+            corners[0].Z = Max.Z;
+            corners[1].X = Max.X;
+            corners[1].Y = Max.Y;
+            corners[1].Z = Max.Z;
+            corners[2].X = Max.X;
+            corners[2].Y = Min.Y;
+            corners[2].Z = Max.Z;
+            corners[3].X = Min.X;
+            corners[3].Y = Min.Y;
+            corners[3].Z = Max.Z;
+            corners[4].X = Min.X;
+            corners[4].Y = Max.Y;
+            corners[4].Z = Min.Z;
+            corners[5].X = Max.X;
+            corners[5].Y = Max.Y;
+            corners[5].Z = Min.Z;
+            corners[6].X = Max.X;
+            corners[6].Y = Min.Y;
+            corners[6].Z = Min.Z;
+            corners[7].X = Min.X;
+            corners[7].Y = Min.Y;
+            corners[7].Z = Min.Z;
         }
 
         /// <summary>
@@ -548,7 +548,7 @@ namespace Microsoft.Xna.Framework
         /// <returns>A hash code for this <see cref="BoundingBox"/>.</returns>
         public override int GetHashCode()
         {
-            return this.Min.GetHashCode() + this.Max.GetHashCode();
+            return Min.GetHashCode() + Max.GetHashCode();
         }
 
         /// <summary>
@@ -576,15 +576,15 @@ namespace Microsoft.Xna.Framework
         /// </param>
         public void Intersects(ref BoundingBox box, out bool result)
         {
-            if ((this.Max.X >= box.Min.X) && (this.Min.X <= box.Max.X))
+            if (Max.X >= box.Min.X && Min.X <= box.Max.X)
             {
-                if ((this.Max.Y < box.Min.Y) || (this.Min.Y > box.Max.Y))
+                if (Max.Y < box.Min.Y || Min.Y > box.Max.Y)
                 {
                     result = false;
                     return;
                 }
 
-                result = (this.Max.Z >= box.Min.Z) && (this.Min.Z <= box.Max.Z);
+                result = Max.Z >= box.Min.Z && Min.Z <= box.Max.Z;
                 return;
             }
 
@@ -782,8 +782,8 @@ namespace Microsoft.Xna.Framework
             get
             {
                 return string.Concat(
-                    "Min( ", this.Min.DebugDisplayString, " )  \r\n",
-                    "Max( ",this.Max.DebugDisplayString, " )"
+                    "Min( ", Min.DebugDisplayString, " )  \r\n",
+                    "Max( ",Max.DebugDisplayString, " )"
                     );
             }
         }
@@ -794,7 +794,7 @@ namespace Microsoft.Xna.Framework
         /// <returns>A <see cref="String"/> representation of this <see cref="BoundingBox"/>.</returns>
         public override string ToString()
         {
-            return "{{Min:" + this.Min.ToString() + " Max:" + this.Max.ToString() + "}}";
+            return "{{Min:" + Min.ToString() + " Max:" + Max.ToString() + "}}";
         }
 
         /// <summary>

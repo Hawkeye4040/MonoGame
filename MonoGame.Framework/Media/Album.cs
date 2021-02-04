@@ -36,7 +36,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.artist;
+                return artist;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.genre;
+                return genre;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.album;
+                return album;
             }
         }
 
@@ -111,14 +111,14 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.songCollection;
+                return songCollection;
             }
         }
 
        private Album(SongCollection songCollection, string name, Artist artist, Genre genre)
         {
             this.songCollection = songCollection;
-            this.album = name;
+            album = name;
             this.artist = artist;
             this.genre = genre;
         }
@@ -226,7 +226,7 @@ namespace Microsoft.Xna.Framework.Media
         /// </summary>
         public override string ToString()
         {
-            return this.album.ToString();
+            return album.ToString();
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Microsoft.Xna.Framework.Media
         /// </summary>
         public override int GetHashCode()
         {
-            return this.album.GetHashCode();
+            return album.GetHashCode();
         }
     }
 }

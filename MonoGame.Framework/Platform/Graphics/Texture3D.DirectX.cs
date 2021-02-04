@@ -23,7 +23,7 @@ namespace Microsoft.Xna.Framework.Graphics
             this.mipMap = mipMap;
 
             if (mipMap)
-                this._levelCount = CalculateMipLevels(width, height, depth);
+                _levelCount = CalculateMipLevels(width, height, depth);
 
             // Create texture
             GetTexture();
@@ -135,15 +135,15 @@ namespace Microsoft.Xna.Framework.Graphics
                             for (var row = top; row < bottom; row++)
                             {
                                 stream.ReadRange(data, currentIndex, elementsInRow);
-                                stream.Seek(databox.RowPitch - (elementSize * elementsInRow), SeekOrigin.Current);
+                                stream.Seek(databox.RowPitch - elementSize * elementsInRow, SeekOrigin.Current);
                                 currentIndex += elementsInRow;
                             }
-                            stream.Seek(databox.SlicePitch - (databox.RowPitch * rowsInSlice), SeekOrigin.Current);
+                            stream.Seek(databox.SlicePitch - databox.RowPitch * rowsInSlice, SeekOrigin.Current);
                         }
                     }
                     finally
                     {
-                        SharpDX.Utilities.Dispose(ref stream);
+                        Utilities.Dispose(ref stream);
                     }
                 }
             }

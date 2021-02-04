@@ -171,15 +171,15 @@ namespace Microsoft.Xna.Framework.Audio
 
             // Do all the randoms before we play.
             if (_volumeVar.HasValue)
-                _trackVolume = _volumeVar.Value.X + ((float)XactHelpers.Random.NextDouble() * _volumeVar.Value.Y);
+                _trackVolume = _volumeVar.Value.X + (float)XactHelpers.Random.NextDouble() * _volumeVar.Value.Y;
             if (_pitchVar.HasValue)
-                _trackPitch = _pitchVar.Value.X + ((float)XactHelpers.Random.NextDouble() * _pitchVar.Value.Y);
+                _trackPitch = _pitchVar.Value.X + (float)XactHelpers.Random.NextDouble() * _pitchVar.Value.Y;
             if (_clip.FilterEnabled)
             {
                 if (_filterVar.HasValue)
                 {
-                    _trackFilterFrequency = _filterVar.Value.X + ((float)XactHelpers.Random.NextDouble() * _filterVar.Value.Y);
-                    _trackFilterQFactor = _filterVar.Value.Z + ((float)XactHelpers.Random.NextDouble() * _filterVar.Value.W);
+                    _trackFilterFrequency = _filterVar.Value.X + (float)XactHelpers.Random.NextDouble() * _filterVar.Value.Y;
+                    _trackFilterQFactor = _filterVar.Value.Z + (float)XactHelpers.Random.NextDouble() * _filterVar.Value.W;
                 }
                 else
                 {

@@ -20,7 +20,7 @@ namespace Microsoft.Xna.Framework.Media
 
         internal SongCollection(List<Song> songs)
         {
-            this.innerlist = songs;
+            innerlist = songs;
         }
 
 		public void Dispose()
@@ -49,7 +49,7 @@ namespace Microsoft.Xna.Framework.Media
         {
 		    get
 		    {
-		        return this.isReadOnly;
+		        return isReadOnly;
 		    }
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-				return this.innerlist[index];
+				return innerlist[index];
             }
         }
 		
@@ -69,20 +69,20 @@ namespace Microsoft.Xna.Framework.Media
 
             if (innerlist.Count == 0)
             {
-                this.innerlist.Add(item);
+                innerlist.Add(item);
                 return;
             }
 
-            for (int i = 0; i < this.innerlist.Count; i++)
+            for (int i = 0; i < innerlist.Count; i++)
             {
-                if (item.TrackNumber < this.innerlist[i].TrackNumber)
+                if (item.TrackNumber < innerlist[i].TrackNumber)
                 {
-                    this.innerlist.Insert(i, item);
+                    innerlist.Insert(i, item);
                     return;
                 }
             }
 
-            this.innerlist.Add(item);
+            innerlist.Add(item);
         }
 		
 		public void Clear()
@@ -93,7 +93,7 @@ namespace Microsoft.Xna.Framework.Media
         public SongCollection Clone()
         {
             SongCollection sc = new SongCollection();
-            foreach (Song song in this.innerlist)
+            foreach (Song song in innerlist)
                 sc.Add(song);
             return sc;
         }

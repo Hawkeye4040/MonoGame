@@ -46,12 +46,12 @@ namespace Microsoft.Xna.Framework.Graphics
             if (depth <= 0)
                 throw new ArgumentOutOfRangeException("depth","Texture depth must be greater than zero");
 
-		    this.GraphicsDevice = graphicsDevice;
-            this._width = width;
-            this._height = height;
-            this._depth = depth;
-            this._levelCount = 1;
-		    this._format = format;
+		    GraphicsDevice = graphicsDevice;
+            _width = width;
+            _height = height;
+            _depth = depth;
+            _levelCount = 1;
+		    _format = format;
 
             PlatformConstruct(graphicsDevice, width, height, depth, mipMap, format, renderTarget);
         }

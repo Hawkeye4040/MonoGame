@@ -26,10 +26,10 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 throw new ArgumentNullException("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
             }
-			this.GraphicsDevice = graphicsDevice;
-			this.IndexElementSize = indexElementSize;	
-            this.IndexCount = indexCount;
-            this.BufferUsage = usage;
+			GraphicsDevice = graphicsDevice;
+			IndexElementSize = indexElementSize;	
+            IndexCount = indexCount;
+            BufferUsage = usage;
 			
             _isDynamic = dynamic;
 
@@ -79,7 +79,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (data.Length < (startIndex + elementCount))
+            if (data.Length < startIndex + elementCount)
                 throw new InvalidOperationException("The array specified in the data parameter is not the correct size for the amount of data requested.");
             if (BufferUsage == BufferUsage.WriteOnly)
                 throw new NotSupportedException("This IndexBuffer was created with a usage type of BufferUsage.WriteOnly. Calling GetData on a resource that was created with BufferUsage.WriteOnly is not supported.");
@@ -89,12 +89,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void GetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            this.GetData<T>(0, data, startIndex, elementCount);
+            GetData<T>(0, data, startIndex, elementCount);
         }
 
         public void GetData<T>(T[] data) where T : struct
         {
-            this.GetData<T>(0, data, 0, data.Length);
+            GetData<T>(0, data, 0, data.Length);
         }
 
         public void SetData<T>(int offsetInBytes, T[] data, int startIndex, int elementCount) where T : struct
@@ -116,7 +116,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (data == null)
                 throw new ArgumentNullException("data");
-            if (data.Length < (startIndex + elementCount))
+            if (data.Length < startIndex + elementCount)
                 throw new InvalidOperationException("The array specified in the data parameter is not the correct size for the amount of data requested.");
 
             PlatformSetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, options);

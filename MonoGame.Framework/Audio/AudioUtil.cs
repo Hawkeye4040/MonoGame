@@ -24,7 +24,7 @@ namespace Microsoft.Xna.Framework.Audio
                 writer.Write((short)1); //format (PCM)
                 writer.Write((short)channels);
                 writer.Write(sampleRate);
-                short blockAlign = (short)((bitsPerSample / 8) * channels);
+                short blockAlign = (short)(bitsPerSample / 8 * channels);
                 writer.Write(sampleRate * blockAlign); //byte rate
                 writer.Write(blockAlign);
                 writer.Write(bitsPerSample);

@@ -43,7 +43,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 			public int GetHashCode(char b)
 			{
-				return (b);
+				return b;
 			}
 
 			static public readonly CharComparer Default = new CharComparer();
@@ -87,12 +87,12 @@ namespace Microsoft.Xna.Framework.Graphics
                     WidthIncludingBearings = kerning[i].X + kerning[i].Y + kerning[i].Z
 				};
                 
-                if(regions.Count == 0 || characters[i] > (regions.Peek().End+1))
+                if(regions.Count == 0 || characters[i] > regions.Peek().End+1)
                 {
                     // Start a new region
                     regions.Push(new CharacterRegion(characters[i], i));
                 } 
-                else if(characters[i] == (regions.Peek().End+1))
+                else if(characters[i] == regions.Peek().End+1)
                 {
                     var currentRegion = regions.Pop();
                     // include character in currentRegion
@@ -395,9 +395,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
             public CharacterRegion(char start, int startIndex)
             {
-                this.Start = start;                
-                this.End = start;
-                this.StartIndex = startIndex;
+                Start = start;                
+                End = start;
+                StartIndex = startIndex;
             }
         }
 	}

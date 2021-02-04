@@ -188,7 +188,7 @@ namespace MonoGame.Framework.Utilities
         ///
         /// <param name="stream">The stream which will be read or written.</param>
         /// <param name="mode">Indicates whether the ZlibStream will compress or decompress.</param>
-        public ZlibStream(System.IO.Stream stream, CompressionMode mode)
+        public ZlibStream(Stream stream, CompressionMode mode)
             : this(stream, mode, CompressionLevel.Default, false)
         {
         }
@@ -252,7 +252,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="stream">The stream to be read or written while deflating or inflating.</param>
         /// <param name="mode">Indicates whether the ZlibStream will compress or decompress.</param>
         /// <param name="level">A tuning knob to trade speed for effectiveness.</param>
-        public ZlibStream(System.IO.Stream stream, CompressionMode mode, CompressionLevel level)
+        public ZlibStream(Stream stream, CompressionMode mode, CompressionLevel level)
             : this(stream, mode, level, false)
         {
         }
@@ -291,7 +291,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="mode">Indicates whether the ZlibStream will compress or decompress.</param>
         /// <param name="leaveOpen">true if the application would like the stream to remain
         /// open after inflation/deflation.</param>
-        public ZlibStream(System.IO.Stream stream, CompressionMode mode, bool leaveOpen)
+        public ZlibStream(Stream stream, CompressionMode mode, bool leaveOpen)
             : this(stream, mode, CompressionLevel.Default, leaveOpen)
         {
         }
@@ -377,7 +377,7 @@ namespace MonoGame.Framework.Utilities
         /// A tuning knob to trade speed for effectiveness. This parameter is
         /// effective only when mode is <c>CompressionMode.Compress</c>.
         /// </param>
-        public ZlibStream(System.IO.Stream stream, CompressionMode mode, CompressionLevel level, bool leaveOpen)
+        public ZlibStream(Stream stream, CompressionMode mode, CompressionLevel level, bool leaveOpen)
         {
             _baseStream = new ZlibBaseStream(stream, mode, level, ZlibStreamFlavor.ZLIB, leaveOpen);
         }
@@ -390,11 +390,11 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         virtual public FlushType FlushMode
         {
-            get { return (this._baseStream._flushMode); }
+            get { return _baseStream._flushMode; }
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
-                this._baseStream._flushMode = value;
+                _baseStream._flushMode = value;
             }
         }
 
@@ -419,29 +419,29 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                return this._baseStream._bufferSize;
+                return _baseStream._bufferSize;
             }
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
-                if (this._baseStream._workingBuffer != null)
+                if (_baseStream._workingBuffer != null)
                     throw new ZlibException("The working buffer is already set.");
                 if (value < ZlibConstants.WorkingBufferSizeMin)
-                    throw new ZlibException(String.Format("Don't be silly. {0} bytes?? Use a bigger buffer, at least {1}.", value, ZlibConstants.WorkingBufferSizeMin));
-                this._baseStream._bufferSize = value;
+                    throw new ZlibException(string.Format("Don't be silly. {0} bytes?? Use a bigger buffer, at least {1}.", value, ZlibConstants.WorkingBufferSizeMin));
+                _baseStream._bufferSize = value;
             }
         }
 
         /// <summary> Returns the total number of bytes input so far.</summary>
         virtual public long TotalIn
         {
-            get { return this._baseStream._z.TotalBytesIn; }
+            get { return _baseStream._z.TotalBytesIn; }
         }
 
         /// <summary> Returns the total number of bytes output so far.</summary>
         virtual public long TotalOut
         {
-            get { return this._baseStream._z.TotalBytesOut; }
+            get { return _baseStream._z.TotalBytesOut; }
         }
 
         #endregion
@@ -477,8 +477,8 @@ namespace MonoGame.Framework.Utilities
             {
                 if (!_disposed)
                 {
-                    if (disposing && (this._baseStream != null))
-                        this._baseStream.Dispose();
+                    if (disposing && _baseStream != null)
+                        _baseStream.Dispose();
                     _disposed = true;
                 }
             }
@@ -562,10 +562,10 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                if (this._baseStream._streamMode == ZlibBaseStream.StreamMode.Writer)
-                    return this._baseStream._z.TotalBytesOut;
-                if (this._baseStream._streamMode == ZlibBaseStream.StreamMode.Reader)
-                    return this._baseStream._z.TotalBytesIn;
+                if (_baseStream._streamMode == ZlibBaseStream.StreamMode.Writer)
+                    return _baseStream._z.TotalBytesOut;
+                if (_baseStream._streamMode == ZlibBaseStream.StreamMode.Reader)
+                    return _baseStream._z.TotalBytesIn;
                 return 0;
             }
 
@@ -624,7 +624,7 @@ namespace MonoGame.Framework.Utilities
         /// </param>
         ///
         /// <returns>nothing. This method always throws.</returns>
-        public override long Seek(long offset, System.IO.SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotSupportedException();
         }
@@ -693,7 +693,7 @@ namespace MonoGame.Framework.Utilities
         /// </param>
         ///
         /// <returns>The string in compressed form</returns>
-        public static byte[] CompressString(String s)
+        public static byte[] CompressString(string s)
         {
             using (var ms = new MemoryStream())
             {
@@ -746,7 +746,7 @@ namespace MonoGame.Framework.Utilities
         /// </param>
         ///
         /// <returns>The uncompressed string</returns>
-        public static String UncompressString(byte[] compressed)
+        public static string UncompressString(byte[] compressed)
         {
             using (var input = new MemoryStream(compressed))
             {
@@ -906,7 +906,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// used for diagnostics, when something goes wrong!
         /// </summary>
-        internal System.String Message;
+        internal string Message;
 
         internal DeflateManager dstate;
         internal InflateManager istate;
@@ -992,7 +992,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate()
         {
-            return InitializeInflate(this.WindowBits);
+            return InitializeInflate(WindowBits);
         }
 
         /// <summary>
@@ -1015,7 +1015,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate(bool expectRfc1950Header)
         {
-            return InitializeInflate(this.WindowBits, expectRfc1950Header);
+            return InitializeInflate(WindowBits, expectRfc1950Header);
         }
 
         /// <summary>
@@ -1026,7 +1026,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeInflate(int windowBits)
         {
-            this.WindowBits = windowBits;
+            WindowBits = windowBits;
             return InitializeInflate(windowBits, true);
         }
 
@@ -1051,7 +1051,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate(int windowBits, bool expectRfc1950Header)
         {
-            this.WindowBits = windowBits;
+            WindowBits = windowBits;
             if (dstate != null) throw new ZlibException("You may not call InitializeInflate() after calling InitializeDeflate().");
             istate = new InflateManager(expectRfc1950Header);
             return istate.Initialize(this, windowBits);
@@ -1213,7 +1213,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeDeflate(CompressionLevel level)
         {
-            this.CompressLevel = level;
+            CompressLevel = level;
             return _InternalInitializeDeflate(true);
         }
 
@@ -1234,7 +1234,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeDeflate(CompressionLevel level, bool wantRfc1950Header)
         {
-            this.CompressLevel = level;
+            CompressLevel = level;
             return _InternalInitializeDeflate(wantRfc1950Header);
         }
 
@@ -1251,8 +1251,8 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeDeflate(CompressionLevel level, int bits)
         {
-            this.CompressLevel = level;
-            this.WindowBits = bits;
+            CompressLevel = level;
+            WindowBits = bits;
             return _InternalInitializeDeflate(true);
         }
 
@@ -1268,8 +1268,8 @@ namespace MonoGame.Framework.Utilities
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeDeflate(CompressionLevel level, int bits, bool wantRfc1950Header)
         {
-            this.CompressLevel = level;
-            this.WindowBits = bits;
+            CompressLevel = level;
+            WindowBits = bits;
             return _InternalInitializeDeflate(wantRfc1950Header);
         }
 
@@ -1279,7 +1279,7 @@ namespace MonoGame.Framework.Utilities
             dstate = new DeflateManager();
             dstate.WantRfc1950HeaderBytes = wantRfc1950Header;
 
-            return dstate.Initialize(this, this.CompressLevel, this.WindowBits, this.Strategy);
+            return dstate.Initialize(this, CompressLevel, WindowBits, Strategy);
         }
 
         /// <summary>
@@ -1436,10 +1436,10 @@ namespace MonoGame.Framework.Utilities
 
             if (dstate.pending.Length <= dstate.nextPending ||
                 OutputBuffer.Length <= NextOut ||
-                dstate.pending.Length < (dstate.nextPending + len) ||
-                OutputBuffer.Length < (NextOut + len))
+                dstate.pending.Length < dstate.nextPending + len ||
+                OutputBuffer.Length < NextOut + len)
             {
-                throw new ZlibException(String.Format("Invalid State. (pending.Length={0}, pendingCount={1})",
+                throw new ZlibException(string.Format("Invalid State. (pending.Length={0}, pendingCount={1})",
                     dstate.pending.Length, dstate.pendingCount));
             }
 
@@ -1486,7 +1486,7 @@ namespace MonoGame.Framework.Utilities
 
     internal enum ZlibStreamFlavor { ZLIB = 1950, DEFLATE = 1951, GZIP = 1952 }
 
-    internal class ZlibBaseStream : System.IO.Stream
+    internal class ZlibBaseStream : Stream
     {
         protected internal ZlibCodec _z = null; // deferred init... new ZlibCodec();
 
@@ -1500,7 +1500,7 @@ namespace MonoGame.Framework.Utilities
         protected internal int _bufferSize = ZlibConstants.WorkingBufferSizeDefault;
         protected internal byte[] _buf1 = new byte[1];
 
-        protected internal System.IO.Stream _stream;
+        protected internal Stream _stream;
         protected internal CompressionStrategy Strategy = CompressionStrategy.Default;
 
         // workitem 7159
@@ -1512,24 +1512,24 @@ namespace MonoGame.Framework.Utilities
 
         internal int Crc32 { get { if (crc == null) return 0; return crc.Crc32Result; } }
 
-        internal ZlibBaseStream(System.IO.Stream stream,
+        internal ZlibBaseStream(Stream stream,
                               CompressionMode compressionMode,
                               CompressionLevel level,
                               ZlibStreamFlavor flavor,
                               bool leaveOpen)
             : base()
         {
-            this._flushMode = FlushType.None;
+            _flushMode = FlushType.None;
             //this._workingBuffer = new byte[WORKING_BUFFER_SIZE_DEFAULT];
-            this._stream = stream;
-            this._leaveOpen = leaveOpen;
-            this._compressionMode = compressionMode;
-            this._flavor = flavor;
-            this._level = level;
+            _stream = stream;
+            _leaveOpen = leaveOpen;
+            _compressionMode = compressionMode;
+            _flavor = flavor;
+            _level = level;
             // workitem 7159
             if (flavor == ZlibStreamFlavor.GZIP)
             {
-                this.crc = new CRC32();
+                crc = new CRC32();
             }
         }
 
@@ -1538,7 +1538,7 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                return (this._compressionMode == CompressionMode.Compress);
+                return _compressionMode == CompressionMode.Compress;
             }
         }
 
@@ -1548,16 +1548,16 @@ namespace MonoGame.Framework.Utilities
             {
                 if (_z == null)
                 {
-                    bool wantRfc1950Header = (this._flavor == ZlibStreamFlavor.ZLIB);
+                    bool wantRfc1950Header = _flavor == ZlibStreamFlavor.ZLIB;
                     _z = new ZlibCodec();
-                    if (this._compressionMode == CompressionMode.Decompress)
+                    if (_compressionMode == CompressionMode.Decompress)
                     {
                         _z.InitializeInflate(wantRfc1950Header);
                     }
                     else
                     {
                         _z.Strategy = Strategy;
-                        _z.InitializeDeflate(this._level, wantRfc1950Header);
+                        _z.InitializeDeflate(_level, wantRfc1950Header);
                     }
                 }
                 return _z;
@@ -1576,7 +1576,7 @@ namespace MonoGame.Framework.Utilities
             }
         }
 
-        public override void Write(System.Byte[] buffer, int offset, int count)
+        public override void Write(byte[] buffer, int offset, int count)
         {
             // workitem 7159
             // calculate the CRC on the unccompressed data  (before writing)
@@ -1601,7 +1601,7 @@ namespace MonoGame.Framework.Utilities
                 _z.OutputBuffer = workingBuffer;
                 _z.NextOut = 0;
                 _z.AvailableBytesOut = _workingBuffer.Length;
-                int rc = (_wantCompress)
+                int rc = _wantCompress
                     ? _z.Deflate(_flushMode)
                     : _z.Inflate(_flushMode);
                 if (rc != ZlibConstants.Z_OK && rc != ZlibConstants.Z_STREAM_END)
@@ -1614,7 +1614,7 @@ namespace MonoGame.Framework.Utilities
 
                 // If GZIP and de-compress, we're done when 8 bytes remain.
                 if (_flavor == ZlibStreamFlavor.GZIP && !_wantCompress)
-                    done = (_z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0);
+                    done = _z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0;
 
             }
             while (!done);
@@ -1634,7 +1634,7 @@ namespace MonoGame.Framework.Utilities
                     _z.OutputBuffer = workingBuffer;
                     _z.NextOut = 0;
                     _z.AvailableBytesOut = _workingBuffer.Length;
-                    int rc = (_wantCompress)
+                    int rc = _wantCompress
                         ? _z.Deflate(FlushType.Finish)
                         : _z.Inflate(FlushType.Finish);
 
@@ -1642,7 +1642,7 @@ namespace MonoGame.Framework.Utilities
                     {
                         string verb = (_wantCompress ? "de" : "in") + "flating";
                         if (_z.Message == null)
-                            throw new ZlibException(String.Format("{0}: (rc = {1})", verb, rc));
+                            throw new ZlibException(string.Format("{0}: (rc = {1})", verb, rc));
                         else
                             throw new ZlibException(verb + ": " + _z.Message);
                     }
@@ -1655,7 +1655,7 @@ namespace MonoGame.Framework.Utilities
                     done = _z.AvailableBytesIn == 0 && _z.AvailableBytesOut != 0;
                     // If GZIP and de-compress, we're done when 8 bytes remain.
                     if (_flavor == ZlibStreamFlavor.GZIP && !_wantCompress)
-                        done = (_z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0);
+                        done = _z.AvailableBytesIn == 8 && _z.AvailableBytesOut != 0;
 
                 }
                 while (!done);
@@ -1670,7 +1670,7 @@ namespace MonoGame.Framework.Utilities
                         // Emit the GZIP trailer: CRC32 and  size mod 2^32
                         int c1 = crc.Crc32Result;
                         _stream.Write(BitConverter.GetBytes(c1), 0, 4);
-                        int c2 = (Int32)(crc.TotalBytesRead & 0x00000000FFFFFFFF);
+                        int c2 = (int)(crc.TotalBytesRead & 0x00000000FFFFFFFF);
                         _stream.Write(BitConverter.GetBytes(c2), 0, 4);
                     }
                     else
@@ -1705,7 +1705,7 @@ namespace MonoGame.Framework.Utilities
                                                          bytesNeeded);
                             if (bytesNeeded != bytesRead)
                             {
-                                throw new ZlibException(String.Format("Missing or incomplete GZIP trailer. Expected 8 bytes, got {0}.",
+                                throw new ZlibException(string.Format("Missing or incomplete GZIP trailer. Expected 8 bytes, got {0}.",
                                                                       _z.AvailableBytesIn + bytesRead));
                             }
                         }
@@ -1714,16 +1714,16 @@ namespace MonoGame.Framework.Utilities
                             Array.Copy(_z.InputBuffer, _z.NextIn, trailer, 0, trailer.Length);
                         }
 
-                        Int32 crc32_expected = BitConverter.ToInt32(trailer, 0);
-                        Int32 crc32_actual = crc.Crc32Result;
-                        Int32 isize_expected = BitConverter.ToInt32(trailer, 4);
-                        Int32 isize_actual = (Int32)(_z.TotalBytesOut & 0x00000000FFFFFFFF);
+                        int crc32_expected = BitConverter.ToInt32(trailer, 0);
+                        int crc32_actual = crc.Crc32Result;
+                        int isize_expected = BitConverter.ToInt32(trailer, 4);
+                        int isize_actual = (int)(_z.TotalBytesOut & 0x00000000FFFFFFFF);
 
                         if (crc32_actual != crc32_expected)
-                            throw new ZlibException(String.Format("Bad CRC32 in GZIP trailer. (actual({0:X8})!=expected({1:X8}))", crc32_actual, crc32_expected));
+                            throw new ZlibException(string.Format("Bad CRC32 in GZIP trailer. (actual({0:X8})!=expected({1:X8}))", crc32_actual, crc32_expected));
 
                         if (isize_actual != isize_expected)
-                            throw new ZlibException(String.Format("Bad size in GZIP trailer. (actual({0})!=expected({1}))", isize_actual, isize_expected));
+                            throw new ZlibException(string.Format("Bad size in GZIP trailer. (actual({0})!=expected({1}))", isize_actual, isize_expected));
 
                     }
                     else
@@ -1755,12 +1755,12 @@ namespace MonoGame.Framework.Utilities
             _stream.Flush();
         }
 
-        public override System.Int64 Seek(System.Int64 offset, System.IO.SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotImplementedException();
             //_outStream.Seek(offset, origin);
         }
-        public override void SetLength(System.Int64 value)
+        public override void SetLength(long value)
         {
             _stream.SetLength(value);
         }
@@ -1784,7 +1784,7 @@ namespace MonoGame.Framework.Utilities
 
         private string ReadZeroTerminatedString()
         {
-            var list = new System.Collections.Generic.List<byte>();
+            var list = new List<byte>();
             bool done = false;
             do
             {
@@ -1822,7 +1822,7 @@ namespace MonoGame.Framework.Utilities
             if (header[0] != 0x1F || header[1] != 0x8B || header[2] != 8)
                 throw new ZlibException("Bad GZIP header.");
 
-            Int32 timet = BitConverter.ToInt32(header, 4);
+            int timet = BitConverter.ToInt32(header, 4);
             _GzipMtime = GZipStream._unixEpoch.AddSeconds(timet);
             totalBytesRead += n;
             if ((header[3] & 0x04) == 0x04)
@@ -1831,7 +1831,7 @@ namespace MonoGame.Framework.Utilities
                 n = _stream.Read(header, 0, 2); // 2-byte length field
                 totalBytesRead += n;
 
-                Int16 extraLength = (Int16)(header[0] + header[1] * 256);
+                short extraLength = (short)(header[0] + header[1] * 256);
                 byte[] extra = new byte[extraLength];
                 n = _stream.Read(extra, 0, extra.Length);
                 if (n != extraLength)
@@ -1850,7 +1850,7 @@ namespace MonoGame.Framework.Utilities
 
 
 
-        public override System.Int32 Read(System.Byte[] buffer, System.Int32 offset, System.Int32 count)
+        public override int Read(byte[] buffer, int offset, int count)
         {
             // According to MS documentation, any implementation of the IO.Stream.Read function must:
             // (a) throw an exception if offset & count reference an invalid part of the buffer,
@@ -1860,7 +1860,7 @@ namespace MonoGame.Framework.Utilities
 
             if (_streamMode == StreamMode.Undefined)
             {
-                if (!this._stream.CanRead) throw new ZlibException("The stream is not readable.");
+                if (!_stream.CanRead) throw new ZlibException("The stream is not readable.");
                 // for the first read, set up some controls.
                 _streamMode = StreamMode.Reader;
                 // (The first reference to _z goes through the private accessor which
@@ -1883,7 +1883,7 @@ namespace MonoGame.Framework.Utilities
             if (buffer == null) throw new ArgumentNullException("buffer");
             if (count < 0) throw new ArgumentOutOfRangeException("count");
             if (offset < buffer.GetLowerBound(0)) throw new ArgumentOutOfRangeException("offset");
-            if ((offset + count) > buffer.GetLength(0)) throw new ArgumentOutOfRangeException("count");
+            if (offset + count > buffer.GetLength(0)) throw new ArgumentOutOfRangeException("count");
 
             int rc = 0;
 
@@ -1900,7 +1900,7 @@ namespace MonoGame.Framework.Utilities
             do
             {
                 // need data in _workingBuffer in order to deflate/inflate.  Here, we check if we have any.
-                if ((_z.AvailableBytesIn == 0) && (!nomoreinput))
+                if (_z.AvailableBytesIn == 0 && !nomoreinput)
                 {
                     // No data available, so try to Read data from the captive stream.
                     _z.NextIn = 0;
@@ -1910,17 +1910,17 @@ namespace MonoGame.Framework.Utilities
 
                 }
                 // we have data in InputBuffer; now compress or decompress as appropriate
-                rc = (_wantCompress)
+                rc = _wantCompress
                     ? _z.Deflate(_flushMode)
                     : _z.Inflate(_flushMode);
 
-                if (nomoreinput && (rc == ZlibConstants.Z_BUF_ERROR))
+                if (nomoreinput && rc == ZlibConstants.Z_BUF_ERROR)
                     return 0;
 
                 if (rc != ZlibConstants.Z_OK && rc != ZlibConstants.Z_STREAM_END)
-                    throw new ZlibException(String.Format("{0}flating:  rc={1}  msg={2}", (_wantCompress ? "de" : "in"), rc, _z.Message));
+                    throw new ZlibException(string.Format("{0}flating:  rc={1}  msg={2}", _wantCompress ? "de" : "in", rc, _z.Message));
 
-                if ((nomoreinput || rc == ZlibConstants.Z_STREAM_END) && (_z.AvailableBytesOut == count))
+                if ((nomoreinput || rc == ZlibConstants.Z_STREAM_END) && _z.AvailableBytesOut == count)
                     break; // nothing more to read
             }
             //while (_z.AvailableBytesOut == count && rc == ZlibConstants.Z_OK);
@@ -1947,13 +1947,13 @@ namespace MonoGame.Framework.Utilities
                         rc = _z.Deflate(FlushType.Finish);
 
                         if (rc != ZlibConstants.Z_OK && rc != ZlibConstants.Z_STREAM_END)
-                            throw new ZlibException(String.Format("Deflating:  rc={0}  msg={1}", rc, _z.Message));
+                            throw new ZlibException(string.Format("Deflating:  rc={0}  msg={1}", rc, _z.Message));
                     }
                 }
             }
 
 
-            rc = (count - _z.AvailableBytesOut);
+            rc = count - _z.AvailableBytesOut;
 
             // calculate CRC after reading
             if (crc != null)
@@ -1964,22 +1964,22 @@ namespace MonoGame.Framework.Utilities
 
 
 
-        public override System.Boolean CanRead
+        public override bool CanRead
         {
-            get { return this._stream.CanRead; }
+            get { return _stream.CanRead; }
         }
 
-        public override System.Boolean CanSeek
+        public override bool CanSeek
         {
-            get { return this._stream.CanSeek; }
+            get { return _stream.CanSeek; }
         }
 
-        public override System.Boolean CanWrite
+        public override bool CanWrite
         {
-            get { return this._stream.CanWrite; }
+            get { return _stream.CanWrite; }
         }
 
-        public override System.Int64 Length
+        public override long Length
         {
             get { return _stream.Length; }
         }
@@ -1998,9 +1998,9 @@ namespace MonoGame.Framework.Utilities
         }
 
 
-        internal static void CompressString(String s, Stream compressor)
+        internal static void CompressString(string s, Stream compressor)
         {
-            byte[] uncompressed = System.Text.Encoding.UTF8.GetBytes(s);
+            byte[] uncompressed = Encoding.UTF8.GetBytes(s);
             using (compressor)
             {
                 compressor.Write(uncompressed, 0, uncompressed.Length);
@@ -2016,11 +2016,11 @@ namespace MonoGame.Framework.Utilities
             }
         }
 
-        internal static String UncompressString(byte[] compressed, Stream decompressor)
+        internal static string UncompressString(byte[] compressed, Stream decompressor)
         {
             // workitem 8460
             byte[] working = new byte[1024];
-            var encoding = System.Text.Encoding.UTF8;
+            var encoding = Encoding.UTF8;
             using (var output = new MemoryStream())
             {
                 using (decompressor)
@@ -2227,7 +2227,7 @@ namespace MonoGame.Framework.Utilities
     /// <summary>
     /// A general purpose exception class for exceptions in the Zlib library.
     /// </summary>
-    internal class ZlibException : System.Exception
+    internal class ZlibException : Exception
     {
         /// <summary>
         /// The ZlibException class captures exception information generated
@@ -2242,7 +2242,7 @@ namespace MonoGame.Framework.Utilities
         /// This ctor collects a message attached to the exception.
         /// </summary>
         /// <param name="s">the message for the exception.</param>
-        internal ZlibException(System.String s)
+        internal ZlibException(string s)
             : base(s)
         {
         }
@@ -2290,7 +2290,7 @@ namespace MonoGame.Framework.Utilities
         ///   count depending on the data available in the source TextReader. Returns -1
         ///   if the end of the stream is reached.
         /// </returns>
-        internal static System.Int32 ReadInput(System.IO.TextReader sourceTextReader, byte[] target, int start, int count)
+        internal static int ReadInput(TextReader sourceTextReader, byte[] target, int start, int count)
         {
             // Returns 0 bytes if not enough space in target
             if (target.Length == 0) return 0;
@@ -2308,15 +2308,15 @@ namespace MonoGame.Framework.Utilities
         }
 
 
-        internal static byte[] ToByteArray(System.String sourceString)
+        internal static byte[] ToByteArray(string sourceString)
         {
-            return System.Text.UTF8Encoding.UTF8.GetBytes(sourceString);
+            return Encoding.UTF8.GetBytes(sourceString);
         }
 
 
         internal static char[] ToCharArray(byte[] byteArray)
         {
-            return System.Text.UTF8Encoding.UTF8.GetChars(byteArray);
+            return Encoding.UTF8.GetChars(byteArray);
         }
     }
 
@@ -2327,7 +2327,7 @@ namespace MonoGame.Framework.Utilities
         internal static readonly int D_CODES = 30;
         internal static readonly int LITERALS = 256;
         internal static readonly int LENGTH_CODES = 29;
-        internal static readonly int L_CODES = (LITERALS + 1 + LENGTH_CODES);
+        internal static readonly int L_CODES = LITERALS + 1 + LENGTH_CODES;
 
         // Bit length codes must not exceed MAX_BL_BITS bits
         internal static readonly int MAX_BL_BITS = 7;
@@ -2509,7 +2509,7 @@ namespace MonoGame.Framework.Utilities
 
     sealed class Tree
     {
-        private static readonly int HEAP_SIZE = (2 * InternalConstants.L_CODES + 1);
+        private static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
 
         // extra bits for each length code
         internal static readonly int[] ExtraLengthBits = new int[]
@@ -2619,7 +2619,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         internal static int DistanceCode(int dist)
         {
-            return (dist < 256)
+            return dist < 256
                 ? _dist_code[dist]
                 : _dist_code[256 + SharedUtils.URShift(dist, 7)];
         }
@@ -2757,7 +2757,7 @@ namespace MonoGame.Framework.Utilities
             // two codes of non zero frequency.
             while (s.heap_len < 2)
             {
-                node = s.heap[++s.heap_len] = (max_code < 2 ? ++max_code : 0);
+                node = s.heap[++s.heap_len] = max_code < 2 ? ++max_code : 0;
                 tree[node * 2] = 1;
                 s.depth[node] = 0;
                 s.opt_len--;
@@ -2790,7 +2790,7 @@ namespace MonoGame.Framework.Utilities
 
                 // Create a new node father of n and m
                 tree[node * 2] = unchecked((short)(tree[n * 2] + tree[m * 2]));
-                s.depth[node] = (sbyte)(System.Math.Max((byte)s.depth[n], (byte)s.depth[m]) + 1);
+                s.depth[node] = (sbyte)(Math.Max((byte)s.depth[n], (byte)s.depth[m]) + 1);
                 tree[n * 2 + 1] = tree[m * 2 + 1] = (short)node;
 
                 // and insert the new node in the heap
@@ -2843,7 +2843,7 @@ namespace MonoGame.Framework.Utilities
                 if (len == 0)
                     continue;
                 // Now reverse the bits
-                tree[n * 2] = unchecked((short)(bi_reverse(next_code[len]++, len)));
+                tree[n * 2] = unchecked((short)bi_reverse(next_code[len]++, len));
             }
         }
 
@@ -2996,7 +2996,7 @@ namespace MonoGame.Framework.Utilities
             while (--i != 0)
             {
                 // note that i == g from above
-                x[xp] = (j += c[p]);
+                x[xp] = j += c[p];
                 xp++;
                 p++;
             }
@@ -3037,12 +3037,12 @@ namespace MonoGame.Framework.Utilities
                         w += l; // previous table always l bits
                         // compute minimum size table less than or equal to l bits
                         z = g - w;
-                        z = (z > l) ? l : z; // table size upper limit
+                        z = z > l ? l : z; // table size upper limit
                         if ((f = 1 << (j = k - w)) > a + 1)
                         {
                             // try a k-w bit table
                             // too few codes for k-w bit table
-                            f -= (a + 1); // deduct codes from patterns left
+                            f -= a + 1; // deduct codes from patterns left
                             xp = k;
                             if (j < z)
                             {
@@ -3072,7 +3072,7 @@ namespace MonoGame.Framework.Utilities
                             x[h] = i; // save pattern for backing up
                             r[0] = (sbyte)j; // bits in this table
                             r[1] = (sbyte)l; // bits to dump before this table
-                            j = SharedUtils.URShift(i, (w - l));
+                            j = SharedUtils.URShift(i, w - l);
                             r[2] = (int)(q - u[h - 1] - j); // offset to this table
                             Array.Copy(r, 0, hp, (u[h - 1] + j) * 3, 3); // connect to last table
                         }
@@ -3172,7 +3172,7 @@ namespace MonoGame.Framework.Utilities
             initWorkArea(288);
             result = huft_build(c, nl, nd, 0, cpdist, cpdext, td, bd, hp, hn, v);
 
-            if (result != Z_OK || (bd[0] == 0 && nl > 257))
+            if (result != Z_OK || bd[0] == 0 && nl > 257)
             {
                 if (result == Z_DATA_ERROR)
                 {
@@ -3278,12 +3278,12 @@ namespace MonoGame.Framework.Utilities
         internal int end;                                 // one byte after sliding window
         internal int readAt;                              // window read pointer
         internal int writeAt;                             // window write pointer
-        internal System.Object checkfn;                   // check function
+        internal object checkfn;                   // check function
         internal uint check;                              // check on output
 
         internal InfTree inftree = new InfTree();
 
-        internal InflateBlocks(ZlibCodec codec, System.Object checkfn, int w)
+        internal InflateBlocks(ZlibCodec codec, object checkfn, int w)
         {
             _codec = codec;
             hufts = new int[MANY * 3];
@@ -3336,7 +3336,7 @@ namespace MonoGame.Framework.Utilities
                 {
                     case InflateBlockMode.TYPE:
 
-                        while (k < (3))
+                        while (k < 3)
                         {
                             if (n != 0)
                             {
@@ -3362,7 +3362,7 @@ namespace MonoGame.Framework.Utilities
                         switch ((uint)t >> 1)
                         {
                             case 0:  // stored
-                                b >>= 3; k -= (3);
+                                b >>= 3; k -= 3;
                                 t = k & 7; // go to byte boundary
                                 b >>= t; k -= t;
                                 mode = InflateBlockMode.LENS; // get length of stored block
@@ -3400,7 +3400,7 @@ namespace MonoGame.Framework.Utilities
 
                     case InflateBlockMode.LENS:
 
-                        while (k < (32))
+                        while (k < 32)
                         {
                             if (n != 0)
                             {
@@ -3421,7 +3421,7 @@ namespace MonoGame.Framework.Utilities
                             k += 8;
                         }
 
-                        if ((((~b) >> 16) & 0xffff) != (b & 0xffff))
+                        if (((~b >> 16) & 0xffff) != (b & 0xffff))
                         {
                             mode = InflateBlockMode.BAD;
                             _codec.Message = "invalid stored block lengths";
@@ -3434,9 +3434,9 @@ namespace MonoGame.Framework.Utilities
                             writeAt = q;
                             return Flush(r);
                         }
-                        left = (b & 0xffff);
+                        left = b & 0xffff;
                         b = k = 0; // dump bits
-                        mode = left != 0 ? InflateBlockMode.STORED : (last != 0 ? InflateBlockMode.DRY : InflateBlockMode.TYPE);
+                        mode = left != 0 ? InflateBlockMode.STORED : last != 0 ? InflateBlockMode.DRY : InflateBlockMode.TYPE;
                         break;
 
                     case InflateBlockMode.STORED:
@@ -3493,7 +3493,7 @@ namespace MonoGame.Framework.Utilities
 
                     case InflateBlockMode.TABLE:
 
-                        while (k < (14))
+                        while (k < 14)
                         {
                             if (n != 0)
                             {
@@ -3514,7 +3514,7 @@ namespace MonoGame.Framework.Utilities
                             k += 8;
                         }
 
-                        table = t = (b & 0x3fff);
+                        table = t = b & 0x3fff;
                         if ((t & 0x1f) > 29 || ((t >> 5) & 0x1f) > 29)
                         {
                             mode = InflateBlockMode.BAD;
@@ -3553,7 +3553,7 @@ namespace MonoGame.Framework.Utilities
                     case InflateBlockMode.BTREE:
                         while (index < 4 + (table >> 10))
                         {
-                            while (k < (3))
+                            while (k < 3)
                             {
                                 if (n != 0)
                                 {
@@ -3655,7 +3655,7 @@ namespace MonoGame.Framework.Utilities
                                 i = c == 18 ? 7 : c - 14;
                                 j = c == 18 ? 11 : 3;
 
-                                while (k < (t + i))
+                                while (k < t + i)
                                 {
                                     if (n != 0)
                                     {
@@ -3678,13 +3678,13 @@ namespace MonoGame.Framework.Utilities
 
                                 b >>= t; k -= t;
 
-                                j += (b & InternalInflateConstants.InflateMask[i]);
+                                j += b & InternalInflateConstants.InflateMask[i];
 
                                 b >>= i; k -= i;
 
                                 i = index;
                                 t = table;
-                                if (i + j > 258 + (t & 0x1f) + ((t >> 5) & 0x1f) || (c == 16 && i < 1))
+                                if (i + j > 258 + (t & 0x1f) + ((t >> 5) & 0x1f) || c == 16 && i < 1)
                                 {
                                     blens = null;
                                     mode = InflateBlockMode.BAD;
@@ -3699,7 +3699,7 @@ namespace MonoGame.Framework.Utilities
                                     return Flush(r);
                                 }
 
-                                c = (c == 16) ? blens[i - 1] : 0;
+                                c = c == 16 ? blens[i - 1] : 0;
                                 do
                                 {
                                     blens[i++] = c;
@@ -4013,7 +4013,7 @@ namespace MonoGame.Framework.Utilities
 
                             if (r != ZlibConstants.Z_OK)
                             {
-                                mode = (r == ZlibConstants.Z_STREAM_END) ? WASH : BADCODE;
+                                mode = r == ZlibConstants.Z_STREAM_END ? WASH : BADCODE;
                                 break;
                             }
                         }
@@ -4047,8 +4047,8 @@ namespace MonoGame.Framework.Utilities
 
                         tindex = (tree_index + (b & InternalInflateConstants.InflateMask[j])) * 3;
 
-                        b >>= (tree[tindex + 1]);
-                        k -= (tree[tindex + 1]);
+                        b >>= tree[tindex + 1];
+                        k -= tree[tindex + 1];
 
                         e = tree[tindex];
 
@@ -4110,7 +4110,7 @@ namespace MonoGame.Framework.Utilities
                             k += 8;
                         }
 
-                        len += (b & InternalInflateConstants.InflateMask[j]);
+                        len += b & InternalInflateConstants.InflateMask[j];
 
                         b >>= j;
                         k -= j;
@@ -4144,7 +4144,7 @@ namespace MonoGame.Framework.Utilities
                         b >>= tree[tindex + 1];
                         k -= tree[tindex + 1];
 
-                        e = (tree[tindex]);
+                        e = tree[tindex];
                         if ((e & 0x10) != 0)
                         {
                             // distance
@@ -4188,7 +4188,7 @@ namespace MonoGame.Framework.Utilities
                             k += 8;
                         }
 
-                        dist += (b & InternalInflateConstants.InflateMask[j]);
+                        dist += b & InternalInflateConstants.InflateMask[j];
 
                         b >>= j;
                         k -= j;
@@ -4362,7 +4362,7 @@ namespace MonoGame.Framework.Utilities
             {
                 // assume called with m >= 258 && n >= 10
                 // get literal/length code
-                while (k < (20))
+                while (k < 20)
                 {
                     // max bits for literal/length code
                     n--;
@@ -4375,7 +4375,7 @@ namespace MonoGame.Framework.Utilities
                 tp_index_t_3 = (tp_index + t) * 3;
                 if ((e = tp[tp_index_t_3]) == 0)
                 {
-                    b >>= (tp[tp_index_t_3 + 1]); k -= (tp[tp_index_t_3 + 1]);
+                    b >>= tp[tp_index_t_3 + 1]; k -= tp[tp_index_t_3 + 1];
 
                     s.window[q++] = (byte)tp[tp_index_t_3 + 2];
                     m--;
@@ -4384,7 +4384,7 @@ namespace MonoGame.Framework.Utilities
                 do
                 {
 
-                    b >>= (tp[tp_index_t_3 + 1]); k -= (tp[tp_index_t_3 + 1]);
+                    b >>= tp[tp_index_t_3 + 1]; k -= tp[tp_index_t_3 + 1];
 
                     if ((e & 16) != 0)
                     {
@@ -4410,7 +4410,7 @@ namespace MonoGame.Framework.Utilities
                         do
                         {
 
-                            b >>= (tp[tp_index_t_3 + 1]); k -= (tp[tp_index_t_3 + 1]);
+                            b >>= tp[tp_index_t_3 + 1]; k -= tp[tp_index_t_3 + 1];
 
                             if ((e & 16) != 0)
                             {
@@ -4434,7 +4434,7 @@ namespace MonoGame.Framework.Utilities
                                     // offset before dest
                                     //  just copy
                                     r = q - d;
-                                    if (q - r > 0 && 2 > (q - r))
+                                    if (q - r > 0 && 2 > q - r)
                                     {
                                         s.window[q++] = s.window[r++]; // minimum count is three,
                                         s.window[q++] = s.window[r++]; // so unroll loop a little
@@ -4460,7 +4460,7 @@ namespace MonoGame.Framework.Utilities
                                     {
                                         // if source crosses,
                                         c -= e; // wrapped copy
-                                        if (q - r > 0 && e > (q - r))
+                                        if (q - r > 0 && e > q - r)
                                         {
                                             do
                                             {
@@ -4478,7 +4478,7 @@ namespace MonoGame.Framework.Utilities
                                 }
 
                                 // copy all or what's left
-                                if (q - r > 0 && c > (q - r))
+                                if (q - r > 0 && c > q - r)
                                 {
                                     do
                                     {
@@ -4496,7 +4496,7 @@ namespace MonoGame.Framework.Utilities
                             else if ((e & 64) == 0)
                             {
                                 t += tp[tp_index_t_3 + 2];
-                                t += (b & InternalInflateConstants.InflateMask[e]);
+                                t += b & InternalInflateConstants.InflateMask[e];
                                 tp_index_t_3 = (tp_index + t) * 3;
                                 e = tp[tp_index_t_3];
                             }
@@ -4504,7 +4504,7 @@ namespace MonoGame.Framework.Utilities
                             {
                                 z.Message = "invalid distance code";
 
-                                c = z.AvailableBytesIn - n; c = (k >> 3) < c ? k >> 3 : c; n += c; p -= c; k -= (c << 3);
+                                c = z.AvailableBytesIn - n; c = k >> 3 < c ? k >> 3 : c; n += c; p -= c; k -= c << 3;
 
                                 s.bitb = b; s.bitk = k;
                                 z.AvailableBytesIn = n; z.TotalBytesIn += p - z.NextIn; z.NextIn = p;
@@ -4520,11 +4520,11 @@ namespace MonoGame.Framework.Utilities
                     if ((e & 64) == 0)
                     {
                         t += tp[tp_index_t_3 + 2];
-                        t += (b & InternalInflateConstants.InflateMask[e]);
+                        t += b & InternalInflateConstants.InflateMask[e];
                         tp_index_t_3 = (tp_index + t) * 3;
                         if ((e = tp[tp_index_t_3]) == 0)
                         {
-                            b >>= (tp[tp_index_t_3 + 1]); k -= (tp[tp_index_t_3 + 1]);
+                            b >>= tp[tp_index_t_3 + 1]; k -= tp[tp_index_t_3 + 1];
                             s.window[q++] = (byte)tp[tp_index_t_3 + 2];
                             m--;
                             break;
@@ -4532,7 +4532,7 @@ namespace MonoGame.Framework.Utilities
                     }
                     else if ((e & 32) != 0)
                     {
-                        c = z.AvailableBytesIn - n; c = (k >> 3) < c ? k >> 3 : c; n += c; p -= c; k -= (c << 3);
+                        c = z.AvailableBytesIn - n; c = k >> 3 < c ? k >> 3 : c; n += c; p -= c; k -= c << 3;
 
                         s.bitb = b; s.bitk = k;
                         z.AvailableBytesIn = n; z.TotalBytesIn += p - z.NextIn; z.NextIn = p;
@@ -4544,7 +4544,7 @@ namespace MonoGame.Framework.Utilities
                     {
                         z.Message = "invalid literal/length code";
 
-                        c = z.AvailableBytesIn - n; c = (k >> 3) < c ? k >> 3 : c; n += c; p -= c; k -= (c << 3);
+                        c = z.AvailableBytesIn - n; c = k >> 3 < c ? k >> 3 : c; n += c; p -= c; k -= c << 3;
 
                         s.bitb = b; s.bitk = k;
                         z.AvailableBytesIn = n; z.TotalBytesIn += p - z.NextIn; z.NextIn = p;
@@ -4558,7 +4558,7 @@ namespace MonoGame.Framework.Utilities
             while (m >= 258 && n >= 10);
 
             // not enough input or output--restore pointers and return
-            c = z.AvailableBytesIn - n; c = (k >> 3) < c ? k >> 3 : c; n += c; p -= c; k -= (c << 3);
+            c = z.AvailableBytesIn - n; c = k >> 3 < c ? k >> 3 : c; n += c; p -= c; k -= c << 3;
 
             s.bitb = b; s.bitk = k;
             z.AvailableBytesIn = n; z.TotalBytesIn += p - z.NextIn; z.NextIn = p;
@@ -4704,14 +4704,14 @@ namespace MonoGame.Framework.Utilities
                         if (((method = _codec.InputBuffer[_codec.NextIn++]) & 0xf) != Z_DEFLATED)
                         {
                             mode = InflateManagerMode.BAD;
-                            _codec.Message = String.Format("unknown compression method (0x{0:X2})", method);
+                            _codec.Message = string.Format("unknown compression method (0x{0:X2})", method);
                             marker = 5; // can't try inflateSync
                             break;
                         }
                         if ((method >> 4) + 8 > wbits)
                         {
                             mode = InflateManagerMode.BAD;
-                            _codec.Message = String.Format("invalid window size ({0})", (method >> 4) + 8);
+                            _codec.Message = string.Format("invalid window size ({0})", (method >> 4) + 8);
                             marker = 5; // can't try inflateSync
                             break;
                         }
@@ -4724,9 +4724,9 @@ namespace MonoGame.Framework.Utilities
                         r = f;
                         _codec.AvailableBytesIn--;
                         _codec.TotalBytesIn++;
-                        b = (_codec.InputBuffer[_codec.NextIn++]) & 0xff;
+                        b = _codec.InputBuffer[_codec.NextIn++] & 0xff;
 
-                        if ((((method << 8) + b) % 31) != 0)
+                        if (((method << 8) + b) % 31 != 0)
                         {
                             mode = InflateManagerMode.BAD;
                             _codec.Message = "incorrect header check";
@@ -4734,7 +4734,7 @@ namespace MonoGame.Framework.Utilities
                             break;
                         }
 
-                        mode = ((b & PRESET_DICT) == 0)
+                        mode = (b & PRESET_DICT) == 0
                             ? InflateManagerMode.BLOCKS
                             : InflateManagerMode.DICT4;
                         break;
@@ -4854,7 +4854,7 @@ namespace MonoGame.Framework.Utilities
                         return ZlibConstants.Z_STREAM_END;
 
                     case InflateManagerMode.BAD:
-                        throw new ZlibException(String.Format("Bad state ({0})", _codec.Message));
+                        throw new ZlibException(string.Format("Bad state ({0})", _codec.Message));
 
                     default:
                         throw new ZlibException("Stream error.");
@@ -4879,7 +4879,7 @@ namespace MonoGame.Framework.Utilities
 
             _codec._Adler32 = Adler.Adler32(0, null, 0, 0);
 
-            if (length >= (1 << wbits))
+            if (length >= 1 << wbits)
             {
                 length = (1 << wbits) - 1;
                 index = dictionary.Length - length;
@@ -5062,7 +5062,7 @@ namespace MonoGame.Framework.Utilities
         ///   (<c>Nothing</c> in VB).
         /// </para>
         /// </remarks>
-        internal String Comment
+        internal string Comment
         {
             get
             {
@@ -5098,7 +5098,7 @@ namespace MonoGame.Framework.Utilities
         ///   in VB).
         /// </para>
         /// </remarks>
-        internal String FileName
+        internal string FileName
         {
             get { return _FileName; }
             set
@@ -5467,11 +5467,11 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         virtual internal FlushType FlushMode
         {
-            get { return (this._baseStream._flushMode); }
+            get { return _baseStream._flushMode; }
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
-                this._baseStream._flushMode = value;
+                _baseStream._flushMode = value;
             }
         }
 
@@ -5496,16 +5496,16 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                return this._baseStream._bufferSize;
+                return _baseStream._bufferSize;
             }
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
-                if (this._baseStream._workingBuffer != null)
+                if (_baseStream._workingBuffer != null)
                     throw new ZlibException("The working buffer is already set.");
                 if (value < ZlibConstants.WorkingBufferSizeMin)
-                    throw new ZlibException(String.Format("Don't be silly. {0} bytes?? Use a bigger buffer, at least {1}.", value, ZlibConstants.WorkingBufferSizeMin));
-                this._baseStream._bufferSize = value;
+                    throw new ZlibException(string.Format("Don't be silly. {0} bytes?? Use a bigger buffer, at least {1}.", value, ZlibConstants.WorkingBufferSizeMin));
+                _baseStream._bufferSize = value;
             }
         }
 
@@ -5515,7 +5515,7 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                return this._baseStream._z.TotalBytesIn;
+                return _baseStream._z.TotalBytesIn;
             }
         }
 
@@ -5524,7 +5524,7 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                return this._baseStream._z.TotalBytesOut;
+                return _baseStream._z.TotalBytesOut;
             }
         }
 
@@ -5561,10 +5561,10 @@ namespace MonoGame.Framework.Utilities
             {
                 if (!_disposed)
                 {
-                    if (disposing && (this._baseStream != null))
+                    if (disposing && _baseStream != null)
                     {
-                        this._baseStream.Dispose();
-                        this._Crc32 = _baseStream.Crc32;
+                        _baseStream.Dispose();
+                        _Crc32 = _baseStream.Crc32;
                     }
                     _disposed = true;
                 }
@@ -5650,10 +5650,10 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                if (this._baseStream._streamMode == ZlibBaseStream.StreamMode.Writer)
-                    return this._baseStream._z.TotalBytesOut + _headerByteCount;
-                if (this._baseStream._streamMode == ZlibBaseStream.StreamMode.Reader)
-                    return this._baseStream._z.TotalBytesIn + this._baseStream._gzipHeaderByteCount;
+                if (_baseStream._streamMode == ZlibBaseStream.StreamMode.Writer)
+                    return _baseStream._z.TotalBytesOut + _headerByteCount;
+                if (_baseStream._streamMode == ZlibBaseStream.StreamMode.Reader)
+                    return _baseStream._z.TotalBytesIn + _baseStream._gzipHeaderByteCount;
                 return 0;
             }
 
@@ -5774,16 +5774,16 @@ namespace MonoGame.Framework.Utilities
         #endregion
 
 
-        internal static readonly System.DateTime _unixEpoch = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        internal static readonly System.Text.Encoding iso8859dash1 = new Iso88591Encoding();
+        internal static readonly DateTime _unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        internal static readonly Encoding iso8859dash1 = new Iso88591Encoding();
 
         private int EmitHeader()
         {
-            byte[] commentBytes = (Comment == null) ? null : iso8859dash1.GetBytes(Comment);
-            byte[] filenameBytes = (FileName == null) ? null : iso8859dash1.GetBytes(FileName);
+            byte[] commentBytes = Comment == null ? null : iso8859dash1.GetBytes(Comment);
+            byte[] filenameBytes = FileName == null ? null : iso8859dash1.GetBytes(FileName);
 
-            int cbLength = (Comment == null) ? 0 : commentBytes.Length + 1;
-            int fnLength = (FileName == null) ? 0 : filenameBytes.Length + 1;
+            int cbLength = Comment == null ? 0 : commentBytes.Length + 1;
+            int fnLength = FileName == null ? 0 : filenameBytes.Length + 1;
 
             int bufferLength = 10 + cbLength + fnLength;
             byte[] header = new byte[bufferLength];
@@ -5805,8 +5805,8 @@ namespace MonoGame.Framework.Utilities
 
             // mtime
             if (!LastModified.HasValue) LastModified = DateTime.Now;
-            System.TimeSpan delta = LastModified.Value - _unixEpoch;
-            Int32 timet = (Int32)delta.TotalSeconds;
+            TimeSpan delta = LastModified.Value - _unixEpoch;
+            int timet = (int)delta.TotalSeconds;
             Array.Copy(BitConverter.GetBytes(timet), 0, header, i, 4);
             i += 4;
 
@@ -5859,11 +5859,11 @@ namespace MonoGame.Framework.Utilities
         /// </param>
         ///
         /// <returns>The string in compressed form</returns>
-        internal static byte[] CompressString(String s)
+        internal static byte[] CompressString(string s)
         {
             using (var ms = new MemoryStream())
             {
-                System.IO.Stream compressor =
+                Stream compressor =
                     new GZipStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
                 ZlibBaseStream.CompressString(s, compressor);
                 return ms.ToArray();
@@ -5891,7 +5891,7 @@ namespace MonoGame.Framework.Utilities
         {
             using (var ms = new MemoryStream())
             {
-                System.IO.Stream compressor =
+                Stream compressor =
                     new GZipStream(ms, CompressionMode.Compress, CompressionLevel.BestCompression);
 
                 ZlibBaseStream.CompressBuffer(b, compressor);
@@ -5912,7 +5912,7 @@ namespace MonoGame.Framework.Utilities
         /// </param>
         ///
         /// <returns>The uncompressed string</returns>
-        internal static String UncompressString(byte[] compressed)
+        internal static string UncompressString(byte[] compressed)
         {
             using (var input = new MemoryStream(compressed))
             {
@@ -5936,9 +5936,9 @@ namespace MonoGame.Framework.Utilities
         /// <returns>The data in uncompressed form</returns>
         internal static byte[] UncompressBuffer(byte[] compressed)
         {
-            using (var input = new System.IO.MemoryStream(compressed))
+            using (var input = new MemoryStream(compressed))
             {
-                System.IO.Stream decompressor =
+                Stream decompressor =
                     new GZipStream(input, CompressionMode.Decompress);
 
                 return ZlibBaseStream.UncompressBuffer(compressed, decompressor);
@@ -5993,11 +5993,11 @@ namespace MonoGame.Framework.Utilities
 
             private Config(int goodLength, int maxLazy, int niceLength, int maxChainLength, DeflateFlavor flavor)
             {
-                this.GoodLength = goodLength;
-                this.MaxLazy = maxLazy;
-                this.NiceLength = niceLength;
-                this.MaxChainLength = maxChainLength;
-                this.Flavor = flavor;
+                GoodLength = goodLength;
+                MaxLazy = maxLazy;
+                NiceLength = niceLength;
+                MaxChainLength = maxChainLength;
+                Flavor = flavor;
             }
 
             internal static Config Lookup(CompressionLevel level)
@@ -6029,7 +6029,7 @@ namespace MonoGame.Framework.Utilities
 
         private CompressFunc DeflateFunction;
 
-        private static readonly System.String[] _ErrorMessage = new System.String[]
+        private static readonly string[] _ErrorMessage = new string[]
         {
             "need dictionary",
             "stream end",
@@ -6067,9 +6067,9 @@ namespace MonoGame.Framework.Utilities
         private static readonly int MIN_MATCH = 3;
         private static readonly int MAX_MATCH = 258;
 
-        private static readonly int MIN_LOOKAHEAD = (MAX_MATCH + MIN_MATCH + 1);
+        private static readonly int MIN_LOOKAHEAD = MAX_MATCH + MIN_MATCH + 1;
 
-        private static readonly int HEAP_SIZE = (2 * InternalConstants.L_CODES + 1);
+        private static readonly int HEAP_SIZE = 2 * InternalConstants.L_CODES + 1;
 
         private static readonly int END_BLOCK = 256;
 
@@ -6305,7 +6305,7 @@ namespace MonoGame.Framework.Utilities
         {
             short tn2 = tree[n * 2];
             short tm2 = tree[m * 2];
-            return (tn2 < tm2 || (tn2 == tm2 && depth[n] <= depth[m]));
+            return tn2 < tm2 || tn2 == tm2 && depth[n] <= depth[m];
         }
 
 
@@ -6517,7 +6517,7 @@ namespace MonoGame.Framework.Utilities
         internal void send_code(int c, short[] tree)
         {
             int c2 = c * 2;
-            send_bits((tree[c2] & 0xffff), (tree[c2 + 1] & 0xffff));
+            send_bits(tree[c2] & 0xffff, tree[c2 + 1] & 0xffff);
         }
 
         internal void send_bits(int value, int length)
@@ -6612,11 +6612,11 @@ namespace MonoGame.Framework.Utilities
                     out_length = (int)(out_length + (int)dyn_dtree[dcode * 2] * (5L + Tree.ExtraDistanceBits[dcode]));
                 }
                 out_length >>= 3;
-                if ((matches < (last_lit / 2)) && out_length < in_length / 2)
+                if (matches < last_lit / 2 && out_length < in_length / 2)
                     return true;
             }
 
-            return (last_lit == lit_bufsize - 1) || (last_lit == lit_bufsize);
+            return last_lit == lit_bufsize - 1 || last_lit == lit_bufsize;
             // dinoch - wraparound?
             // We avoid equality with lit_bufsize because of wraparound at 64K
             // on 16 bit machines and because stored blocks are restricted to
@@ -6641,7 +6641,7 @@ namespace MonoGame.Framework.Utilities
                     int ix = _distanceOffset + lx * 2;
                     distance = ((pending[ix] << 8) & 0xff00) |
                         (pending[ix + 1] & 0xff);
-                    lc = (pending[_lengthOffset + lx]) & 0xff;
+                    lc = pending[_lengthOffset + lx] & 0xff;
                     lx++;
 
                     if (distance == 0)
@@ -6710,7 +6710,7 @@ namespace MonoGame.Framework.Utilities
             {
                 bin_freq += dyn_ltree[n * 2]; n++;
             }
-            data_type = (sbyte)(bin_freq > (ascii_freq >> 2) ? Z_BINARY : Z_ASCII);
+            data_type = (sbyte)(bin_freq > ascii_freq >> 2 ? Z_BINARY : Z_ASCII);
         }
 
 
@@ -6840,7 +6840,7 @@ namespace MonoGame.Framework.Utilities
 
             flush_block_only(flush == FlushType.Finish);
             if (_codec.AvailableBytesOut == 0)
-                return (flush == FlushType.Finish) ? BlockState.FinishStarted : BlockState.NeedMore;
+                return flush == FlushType.Finish ? BlockState.FinishStarted : BlockState.NeedMore;
 
             return flush == FlushType.Finish ? BlockState.FinishDone : BlockState.BlockDone;
         }
@@ -6940,7 +6940,7 @@ namespace MonoGame.Framework.Utilities
 
             do
             {
-                more = (window_size - lookahead - strstart);
+                more = window_size - lookahead - strstart;
 
                 // Deal with !@#$% 64K limit:
                 if (more == 0 && strstart == 0 && lookahead == 0)
@@ -6973,8 +6973,8 @@ namespace MonoGame.Framework.Utilities
                     p = n;
                     do
                     {
-                        m = (head[--p] & 0xffff);
-                        head[p] = (short)((m >= w_size) ? (m - w_size) : 0);
+                        m = head[--p] & 0xffff;
+                        head[p] = (short)(m >= w_size ? m - w_size : 0);
                     }
                     while (--n != 0);
 
@@ -6982,8 +6982,8 @@ namespace MonoGame.Framework.Utilities
                     p = n;
                     do
                     {
-                        m = (prev[--p] & 0xffff);
-                        prev[p] = (short)((m >= w_size) ? (m - w_size) : 0);
+                        m = prev[--p] & 0xffff;
+                        prev[p] = (short)(m >= w_size ? m - w_size : 0);
                         // If n is not on any hash chain, prev[n] is garbage but
                         // its value will never be used.
                     }
@@ -7012,7 +7012,7 @@ namespace MonoGame.Framework.Utilities
                 if (lookahead >= MIN_MATCH)
                 {
                     ins_h = window[strstart] & 0xff;
-                    ins_h = (((ins_h) << hash_shift) ^ (window[strstart + 1] & 0xff)) & hash_mask;
+                    ins_h = ((ins_h << hash_shift) ^ (window[strstart + 1] & 0xff)) & hash_mask;
                 }
                 // If the whole input has less than MIN_MATCH bytes, ins_h is garbage,
                 // but this is not important since only literal bytes will be emitted.
@@ -7052,10 +7052,10 @@ namespace MonoGame.Framework.Utilities
                 // dictionary, and set hash_head to the head of the hash chain:
                 if (lookahead >= MIN_MATCH)
                 {
-                    ins_h = (((ins_h) << hash_shift) ^ (window[(strstart) + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
+                    ins_h = ((ins_h << hash_shift) ^ (window[strstart + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
 
                     //  prev[strstart&w_mask]=hash_head=head[ins_h];
-                    hash_head = (head[ins_h] & 0xffff);
+                    hash_head = head[ins_h] & 0xffff;
                     prev[strstart & w_mask] = head[ins_h];
                     head[ins_h] = unchecked((short)strstart);
                 }
@@ -7091,9 +7091,9 @@ namespace MonoGame.Framework.Utilities
                         {
                             strstart++;
 
-                            ins_h = ((ins_h << hash_shift) ^ (window[(strstart) + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
+                            ins_h = ((ins_h << hash_shift) ^ (window[strstart + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
                             //      prev[strstart&w_mask]=hash_head=head[ins_h];
-                            hash_head = (head[ins_h] & 0xffff);
+                            hash_head = head[ins_h] & 0xffff;
                             prev[strstart & w_mask] = head[ins_h];
                             head[ins_h] = unchecked((short)strstart);
 
@@ -7109,7 +7109,7 @@ namespace MonoGame.Framework.Utilities
                         match_length = 0;
                         ins_h = window[strstart] & 0xff;
 
-                        ins_h = (((ins_h) << hash_shift) ^ (window[strstart + 1] & 0xff)) & hash_mask;
+                        ins_h = ((ins_h << hash_shift) ^ (window[strstart + 1] & 0xff)) & hash_mask;
                         // If lookahead < MIN_MATCH, ins_h is garbage, but it does not
                         // matter since it will be recomputed at next deflate call.
                     }
@@ -7173,9 +7173,9 @@ namespace MonoGame.Framework.Utilities
 
                 if (lookahead >= MIN_MATCH)
                 {
-                    ins_h = (((ins_h) << hash_shift) ^ (window[(strstart) + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
+                    ins_h = ((ins_h << hash_shift) ^ (window[strstart + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
                     //  prev[strstart&w_mask]=hash_head=head[ins_h];
-                    hash_head = (head[ins_h] & 0xffff);
+                    hash_head = head[ins_h] & 0xffff;
                     prev[strstart & w_mask] = head[ins_h];
                     head[ins_h] = unchecked((short)strstart);
                 }
@@ -7199,7 +7199,7 @@ namespace MonoGame.Framework.Utilities
                     // longest_match() sets match_start
 
                     if (match_length <= 5 && (compressionStrategy == CompressionStrategy.Filtered ||
-                                              (match_length == MIN_MATCH && strstart - match_start > 4096)))
+                                              match_length == MIN_MATCH && strstart - match_start > 4096))
                     {
 
                         // If prev_match is also MIN_MATCH, match_start is garbage
@@ -7223,15 +7223,15 @@ namespace MonoGame.Framework.Utilities
                     // strstart-1 and strstart are already inserted. If there is not
                     // enough lookahead, the last two strings are not inserted in
                     // the hash table.
-                    lookahead -= (prev_length - 1);
+                    lookahead -= prev_length - 1;
                     prev_length -= 2;
                     do
                     {
                         if (++strstart <= max_insert)
                         {
-                            ins_h = (((ins_h) << hash_shift) ^ (window[(strstart) + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
+                            ins_h = ((ins_h << hash_shift) ^ (window[strstart + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
                             //prev[strstart&w_mask]=hash_head=head[ins_h];
-                            hash_head = (head[ins_h] & 0xffff);
+                            hash_head = head[ins_h] & 0xffff;
                             prev[strstart & w_mask] = head[ins_h];
                             head[ins_h] = unchecked((short)strstart);
                         }
@@ -7303,7 +7303,7 @@ namespace MonoGame.Framework.Utilities
             int match;                                // matched string
             int len;                                  // length of current match
             int best_len = prev_length;           // best match length so far
-            int limit = strstart > (w_size - MIN_LOOKAHEAD) ? strstart - (w_size - MIN_LOOKAHEAD) : 0;
+            int limit = strstart > w_size - MIN_LOOKAHEAD ? strstart - (w_size - MIN_LOOKAHEAD) : 0;
 
             int niceLength = config.NiceLength;
 
@@ -7376,7 +7376,7 @@ namespace MonoGame.Framework.Utilities
                     scan_end = window[scan + best_len];
                 }
             }
-            while ((cur_match = (prev[cur_match & wmask] & 0xffff)) > limit && --chain_length != 0);
+            while ((cur_match = prev[cur_match & wmask] & 0xffff) > limit && --chain_length != 0);
 
             if (best_len <= lookahead)
                 return best_len;
@@ -7418,7 +7418,7 @@ namespace MonoGame.Framework.Utilities
                 throw new ZlibException("windowBits must be in the range 9..15.");
 
             if (memLevel < 1 || memLevel > MEM_LEVEL_MAX)
-                throw new ZlibException(String.Format("memLevel must be in the range 1.. {0}", MEM_LEVEL_MAX));
+                throw new ZlibException(string.Format("memLevel must be in the range 1.. {0}", MEM_LEVEL_MAX));
 
             _codec.dstate = this;
 
@@ -7429,7 +7429,7 @@ namespace MonoGame.Framework.Utilities
             hash_bits = memLevel + 7;
             hash_size = 1 << hash_bits;
             hash_mask = hash_size - 1;
-            hash_shift = ((hash_bits + MIN_MATCH - 1) / MIN_MATCH);
+            hash_shift = (hash_bits + MIN_MATCH - 1) / MIN_MATCH;
 
             window = new byte[w_size * 2];
             prev = new short[w_size];
@@ -7451,8 +7451,8 @@ namespace MonoGame.Framework.Utilities
             // The middle slice, of 32k, is used for distance codes.
             // The final 16k are length codes.
 
-            this.compressionLevel = level;
-            this.compressionStrategy = strategy;
+            compressionLevel = level;
+            compressionStrategy = strategy;
 
             Reset();
             return ZlibConstants.Z_OK;
@@ -7470,7 +7470,7 @@ namespace MonoGame.Framework.Utilities
 
             Rfc1950BytesEmitted = false;
 
-            status = (WantRfc1950HeaderBytes) ? INIT_STATE : BUSY_STATE;
+            status = WantRfc1950HeaderBytes ? INIT_STATE : BUSY_STATE;
             _codec._Adler32 = Adler.Adler32(0, null, 0, 0);
 
             last_flush = (int)FlushType.None;
@@ -7567,11 +7567,11 @@ namespace MonoGame.Framework.Utilities
             // call of fill_window.
 
             ins_h = window[0] & 0xff;
-            ins_h = (((ins_h) << hash_shift) ^ (window[1] & 0xff)) & hash_mask;
+            ins_h = ((ins_h << hash_shift) ^ (window[1] & 0xff)) & hash_mask;
 
             for (int n = 0; n <= length - MIN_MATCH; n++)
             {
-                ins_h = (((ins_h) << hash_shift) ^ (window[(n) + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
+                ins_h = ((ins_h << hash_shift) ^ (window[n + (MIN_MATCH - 1)] & 0xff)) & hash_mask;
                 prev[n & w_mask] = head[ins_h];
                 head[ins_h] = (short)n;
             }
@@ -7585,15 +7585,15 @@ namespace MonoGame.Framework.Utilities
             int old_flush;
 
             if (_codec.OutputBuffer == null ||
-                (_codec.InputBuffer == null && _codec.AvailableBytesIn != 0) ||
-                (status == FINISH_STATE && flush != FlushType.Finish))
+                _codec.InputBuffer == null && _codec.AvailableBytesIn != 0 ||
+                status == FINISH_STATE && flush != FlushType.Finish)
             {
-                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - (ZlibConstants.Z_STREAM_ERROR)];
-                throw new ZlibException(String.Format("Something is fishy. [{0}]", _codec.Message));
+                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - ZlibConstants.Z_STREAM_ERROR];
+                throw new ZlibException(string.Format("Something is fishy. [{0}]", _codec.Message));
             }
             if (_codec.AvailableBytesOut == 0)
             {
-                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - (ZlibConstants.Z_BUF_ERROR)];
+                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - ZlibConstants.Z_BUF_ERROR];
                 throw new ZlibException("OutputBuffer is full (AvailableBytesOut == 0)");
             }
 
@@ -7608,10 +7608,10 @@ namespace MonoGame.Framework.Utilities
 
                 if (level_flags > 3)
                     level_flags = 3;
-                header |= (level_flags << 6);
+                header |= level_flags << 6;
                 if (strstart != 0)
                     header |= PRESET_DICT;
-                header += 31 - (header % 31);
+                header += 31 - header % 31;
 
                 status = BUSY_STATE;
                 //putShortMSB(header);
@@ -7671,12 +7671,12 @@ namespace MonoGame.Framework.Utilities
             // User must not provide more input after the first FINISH:
             if (status == FINISH_STATE && _codec.AvailableBytesIn != 0)
             {
-                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - (ZlibConstants.Z_BUF_ERROR)];
+                _codec.Message = _ErrorMessage[ZlibConstants.Z_NEED_DICT - ZlibConstants.Z_BUF_ERROR];
                 throw new ZlibException("status == FINISH_STATE && _codec.AvailableBytesIn != 0");
             }
 
             // Start a new block or continue the current one.
-            if (_codec.AvailableBytesIn != 0 || lookahead != 0 || (flush != FlushType.None && status != FINISH_STATE))
+            if (_codec.AvailableBytesIn != 0 || lookahead != 0 || flush != FlushType.None && status != FINISH_STATE)
             {
                 BlockState bstate = DeflateFunction(flush);
 
@@ -7769,7 +7769,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         ///   Indicates the total number of bytes applied to the CRC.
         /// </summary>
-        internal Int64 TotalBytesRead
+        internal long TotalBytesRead
         {
             get
             {
@@ -7780,11 +7780,11 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// Indicates the current CRC for all blocks slurped in.
         /// </summary>
-        internal Int32 Crc32Result
+        internal int Crc32Result
         {
             get
             {
-                return unchecked((Int32)(~_register));
+                return unchecked((int)(~_register));
             }
         }
 
@@ -7793,7 +7793,7 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         /// <param name="input">The stream over which to calculate the CRC32</param>
         /// <returns>the CRC32 calculation</returns>
-        internal Int32 GetCrc32(System.IO.Stream input)
+        internal int GetCrc32(Stream input)
         {
             return GetCrc32AndCopy(input, null);
         }
@@ -7805,7 +7805,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="input">The stream over which to calculate the CRC32</param>
         /// <param name="output">The stream into which to deflate the input</param>
         /// <returns>the CRC32 calculation</returns>
-        internal Int32 GetCrc32AndCopy(System.IO.Stream input, System.IO.Stream output)
+        internal int GetCrc32AndCopy(Stream input, Stream output)
         {
             if (input == null)
                 throw new Exception("The input stream must not be null.");
@@ -7827,7 +7827,7 @@ namespace MonoGame.Framework.Utilities
                     _TotalBytesRead += count;
                 }
 
-                return (Int32)(~_register);
+                return (int)(~_register);
             }
         }
 
@@ -7839,14 +7839,14 @@ namespace MonoGame.Framework.Utilities
         /// <param name="W">The word to start with.</param>
         /// <param name="B">The byte to combine it with.</param>
         /// <returns>The CRC-ized result.</returns>
-        internal Int32 ComputeCrc32(Int32 W, byte B)
+        internal int ComputeCrc32(int W, byte B)
         {
-            return _InternalComputeCrc32((UInt32)W, B);
+            return _InternalComputeCrc32((uint)W, B);
         }
 
-        internal Int32 _InternalComputeCrc32(UInt32 W, byte B)
+        internal int _InternalComputeCrc32(uint W, byte B)
         {
-            return (Int32)(crc32Table[(W ^ B) & 0xFF] ^ (W >> 8));
+            return (int)(crc32Table[(W ^ B) & 0xFF] ^ (W >> 8));
         }
 
 
@@ -7867,14 +7867,14 @@ namespace MonoGame.Framework.Utilities
             {
                 int x = offset + i;
                 byte b = block[x];
-                if (this.reverseBits)
+                if (reverseBits)
                 {
-                    UInt32 temp = (_register >> 24) ^ b;
+                    uint temp = (_register >> 24) ^ b;
                     _register = (_register << 8) ^ crc32Table[temp];
                 }
                 else
                 {
-                    UInt32 temp = (_register & 0x000000FF) ^ b;
+                    uint temp = (_register & 0x000000FF) ^ b;
                     _register = (_register >> 8) ^ crc32Table[temp];
                 }
             }
@@ -7888,14 +7888,14 @@ namespace MonoGame.Framework.Utilities
         /// <param name = "b">the byte to include into the CRC .  </param>
         internal void UpdateCRC(byte b)
         {
-            if (this.reverseBits)
+            if (reverseBits)
             {
-                UInt32 temp = (_register >> 24) ^ b;
+                uint temp = (_register >> 24) ^ b;
                 _register = (_register << 8) ^ crc32Table[temp];
             }
             else
             {
-                UInt32 temp = (_register & 0x000000FF) ^ b;
+                uint temp = (_register & 0x000000FF) ^ b;
                 _register = (_register >> 8) ^ crc32Table[temp];
             }
         }
@@ -7918,19 +7918,19 @@ namespace MonoGame.Framework.Utilities
         {
             while (n-- > 0)
             {
-                if (this.reverseBits)
+                if (reverseBits)
                 {
                     uint temp = (_register >> 24) ^ b;
-                    _register = (_register << 8) ^ crc32Table[(temp >= 0)
+                    _register = (_register << 8) ^ crc32Table[temp >= 0
                                                               ? temp
-                                                              : (temp + 256)];
+                                                              : temp + 256];
                 }
                 else
                 {
-                    UInt32 temp = (_register & 0x000000FF) ^ b;
-                    _register = (_register >> 8) ^ crc32Table[(temp >= 0)
+                    uint temp = (_register & 0x000000FF) ^ b;
+                    _register = (_register >> 8) ^ crc32Table[temp >= 0
                                                               ? temp
-                                                              : (temp + 256)];
+                                                              : temp + 256];
 
                 }
             }
@@ -7967,10 +7967,10 @@ namespace MonoGame.Framework.Utilities
 
         private void GenerateLookupTable()
         {
-            crc32Table = new UInt32[256];
+            crc32Table = new uint[256];
             unchecked
             {
-                UInt32 dwCrc;
+                uint dwCrc;
                 byte i = 0;
                 do
                 {
@@ -8061,7 +8061,7 @@ namespace MonoGame.Framework.Utilities
             uint crc2 = (uint)crc;
 
             // put operator for one zero bit in odd
-            odd[0] = this.dwPolynomial;  // the CRC-32 polynomial
+            odd[0] = dwPolynomial;  // the CRC-32 polynomial
             uint row = 1;
             for (int i = 1; i < 32; i++)
             {
@@ -8168,8 +8168,8 @@ namespace MonoGame.Framework.Utilities
         internal CRC32(int polynomial, bool reverseBits)
         {
             this.reverseBits = reverseBits;
-            this.dwPolynomial = (uint)polynomial;
-            this.GenerateLookupTable();
+            dwPolynomial = (uint)polynomial;
+            GenerateLookupTable();
         }
 
         /// <summary>
@@ -8187,12 +8187,12 @@ namespace MonoGame.Framework.Utilities
         }
 
         // private member vars
-        private UInt32 dwPolynomial;
-        private Int64 _TotalBytesRead;
+        private uint dwPolynomial;
+        private long _TotalBytesRead;
         private bool reverseBits;
-        private UInt32[] crc32Table;
+        private uint[] crc32Table;
         private const int BUFFER_SIZE = 8192;
-        private UInt32 _register = 0xFFFFFFFFU;
+        private uint _register = 0xFFFFFFFFU;
     }
 
 
@@ -8215,13 +8215,13 @@ namespace MonoGame.Framework.Utilities
     /// DotNetZip library.
     /// </para>
     /// </remarks>
-    internal class CrcCalculatorStream : System.IO.Stream, System.IDisposable
+    internal class CrcCalculatorStream : Stream, IDisposable
     {
-        private static readonly Int64 UnsetLengthLimit = -99;
+        private static readonly long UnsetLengthLimit = -99;
 
-        internal System.IO.Stream _innerStream;
+        internal Stream _innerStream;
         private CRC32 _Crc32;
-        private Int64 _lengthLimit = -99;
+        private long _lengthLimit = -99;
         private bool _leaveOpen;
 
         /// <summary>
@@ -8235,8 +8235,8 @@ namespace MonoGame.Framework.Utilities
         ///   </para>
         /// </remarks>
         /// <param name="stream">The underlying stream</param>
-        internal CrcCalculatorStream(System.IO.Stream stream)
-            : this(true, CrcCalculatorStream.UnsetLengthLimit, stream, null)
+        internal CrcCalculatorStream(Stream stream)
+            : this(true, UnsetLengthLimit, stream, null)
         {
         }
 
@@ -8253,8 +8253,8 @@ namespace MonoGame.Framework.Utilities
         /// <param name="stream">The underlying stream</param>
         /// <param name="leaveOpen">true to leave the underlying stream
         /// open upon close of the <c>CrcCalculatorStream</c>; false otherwise.</param>
-        internal CrcCalculatorStream(System.IO.Stream stream, bool leaveOpen)
-            : this(leaveOpen, CrcCalculatorStream.UnsetLengthLimit, stream, null)
+        internal CrcCalculatorStream(Stream stream, bool leaveOpen)
+            : this(leaveOpen, UnsetLengthLimit, stream, null)
         {
         }
 
@@ -8274,7 +8274,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         /// <param name="stream">The underlying stream</param>
         /// <param name="length">The length of the stream to slurp</param>
-        internal CrcCalculatorStream(System.IO.Stream stream, Int64 length)
+        internal CrcCalculatorStream(Stream stream, long length)
             : this(true, length, stream, null)
         {
             if (length < 0)
@@ -8296,7 +8296,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="length">The length of the stream to slurp</param>
         /// <param name="leaveOpen">true to leave the underlying stream
         /// open upon close of the <c>CrcCalculatorStream</c>; false otherwise.</param>
-        internal CrcCalculatorStream(System.IO.Stream stream, Int64 length, bool leaveOpen)
+        internal CrcCalculatorStream(Stream stream, long length, bool leaveOpen)
             : this(leaveOpen, length, stream, null)
         {
             if (length < 0)
@@ -8319,7 +8319,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="leaveOpen">true to leave the underlying stream
         /// open upon close of the <c>CrcCalculatorStream</c>; false otherwise.</param>
         /// <param name="crc32">the CRC32 instance to use to calculate the CRC32</param>
-        internal CrcCalculatorStream(System.IO.Stream stream, Int64 length, bool leaveOpen,
+        internal CrcCalculatorStream(Stream stream, long length, bool leaveOpen,
                                    CRC32 crc32)
             : this(leaveOpen, length, stream, crc32)
         {
@@ -8334,7 +8334,7 @@ namespace MonoGame.Framework.Utilities
         // explicit param, otherwise we don't validate, because it could be our special
         // value.
         private CrcCalculatorStream
-            (bool leaveOpen, Int64 length, System.IO.Stream stream, CRC32 crc32)
+            (bool leaveOpen, long length, Stream stream, CRC32 crc32)
             : base()
         {
             _innerStream = stream;
@@ -8352,7 +8352,7 @@ namespace MonoGame.Framework.Utilities
         ///   This is either the total number of bytes read, or the total number of
         ///   bytes written, depending on the direction of this stream.
         /// </remarks>
-        internal Int64 TotalBytesSlurped
+        internal long TotalBytesSlurped
         {
             get { return _Crc32.TotalBytesRead; }
         }
@@ -8367,7 +8367,7 @@ namespace MonoGame.Framework.Utilities
         ///     get an accurate CRC for the entire stream.
         ///   </para>
         /// </remarks>
-        internal Int32 Crc
+        internal int Crc
         {
             get { return _Crc32.Crc32Result; }
         }
@@ -8406,10 +8406,10 @@ namespace MonoGame.Framework.Utilities
             // calling ReadToEnd() on it, We can "over-read" the zip data and get a
             // corrupt string.  The length limits that, prevents that problem.
 
-            if (_lengthLimit != CrcCalculatorStream.UnsetLengthLimit)
+            if (_lengthLimit != UnsetLengthLimit)
             {
                 if (_Crc32.TotalBytesRead >= _lengthLimit) return 0; // EOF
-                Int64 bytesRemaining = _lengthLimit - _Crc32.TotalBytesRead;
+                long bytesRemaining = _lengthLimit - _Crc32.TotalBytesRead;
                 if (bytesRemaining < count) bytesToRead = (int)bytesRemaining;
             }
             int n = _innerStream.Read(buffer, offset, bytesToRead);
@@ -8473,7 +8473,7 @@ namespace MonoGame.Framework.Utilities
         {
             get
             {
-                if (_lengthLimit == CrcCalculatorStream.UnsetLengthLimit)
+                if (_lengthLimit == UnsetLengthLimit)
                     return _innerStream.Length;
                 else return _lengthLimit;
             }
@@ -8497,7 +8497,7 @@ namespace MonoGame.Framework.Utilities
         /// <param name="offset">N/A</param>
         /// <param name="origin">N/A</param>
         /// <returns>N/A</returns>
-        public override long Seek(long offset, System.IO.SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotSupportedException();
         }
@@ -8562,7 +8562,7 @@ namespace MonoGame.Framework.Utilities
                 {
                     string msg = "Cannot use the character [{0}] (int value {1}) as fallback value "
                     + "- the fallback character itself is not supported by the encoding.";
-                    msg = String.Format(msg, value.Value, (int)value.Value);
+                    msg = string.Format(msg, value.Value, (int)value.Value);
                     throw new EncoderFallbackException(msg);
                 }
 
@@ -8630,7 +8630,7 @@ namespace MonoGame.Framework.Utilities
                     //throw exception
                     string msg =
                       "The encoding [{0}] cannot encode the character [{1}] (int value {2}). Set the FallbackCharacter property in order to suppress this exception and encode a default character instead.";
-                    msg = String.Format(msg, WebName, character, (int)character);
+                    msg = string.Format(msg, WebName, character, (int)character);
                     throw new EncoderFallbackException(msg);
                 }
 
@@ -8690,7 +8690,7 @@ namespace MonoGame.Framework.Utilities
                 {
                     //throw exception
                     string msg = "The encoding [{0}] cannot decode byte value [{1}]. Set the FallbackCharacter property in order to suppress this exception and decode the value as a default character instead.";
-                    msg = String.Format(msg, WebName, lookupIndex);
+                    msg = string.Format(msg, WebName, lookupIndex);
                     throw new EncoderFallbackException(msg);
                 }
 

@@ -31,7 +31,7 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public bool IsConstant
         {
-            get { return this._keys.Count <= 1; }
+            get { return _keys.Count <= 1; }
         }
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveLoopType PreLoop
         {
-            get { return this._preLoop; }
-            set { this._preLoop = value; }
+            get { return _preLoop; }
+            set { _preLoop = value; }
         }
 
         /// <summary>
@@ -50,8 +50,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveLoopType PostLoop
         {
-            get { return this._postLoop; }
-            set { this._postLoop = value; }
+            get { return _postLoop; }
+            set { _postLoop = value; }
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveKeyCollection Keys
         {
-            get { return this._keys; }
+            get { return _keys; }
         }
 
         #endregion
@@ -72,7 +72,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Curve()
         {
-            this._keys = new CurveKeyCollection();
+            _keys = new CurveKeyCollection();
         }
 
         #endregion
@@ -87,9 +87,9 @@ namespace Microsoft.Xna.Framework
         {
             Curve curve = new Curve();
 
-            curve._keys = this._keys.Clone();
-            curve._preLoop = this._preLoop;
-            curve._postLoop = this._postLoop;
+            curve._keys = _keys.Clone();
+            curve._preLoop = _preLoop;
+            curve._postLoop = _postLoop;
 
             return curve;
         }
@@ -116,7 +116,7 @@ namespace Microsoft.Xna.Framework
 
             if (position < first.Position)
             {
-                switch (this.PreLoop)
+                switch (PreLoop)
                 {
                     case CurveLoopType.Constant:
                         //constant
@@ -129,30 +129,30 @@ namespace Microsoft.Xna.Framework
                     case CurveLoopType.Cycle:
                         //start -> end / start -> end
                         int cycle = GetNumberOfCycle(position);
-                        float virtualPos = position - (cycle * (last.Position - first.Position));
+                        float virtualPos = position - cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
 
                     case CurveLoopType.CycleOffset:
                         //make the curve continue (with no step) so must up the curve each cycle of delta(value)
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
-                        return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+                        virtualPos = position - cycle * (last.Position - first.Position);
+                        return GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value);
 
                     case CurveLoopType.Oscillate:
                         //go back on curve from end and target start 
                         // start-> end / end -> start
                         cycle = GetNumberOfCycle(position);
                         if (0 == cycle % 2f)//if pair
-                            virtualPos = position - (cycle * (last.Position - first.Position));
+                            virtualPos = position - cycle * (last.Position - first.Position);
                         else
-                            virtualPos = last.Position - position + first.Position + (cycle * (last.Position - first.Position));
+                            virtualPos = last.Position - position + first.Position + cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
                 }
             }
             else if (position > last.Position)
             {
                 int cycle;
-                switch (this.PostLoop)
+                switch (PostLoop)
                 {
                     case CurveLoopType.Constant:
                         //constant
@@ -165,24 +165,24 @@ namespace Microsoft.Xna.Framework
                     case CurveLoopType.Cycle:
                         //start -> end / start -> end
                         cycle = GetNumberOfCycle(position);
-                        float virtualPos = position - (cycle * (last.Position - first.Position));
+                        float virtualPos = position - cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
 
                     case CurveLoopType.CycleOffset:
                         //make the curve continue (with no step) so must up the curve each cycle of delta(value)
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
-                        return (GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value));
+                        virtualPos = position - cycle * (last.Position - first.Position);
+                        return GetCurvePosition(virtualPos) + cycle * (last.Value - first.Value);
 
                     case CurveLoopType.Oscillate:
                         //go back on curve from end and target start 
                         // start-> end / end -> start
                         cycle = GetNumberOfCycle(position);
-                        virtualPos = position - (cycle * (last.Position - first.Position));
+                        virtualPos = position - cycle * (last.Position - first.Position);
                         if (0 == cycle % 2f)//if pair
-                            virtualPos = position - (cycle * (last.Position - first.Position));
+                            virtualPos = position - cycle * (last.Position - first.Position);
                         else
-                            virtualPos = last.Position - position + first.Position + (cycle * (last.Position - first.Position));
+                            virtualPos = last.Position - position + first.Position + cycle * (last.Position - first.Position);
                         return GetCurvePosition(virtualPos);
                 }
             }
@@ -303,11 +303,11 @@ namespace Microsoft.Xna.Framework
         private float GetCurvePosition(float position)
         {
             //only for position in curve
-            CurveKey prev = this._keys[0];
+            CurveKey prev = _keys[0];
             CurveKey next;
-            for (int i = 1; i < this._keys.Count; ++i)
+            for (int i = 1; i < _keys.Count; ++i)
             {
-                next = this.Keys[i];
+                next = Keys[i];
                 if (next.Position >= position)
                 {
                     if (prev.Continuity == CurveContinuity.Step)

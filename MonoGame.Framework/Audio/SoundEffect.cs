@@ -164,17 +164,17 @@ namespace Microsoft.Xna.Framework.Audio
                 throw new ArgumentException("Ensure that the buffer length is non-zero.", "buffer");
 
             int blockAlign = (int)channels * 2;
-            if ((count % blockAlign) != 0)
+            if (count % blockAlign != 0)
                 throw new ArgumentException("Ensure that the buffer meets the block alignment requirements for the number of channels.", "buffer");
 
             if (count <= 0)
                 throw new ArgumentException("Ensure that the count is greater than zero.", "count");
-            if ((count % blockAlign) != 0)
+            if (count % blockAlign != 0)
                 throw new ArgumentException("Ensure that the count meets the block alignment requirements for the number of channels.", "count");
 
             if (offset < 0)
                 throw new ArgumentException("The offset cannot be negative.", "offset");
-            if (((ulong)count + (ulong)offset) > (ulong)buffer.Length)
+            if ((ulong)count + (ulong)offset > (ulong)buffer.Length)
                 throw new ArgumentException("Ensure that the offset+count region lines within the buffer.", "offset");
 
             int totalSamples = count / blockAlign;
@@ -189,7 +189,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             if (loopLength < 0)
                 throw new ArgumentException("The loopLength cannot be negative.", "loopLength");
-            if (((ulong)loopStart + (ulong)loopLength) > (ulong)totalSamples)
+            if ((ulong)loopStart + (ulong)loopLength > (ulong)totalSamples)
                 throw new ArgumentException("Ensure that the loopStart+loopLength region lies within the sample range.", "loopLength");
 
             _duration = GetSampleDuration(count, sampleRate, channels);

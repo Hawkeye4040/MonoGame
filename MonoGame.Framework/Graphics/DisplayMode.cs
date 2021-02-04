@@ -56,11 +56,11 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         public int Height {
-            get { return this.height; }
+            get { return height; }
         }
 
         public int Width {
-            get { return this.width; }
+            get { return width; }
         }
         
         public Rectangle TitleSafeArea {
@@ -97,9 +97,9 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 return false;
             }
-            return (left.format == right.format) &&
-                (left.height == right.height) &&
-                (left.width == right.width);
+            return left.format == right.format &&
+                left.height == right.height &&
+                left.width == right.width;
         }
 
         #endregion Operators
@@ -113,12 +113,12 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public override int GetHashCode()
         {
-            return (this.width.GetHashCode() ^ this.height.GetHashCode() ^ this.format.GetHashCode());
+            return width.GetHashCode() ^ height.GetHashCode() ^ format.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "{Width:" + this.width + " Height:" + this.height + " Format:" + this.Format + " AspectRatio:" + this.AspectRatio + "}";
+            return "{Width:" + width + " Height:" + height + " Format:" + Format + " AspectRatio:" + AspectRatio + "}";
         }
 
         #endregion Public Methods

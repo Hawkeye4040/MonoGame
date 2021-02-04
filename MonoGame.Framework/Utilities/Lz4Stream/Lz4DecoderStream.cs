@@ -41,7 +41,7 @@ namespace MonoGame.Framework.Utilities
 
         protected override void Dispose(bool disposing)
 		{
-            this.input = null;
+            input = null;
             base.Dispose(disposing);
 		}
 

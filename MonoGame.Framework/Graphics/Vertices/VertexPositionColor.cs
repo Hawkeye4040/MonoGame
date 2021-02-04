@@ -18,7 +18,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public VertexPositionColor(Vector3 position, Color color)
 		{
-			this.Position = position;
+			Position = position;
 			Color = color;
 		}
 
@@ -40,7 +40,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 	    public override string ToString()
 		{
-            return "{{Position:" + this.Position + " Color:" + this.Color + "}}";
+            return "{{Position:" + Position + " Color:" + Color + "}}";
 		}
 
 		public static bool operator == (VertexPositionColor left, VertexPositionColor right)
@@ -58,7 +58,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			if (obj == null) {
 				return false;
 			}
-			if (obj.GetType () != base.GetType ()) {
+			if (obj.GetType () != GetType ()) {
 				return false;
 			}
 			return (this == ((VertexPositionColor)obj));

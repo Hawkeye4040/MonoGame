@@ -19,7 +19,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.albumCollection.Count;
+                return albumCollection.Count;
             }
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Xna.Framework.Media
 
         public AlbumCollection(List<Album> albums)
         {
-            this.albumCollection = albums;
+            albumCollection = albums;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.Xna.Framework.Media
         {
             get
             {
-                return this.albumCollection[index];
+                return albumCollection[index];
             }
         }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Xna.Framework.Media
         /// </summary>
         public void Dispose()
         {
-            foreach (var album in this.albumCollection)
+            foreach (var album in albumCollection)
                 album.Dispose();
         }
     }

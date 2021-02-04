@@ -190,7 +190,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
                 finally
                 {
-                    SharpDX.Utilities.Dispose( ref stream);
+                    Utilities.Dispose( ref stream);
 
                     d3dContext.UnmapSubresource(_cachedStagingTexture, 0);
                 }
@@ -201,7 +201,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (disposing)
             {
-                SharpDX.Utilities.Dispose(ref _cachedStagingTexture);
+                Utilities.Dispose(ref _cachedStagingTexture);
             }
 
             base.Dispose(disposing);
