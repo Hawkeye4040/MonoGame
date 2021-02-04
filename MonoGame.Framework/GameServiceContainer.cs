@@ -105,10 +105,7 @@ namespace Microsoft.Xna.Framework
         {
             var service = GetService(typeof(T));
 
-            if (service == null)
-                return null;
-
-            return (T)service;
+            return (T) service;
         }
     }
 }

@@ -223,12 +223,11 @@
   <PropertyGroup>
     <!-- NuGet warns if we copy assemblies but don't reference them; we suppress those warnings. -->
     <NoWarn>NU5100</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   
   <ItemGroup>
-    <Content Include="..\Artifacts\MonoGame.Effect.Compiler\$(Configuration)\*"
-             Exclude="..\Artifacts\MonoGame.Effect.Compiler\$(Configuration)\*.nupkg"
-             Visible="false">
+    <Content Include="..\Artifacts\MonoGame.Effect.Compiler\$(Configuration)\*" Exclude="..\Artifacts\MonoGame.Effect.Compiler\$(Configuration)\*.nupkg" Visible="false">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

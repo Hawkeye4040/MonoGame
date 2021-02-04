@@ -14,6 +14,7 @@
     <!-- DisableFastUpToDateCheck so we get updates to other projects even though
          the ProjectReferences have 'ReferenceOutputAssembly' set to false. -->
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <Choose>

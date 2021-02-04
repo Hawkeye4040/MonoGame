@@ -557,8 +557,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 
                 // Transform the mesh content.
                 var mesh = node as MeshContent;
-                if (mesh != null)
-                    mesh.TransformContents(ref transform);
+                mesh?.TransformContents(ref transform);
 
                 // Transform local coordinate system using "similarity transform".
                 node.Transform = inverseTransform * node.Transform * transform;
