@@ -53,7 +53,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 throw new ArgumentNullException("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
             }
-            this.GraphicsDevice = graphicsDevice;
+            GraphicsDevice = graphicsDevice;
 		}
 			
 		protected Effect(Effect cloneSource)

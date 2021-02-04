@@ -3,9 +3,9 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -40,7 +40,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         internal RpcVariable[] CreateCueVariables()
         {
-            var clone = new RpcVariable[_cueVariables.Length];
+            RpcVariable[] clone = new RpcVariable[_cueVariables.Length];
             Array.Copy(_cueVariables, clone, _cueVariables.Length);
             return clone;
         }
@@ -58,7 +58,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         internal static Stream OpenStream(string filePath, bool useMemoryStream = false)
         {
-            var stream = TitleContainer.OpenStream(filePath);
+            Stream stream = TitleContainer.OpenStream(filePath);
 
             // Read the asset into memory in one go. This results in a ~50% reduction
             // in load times on Android due to slow Android asset streams.
@@ -68,7 +68,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             if (useMemoryStream)
             {
-                var memStream = new MemoryStream();
+                MemoryStream memStream = new MemoryStream();
                 stream.CopyTo(memStream);
                 memStream.Seek(0, SeekOrigin.Begin);
                 stream.Dispose();
@@ -89,8 +89,8 @@ namespace Microsoft.Xna.Framework.Audio
 
             // Read the xact settings file
             // Credits to alisci01 for initial format documentation
-            using (var stream = OpenStream(settingsFile))
-            using (var reader = new BinaryReader(stream)) 
+            using (Stream stream = OpenStream(settingsFile))
+            using (BinaryReader reader = new BinaryReader(stream)) 
             {
                 uint magic = reader.ReadUInt32 ();
                 if (magic != 0x46534758) //'XGFS'
@@ -144,13 +144,13 @@ namespace Microsoft.Xna.Framework.Audio
                 reader.BaseStream.Seek (varNamesOffset, SeekOrigin.Begin);
                 string[] varNames = ReadNullTerminatedStrings(numVars, reader);
 
-                var variables = new List<RpcVariable>();
-                var cueVariables = new List<RpcVariable>();
-                var globalVariables = new List<RpcVariable>();
+                List<RpcVariable> variables = new List<RpcVariable>();
+                List<RpcVariable> cueVariables = new List<RpcVariable>();
+                List<RpcVariable> globalVariables = new List<RpcVariable>();
                 reader.BaseStream.Seek (varsOffset, SeekOrigin.Begin);
-                for (var i=0; i < numVars; i++)
+                for (int i=0; i < numVars; i++)
                 {
-                    var v = new RpcVariable();
+                    RpcVariable v = new RpcVariable();
                     v.Name = varNames[i];
                     v.Flags = reader.ReadByte();						
                     v.InitValue = reader.ReadSingle();
@@ -170,17 +170,17 @@ namespace Microsoft.Xna.Framework.Audio
                 _cueVariables = cueVariables.ToArray();
                 _variables = globalVariables.ToArray();
 
-                var reverbCurves = new List<RpcCurve>();
+                List<RpcCurve> reverbCurves = new List<RpcCurve>();
                 RpcCurves = new RpcCurve[numRpc];
                 if (numRpc > 0)
                 {
                     reader.BaseStream.Seek(rpcOffset, SeekOrigin.Begin);
-                    for (var i=0; i < numRpc; i++)
+                    for (int i=0; i < numRpc; i++)
                     {
-                        var curve = new RpcCurve();
+                        RpcCurve curve = new RpcCurve();
                         curve.FileOffset = (uint)reader.BaseStream.Position;
 
-                        var variable = variables[ reader.ReadUInt16() ];
+                        RpcVariable variable = variables[ reader.ReadUInt16() ];
                         if (variable.IsGlobal)
                         {
                             curve.IsGlobal = true;
@@ -192,11 +192,11 @@ namespace Microsoft.Xna.Framework.Audio
                             curve.Variable = cueVariables.FindIndex(e => e.Name == variable.Name);
                         }
 
-                        var pointCount = (int)reader.ReadByte();
+                        int pointCount = reader.ReadByte();
                         curve.Parameter = (RpcParameter)reader.ReadUInt16();
 
                         curve.Points = new RpcPoint[pointCount];
-                        for (var j=0; j < pointCount; j++) 
+                        for (int j=0; j < pointCount; j++) 
                         {
                             curve.Points[j].Position = reader.ReadSingle();
                             curve.Points[j].Value = reader.ReadSingle();
@@ -205,7 +205,7 @@ namespace Microsoft.Xna.Framework.Audio
 
                         // If the parameter is greater than the max then this is a DSP
                         // parameter which is for reverb.
-                        var dspParameter = curve.Parameter - RpcParameter.NumParameters;
+                        int dspParameter = curve.Parameter - RpcParameter.NumParameters;
                         if (dspParameter >= 0 && variable.IsGlobal)
                             reverbCurves.Add(curve);
 
@@ -237,7 +237,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         internal int GetRpcIndex(uint fileOffset)
         {
-            for (var i = 0; i < RpcCurves.Length; i++)
+            for (int i = 0; i < RpcCurves.Length; i++)
             {
                 if (RpcCurves[i].FileOffset == fileOffset)
                     return i;
@@ -248,11 +248,11 @@ namespace Microsoft.Xna.Framework.Audio
 
         private static string[] ReadNullTerminatedStrings(uint count, BinaryReader reader)
         {
-            var ret = new string[count];
+            string[] ret = new string[count];
             
-            for (var i=0; i < count; i++) 
+            for (int i=0; i < count; i++) 
             {
-                var s = new List<char>();
+                List<char> s = new List<char>();
                 while (reader.PeekChar() != 0) 
                     s.Add(reader.ReadChar()); 
 
@@ -269,16 +269,16 @@ namespace Microsoft.Xna.Framework.Audio
         /// <remarks>Must be called at least once per frame.</remarks>
         public void Update()
         {
-            var cur = _stopwatch.Elapsed;
-            var elapsed = cur - _lastUpdateTime;
+            TimeSpan cur = _stopwatch.Elapsed;
+            TimeSpan elapsed = cur - _lastUpdateTime;
             _lastUpdateTime = cur;
-            var dt = (float)elapsed.TotalSeconds;
+            float dt = (float)elapsed.TotalSeconds;
 
             lock (UpdateLock)
             {
-                for (var x = 0; x < ActiveCues.Count; )
+                for (int x = 0; x < ActiveCues.Count; )
                 {
-                    var cue = ActiveCues[x];
+                    Cue cue = ActiveCues[x];
 
                     cue.Update(dt);
 
@@ -296,11 +296,11 @@ namespace Microsoft.Xna.Framework.Audio
             // specifically for the reverb DSP effect.
             if (_reverbSettings != null)
             {
-                for (var i = 0; i < _reverbCurves.Length; i++)
+                for (int i = 0; i < _reverbCurves.Length; i++)
                 {
-                    var curve = _reverbCurves[i];
-                    var result = curve.Evaluate(_variables[curve.Variable].Value);
-                    var parameter = curve.Parameter - RpcParameter.NumParameters;
+                    RpcCurve curve = _reverbCurves[i];
+                    float result = curve.Evaluate(_variables[curve.Variable].Value);
+                    int parameter = curve.Parameter - RpcParameter.NumParameters;
                     _reverbSettings[parameter] = result;
                 }
 

@@ -12,7 +12,7 @@ namespace Microsoft.Xna.Framework.Audio
     /// </remarks>
     public partial class SoundEffectInstance : IDisposable
     {
-        private bool _isDisposed = false;
+        private bool _isDisposed;
         internal bool _isPooled = true;
         internal bool _isXAct;
         internal bool _isDynamic;
@@ -125,7 +125,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// <param name="emitter">Data about the source of emission.</param>
         public void Apply3D(AudioListener[] listeners, AudioEmitter emitter)
         {
-            foreach (var l in listeners)
+            foreach (AudioListener l in listeners)
 				PlatformApply3D(l, emitter);
         }
 

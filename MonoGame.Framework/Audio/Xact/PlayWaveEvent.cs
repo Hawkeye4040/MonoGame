@@ -2,9 +2,6 @@
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
-using System;
-using System.IO;
-
 namespace Microsoft.Xna.Framework.Audio
 {
     enum VariationType
@@ -14,7 +11,7 @@ namespace Microsoft.Xna.Framework.Audio
         Random,
         RandomNoImmediateRepeats,
         Shuffle
-    };
+    }
 
     class PlayWaveEvent : ClipEvent
     {
@@ -100,7 +97,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         private void Play(bool pickNewWav)
         {
-            var trackCount = _tracks.Length;
+            int trackCount = _tracks.Length;
 
             // Do we need to pick a new wav to play first?
             if (pickNewWav)
@@ -120,8 +117,8 @@ namespace Microsoft.Xna.Framework.Audio
                             _wavIndex = XactHelpers.Random.Next() % trackCount;
                         else
                         {
-                            var sum = XactHelpers.Random.Next(_totalWeights);
-                            for (var i=0; i < trackCount; i++)
+                            int sum = XactHelpers.Random.Next(_totalWeights);
+                            for (int i=0; i < trackCount; i++)
                             {
                                 sum -= _weights[i];
                                 if (sum <= 0)
@@ -139,9 +136,9 @@ namespace Microsoft.Xna.Framework.Audio
                             _wavIndex = XactHelpers.Random.Next() % trackCount;
                         else
                         {
-                            var last = _wavIndex;
-                            var sum = XactHelpers.Random.Next(_totalWeights);
-                            for (var i=0; i < trackCount; i++)
+                            int last = _wavIndex;
+                            int sum = XactHelpers.Random.Next(_totalWeights);
+                            for (int i=0; i < trackCount; i++)
                             {
                                 sum -= _weights[i];
                                 if (sum <= 0)

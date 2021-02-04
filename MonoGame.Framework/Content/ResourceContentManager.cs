@@ -19,9 +19,9 @@ namespace Microsoft.Xna.Framework.Content
             this.resource = resource;
         }
 
-        protected override System.IO.Stream OpenStream(string assetName)
+        protected override Stream OpenStream(string assetName)
         {
-            object obj = this.resource.GetObject(assetName);
+            object obj = resource.GetObject(assetName);
             if (obj == null)
             {
                 throw new ContentLoadException("Resource not found");

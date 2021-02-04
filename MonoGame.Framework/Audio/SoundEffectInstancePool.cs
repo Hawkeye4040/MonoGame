@@ -19,7 +19,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             // Reduce garbage generation by allocating enough capacity for
             // the maximum playing instances or at least some reasonable value.
-            var maxInstances = SoundEffect.MAX_PLAYING_INSTANCES < 1024 ? SoundEffect.MAX_PLAYING_INSTANCES : 1024;
+            int maxInstances = SoundEffect.MAX_PLAYING_INSTANCES < 1024 ? SoundEffect.MAX_PLAYING_INSTANCES : 1024;
             _playingInstances = new List<SoundEffectInstance>(maxInstances);
             _pooledInstances = new List<SoundEffectInstance>(maxInstances);
         }
@@ -77,7 +77,7 @@ namespace Microsoft.Xna.Framework.Audio
             lock (_locker) {
 
             SoundEffectInstance inst = null;
-            var count = _pooledInstances.Count;
+            int count = _pooledInstances.Count;
             if (count > 0)
             {
                 // Grab the item at the end of the list so the remove doesn't copy all
@@ -118,7 +118,7 @@ namespace Microsoft.Xna.Framework.Audio
             SoundEffectInstance inst = null;
 
             // Cleanup instances which have finished playing.                    
-            for (var x = 0; x < _playingInstances.Count;)
+            for (int x = 0; x < _playingInstances.Count;)
             {
                 inst = _playingInstances[x];
 
@@ -156,7 +156,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             SoundEffectInstance inst = null;
 
-            for (var x = 0; x < _playingInstances.Count;)
+            for (int x = 0; x < _playingInstances.Count;)
             {
                 inst = _playingInstances[x];
                 if (inst._effect == effect)
@@ -176,7 +176,7 @@ namespace Microsoft.Xna.Framework.Audio
         {
             lock (_locker) {
 
-            foreach (var inst in _playingInstances)
+            foreach (SoundEffectInstance inst in _playingInstances)
             {
                 // XAct sounds are not controlled by the SoundEffect
                 // master volume, so we can skip them completely.
@@ -184,6 +184,15 @@ namespace Microsoft.Xna.Framework.Audio
                     continue;
 
                 // Re-applying the volume to itself will update
+                // the sound with the current master volume.
+                inst.Volume = inst.Volume;
+            }
+        }
+
+        } // lock (_locker)
+    }
+}
+l update
                 // the sound with the current master volume.
                 inst.Volume = inst.Volume;
             }

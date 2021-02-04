@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -140,11 +141,11 @@ namespace Microsoft.Xna.Framework.Audio
 
             if ((wavebankheader.Version == 2) || (wavebankheader.Version == 3))
             {
-                wavebankdata.BankName = System.Text.Encoding.UTF8.GetString(reader.ReadBytes(16),0,16).Replace("\0", "");
+                wavebankdata.BankName = Encoding.UTF8.GetString(reader.ReadBytes(16),0,16).Replace("\0", "");
             }
             else
             {
-                wavebankdata.BankName = System.Text.Encoding.UTF8.GetString(reader.ReadBytes(64),0,64).Replace("\0", "");
+                wavebankdata.BankName = Encoding.UTF8.GetString(reader.ReadBytes(64),0,64).Replace("\0", "");
             }
 
             _bankName = wavebankdata.BankName;
@@ -192,19 +193,19 @@ namespace Microsoft.Xna.Framework.Audio
             reader.BaseStream.Seek(wavebank_offset, SeekOrigin.Begin);
 
             // The compact format requires us to load stuff differently.
-            var isCompactFormat = (wavebankdata.Flags & Flag_Compact) != 0;
+            bool isCompactFormat = (wavebankdata.Flags & Flag_Compact) != 0;
             if (isCompactFormat)
             {
                 // Load the sound data offset table from disk.
-                for (var i = 0; i < wavebankdata.EntryCount; i++)
+                for (int i = 0; i < wavebankdata.EntryCount; i++)
                 {
-                    var len = reader.ReadInt32();
+                    int len = reader.ReadInt32();
                     _streams[i].Format = wavebankdata.CompactFormat;
                     _streams[i].FileOffset = (len & ((1 << 21) - 1))*wavebankdata.Alignment;
                 }
 
                 // Now figure out the sound data lengths.
-                for (var i = 0; i < wavebankdata.EntryCount; i++)
+                for (int i = 0; i < wavebankdata.EntryCount; i++)
                 {
                     int nextOffset;
                     if (i == (wavebankdata.EntryCount - 1))
@@ -218,9 +219,9 @@ namespace Microsoft.Xna.Framework.Audio
             }
             else
             {
-                for (var i = 0; i < wavebankdata.EntryCount; i++)
+                for (int i = 0; i < wavebankdata.EntryCount; i++)
                 {
-                    var info = new StreamInfo();
+                    StreamInfo info = new StreamInfo();
                     if (wavebankheader.Version == 1)
                     {
                         info.Format = reader.ReadInt32();
@@ -231,7 +232,7 @@ namespace Microsoft.Xna.Framework.Audio
                     }
                     else
                     {
-                        var flagsAndDuration = reader.ReadInt32(); // Unused
+                        int flagsAndDuration = reader.ReadInt32(); // Unused
 
                         if (wavebankdata.EntryMetaDataElementSize >= 8)
                             info.Format = reader.ReadInt32();
@@ -259,13 +260,13 @@ namespace Microsoft.Xna.Framework.Audio
             // If this isn't a streaming wavebank then load all the sounds now.
             if (!_streaming)
             {
-                for (var i = 0; i < _streams.Length; i++)
+                for (int i = 0; i < _streams.Length; i++)
                 {
-                    var info = _streams[i];
+                    StreamInfo info = _streams[i];
                     
                     // Read the data.
                     reader.BaseStream.Seek(info.FileOffset + _playRegionOffset, SeekOrigin.Begin);
-                    var audiodata = reader.ReadBytes(info.FileLength);
+                    byte[] audiodata = reader.ReadBytes(info.FileLength);
 
                     // Decode the format information.
                     MiniFormatTag codec;
@@ -363,15 +364,13 @@ namespace Microsoft.Xna.Framework.Audio
             if (_streaming)
             {
                 streaming = true;
-                var stream = _streams[trackIndex];
+                StreamInfo stream = _streams[trackIndex];
                 return PlatformCreateStream(stream);
             }
-            else
-            {
-                streaming = false;
-                var sound = _sounds[trackIndex];
-                return sound.GetPooledInstance(true);
-            }
+
+            streaming = false;
+            SoundEffect sound = _sounds[trackIndex];
+            return sound.GetPooledInstance(true);
         }
 
         /// <summary>
@@ -407,7 +406,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             if (disposing)
             {
-                foreach (var s in _sounds)
+                foreach (SoundEffect s in _sounds)
                     s.Dispose();
 
                 IsPrepared = false;

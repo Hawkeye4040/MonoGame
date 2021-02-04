@@ -3,7 +3,6 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
-using System.Collections.Generic;
 
 namespace Microsoft.Xna.Framework.Audio
 {
@@ -28,7 +27,7 @@ namespace Microsoft.Xna.Framework.Audio
             set
             {
                 AssertNotDisposed();
-                if (value == true)
+                if (value)
                     throw new InvalidOperationException("IsLooped cannot be set true. Submit looped audio data to implement looping.");
             }
         }
@@ -228,7 +227,7 @@ namespace Microsoft.Xna.Framework.Audio
 
             // Ensure that the buffer length matches alignment.
             // The data must be 16-bit, so the length is a multiple of 2 (mono) or 4 (stereo).
-            var sampleSize = 2 * (int)_channels;
+            int sampleSize = 2 * (int)_channels;
             if (buffer.Length % sampleSize != 0)
                 throw new ArgumentException("Buffer length does not match format alignment.");
 
@@ -256,7 +255,7 @@ namespace Microsoft.Xna.Framework.Audio
                 throw new ArgumentException("Buffer is shorter than the specified number of bytes from the offset.");
 
             // Ensure that the buffer length and start position match alignment.
-            var sampleSize = 2 * (int)_channels;
+            int sampleSize = 2 * (int)_channels;
             if (count % sampleSize != 0)
                 throw new ArgumentException("Number of bytes does not match format alignment.");
             if (offset % sampleSize != 0)
@@ -293,12 +292,12 @@ namespace Microsoft.Xna.Framework.Audio
             PlatformUpdateQueue();
 
             // Raise the event
-            var bufferNeededHandler = BufferNeeded;
+            EventHandler<EventArgs> bufferNeededHandler = BufferNeeded;
 
             if (bufferNeededHandler != null)
             {
-                var eventCount = (_buffersNeeded < 3) ? _buffersNeeded : 3;
-                for (var i = 0; i < eventCount; i++)
+                int eventCount = (_buffersNeeded < 3) ? _buffersNeeded : 3;
+                for (int i = 0; i < eventCount; i++)
                 {
                     bufferNeededHandler(this, EventArgs.Empty);
                 }

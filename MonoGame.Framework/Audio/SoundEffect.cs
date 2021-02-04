@@ -1,7 +1,7 @@
 // MonoGame - Copyright (C) The MonoGame Team
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
-﻿
+
 using System;
 using System.IO;
 
@@ -19,7 +19,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         private string _name = string.Empty;
         
-        private bool _isDisposed = false;
+        private bool _isDisposed;
         private readonly TimeSpan _duration;
 
         #endregion
@@ -55,12 +55,12 @@ namespace Microsoft.Xna.Framework.Audio
             _duration = TimeSpan.FromMilliseconds(durationMs);
 
             // Peek at the format... handle regular PCM data.
-            var format = BitConverter.ToInt16(header, 0);
+            short format = BitConverter.ToInt16(header, 0);
             if (format == 1)
             {
-                var channels = BitConverter.ToInt16(header, 2);
-                var sampleRate = BitConverter.ToInt32(header, 4);
-                var bitsPerSample = BitConverter.ToInt16(header, 14);
+                short channels = BitConverter.ToInt16(header, 2);
+                int sampleRate = BitConverter.ToInt32(header, 4);
+                short bitsPerSample = BitConverter.ToInt16(header, 14);
                 PlatformInitializePcm(buffer, 0, bufferSize, bitsPerSample, sampleRate, (AudioChannels)channels, loopStart, loopLength);
                 return;
             }
@@ -163,7 +163,7 @@ namespace Microsoft.Xna.Framework.Audio
             if (buffer == null || buffer.Length == 0)
                 throw new ArgumentException("Ensure that the buffer length is non-zero.", "buffer");
 
-            var blockAlign = (int)channels * 2;
+            int blockAlign = (int)channels * 2;
             if ((count % blockAlign) != 0)
                 throw new ArgumentException("Ensure that the buffer meets the block alignment requirements for the number of channels.", "buffer");
 
@@ -177,7 +177,7 @@ namespace Microsoft.Xna.Framework.Audio
             if (((ulong)count + (ulong)offset) > (ulong)buffer.Length)
                 throw new ArgumentException("Ensure that the offset+count region lines within the buffer.", "offset");
 
-            var totalSamples = count / blockAlign;
+            int totalSamples = count / blockAlign;
 
             if (loopStart < 0)
                 throw new ArgumentException("The loopStart cannot be negative.", "loopStart");
@@ -221,7 +221,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// <remarks>Creating a SoundEffectInstance before calling SoundEffectInstance.Play() allows you to access advanced playback features, such as volume, pitch, and 3D positioning.</remarks>
         public SoundEffectInstance CreateInstance()
         {
-            var inst = new SoundEffectInstance();
+            SoundEffectInstance inst = new SoundEffectInstance();
             PlatformSetupInstance(inst);
 
             inst._isPooled = false;
@@ -253,7 +253,7 @@ namespace Microsoft.Xna.Framework.Audio
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            using (var stream = File.OpenRead(path))
+            using (FileStream stream = File.OpenRead(path))
                 return FromStream(stream);
         }
 
@@ -296,7 +296,7 @@ namespace Microsoft.Xna.Framework.Audio
             if (sampleRate < 8000 || sampleRate > 48000)
                 throw new ArgumentOutOfRangeException("sampleRate");
 
-            var numChannels = (int)channels;
+            int numChannels = (int)channels;
             if (numChannels != 1 && numChannels != 2)
                 throw new ArgumentOutOfRangeException("channels");
 
@@ -306,9 +306,9 @@ namespace Microsoft.Xna.Framework.Audio
             // Reference
             // http://tinyurl.com/hq9slfy
 
-            var dur = sizeInBytes / (sampleRate * numChannels * 16f / 8f);
+            float dur = sizeInBytes / (sampleRate * numChannels * 16f / 8f);
 
-            var duration = TimeSpan.FromSeconds(dur);
+            TimeSpan duration = TimeSpan.FromSeconds(dur);
 
             return duration;
         }
@@ -327,14 +327,14 @@ namespace Microsoft.Xna.Framework.Audio
             if (sampleRate < 8000 || sampleRate > 48000)
                 throw new ArgumentOutOfRangeException("sampleRate");
 
-            var numChannels = (int)channels;
+            int numChannels = (int)channels;
             if (numChannels != 1 && numChannels != 2)
                 throw new ArgumentOutOfRangeException("channels");
 
             // Reference
             // http://tinyurl.com/hq9slfy
 
-            var sizeInBytes = duration.TotalSeconds * (sampleRate * numChannels * 16f / 8f);
+            double sizeInBytes = duration.TotalSeconds * (sampleRate * numChannels * 16f / 8f);
 
             return (int)sizeInBytes;
         }
@@ -352,7 +352,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// </remarks>
         public bool Play()
         {
-            var inst = GetPooledInstance(false);
+            SoundEffectInstance inst = GetPooledInstance(false);
             if (inst == null)
                 return false;
 
@@ -373,7 +373,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// </remarks>
         public bool Play(float volume, float pitch, float pan)
         {
-            var inst = GetPooledInstance(false);
+            SoundEffectInstance inst = GetPooledInstance(false);
             if (inst == null)
                 return false;
 
@@ -394,7 +394,7 @@ namespace Microsoft.Xna.Framework.Audio
             if (!SoundEffectInstancePool.SoundsAvailable)
                 return null;
 
-            var inst = SoundEffectInstancePool.GetInstance(forXAct);
+            SoundEffectInstance inst = SoundEffectInstancePool.GetInstance(forXAct);
             inst._effect = this;
             PlatformSetupInstance(inst);
 
@@ -535,6 +535,14 @@ namespace Microsoft.Xna.Framework.Audio
                 SoundEffectInstancePool.StopPooledInstances(this);
                 PlatformDispose(disposing);
                 _isDisposed = true;
+            }
+        }
+
+        #endregion
+
+    }
+}
+      _isDisposed = true;
             }
         }
 

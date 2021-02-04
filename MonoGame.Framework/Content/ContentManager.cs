@@ -167,7 +167,7 @@ namespace Microsoft.Xna.Framework.Content
 			{
 				throw new ArgumentNullException("rootDirectory");
 			}
-			this.RootDirectory = rootDirectory;
+			RootDirectory = rootDirectory;
 			this.serviceProvider = serviceProvider;
             AddContentManager(this);
 		}
@@ -478,7 +478,7 @@ namespace Microsoft.Xna.Framework.Content
 		{
 			get
 			{
-				return this.serviceProvider;
+				return serviceProvider;
 			}
 		}
     }

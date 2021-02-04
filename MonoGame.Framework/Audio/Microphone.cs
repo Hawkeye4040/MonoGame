@@ -106,7 +106,7 @@ namespace Microsoft.Xna.Framework.Audio
 
         #region Static Members
 
-        private static List<Microphone> _allMicrophones = null;
+        private static List<Microphone> _allMicrophones;
 
         /// <summary>
         /// Returns all compatible microphones.

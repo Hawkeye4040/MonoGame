@@ -3,16 +3,21 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if WINDOWS_UAP
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-#endif
+using System.Threading;
+
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+
+using MonoGame.Framework.Utilities;
+#if WINDOWS_UAP
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+#endif
 
 
 namespace Microsoft.Xna.Framework
@@ -21,7 +26,7 @@ namespace Microsoft.Xna.Framework
     /// This class is the entry point for most games. Handles setting up
     /// a window and graphics and runs a game loop that calls <see cref="Update"/> and <see cref="Draw"/>.
     /// </summary>
-    public partial class Game : IDisposable
+    public class Game : IDisposable
     {
         private GameComponentCollection _components;
         private GameServiceContainer _services;
@@ -49,7 +54,7 @@ namespace Microsoft.Xna.Framework
         private IGraphicsDeviceManager _graphicsDeviceManager;
         private IGraphicsDeviceService _graphicsDeviceService;
 
-        private bool _initialized = false;
+        private bool _initialized;
         private bool _isFixedTimeStep = true;
 
         private TimeSpan _targetElapsedTime = TimeSpan.FromTicks(166667); // 60fps
@@ -60,7 +65,10 @@ namespace Microsoft.Xna.Framework
         private bool _shouldExit;
         private bool _suppressDraw;
 
-        partial void PlatformConstruct();
+        private void PlatformConstruct()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Create a <see cref="Game"/>.
@@ -92,10 +100,10 @@ namespace Microsoft.Xna.Framework
             Dispose(false);
         }
 
-		[System.Diagnostics.Conditional("DEBUG")]
-		internal void Log(string Message)
+		[Conditional("DEBUG")]
+		internal void Log(string message)
 		{
-			if (Platform != null) Platform.Log(Message);
+			if (Platform != null) Platform.Log(message);
 		}
 
         #region IDisposable Implementation
@@ -117,7 +125,7 @@ namespace Microsoft.Xna.Framework
                     // Dispose loaded game components
                     for (int i = 0; i < _components.Count; i++)
                     {
-                        var disposable = _components[i] as IDisposable;
+                        IDisposable disposable = _components[i] as IDisposable;
                         if (disposable != null)
                             disposable.Dispose();
                     }
@@ -158,7 +166,7 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        [System.Diagnostics.DebuggerNonUserCode]
+        [DebuggerNonUserCode]
         private void AssertNotDisposed()
         {
             if (_isDisposed)
@@ -177,8 +185,8 @@ namespace Microsoft.Xna.Framework
         [CLSCompliant(false)]
         public static AndroidGameActivity Activity { get; internal set; }
 #endif
-        private static Game _instance = null;
-        internal static Game Instance { get { return Game._instance; } }
+        private static Game _instance;
+        internal static Game Instance { get { return _instance; } }
 
         /// <summary>
         /// The start up parameters for this <see cref="Game"/>.
@@ -491,7 +499,7 @@ namespace Microsoft.Xna.Framework
         private TimeSpan _accumulatedElapsedTime;
         private readonly GameTime _gameTime = new GameTime();
         private Stopwatch _gameTimer;
-        private long _previousTicks = 0;
+        private long _previousTicks;
         private int _updateFrameLag;
 #if WINDOWS_UAP
         private readonly object _locker = new object();
@@ -520,22 +528,22 @@ namespace Microsoft.Xna.Framework
                 lock (_locker)
                     System.Threading.Monitor.Wait(_locker, (int)InactiveSleepTime.TotalMilliseconds);
 #else
-                System.Threading.Thread.Sleep((int)InactiveSleepTime.TotalMilliseconds);
+                Thread.Sleep((int)InactiveSleepTime.TotalMilliseconds);
 #endif
             }
 
             // Advance the accumulated elapsed time.
-            var currentTicks = _gameTimer.Elapsed.Ticks;
+            long currentTicks = _gameTimer.Elapsed.Ticks;
             _accumulatedElapsedTime += TimeSpan.FromTicks(currentTicks - _previousTicks);
             _previousTicks = currentTicks;
 
             if (IsFixedTimeStep && _accumulatedElapsedTime < TargetElapsedTime)
             {
                 // Sleep for as long as possible without overshooting the update time
-                var sleepTime = (TargetElapsedTime - _accumulatedElapsedTime).TotalMilliseconds;
+                double sleepTime = (TargetElapsedTime - _accumulatedElapsedTime).TotalMilliseconds;
                 // We only have a precision timer on Windows, so other platforms may still overshoot
 #if WINDOWS && !DESKTOPGL
-                MonoGame.Framework.Utilities.TimerHelper.SleepForNoMoreThan(sleepTime);
+                TimerHelper.SleepForNoMoreThan(sleepTime);
 #elif WINDOWS_UAP
                 lock (_locker)
                     if (sleepTime >= 2.0)
@@ -555,7 +563,7 @@ namespace Microsoft.Xna.Framework
             if (IsFixedTimeStep)
             {
                 _gameTime.ElapsedGameTime = TargetElapsedTime;
-                var stepCount = 0;
+                int stepCount = 0;
 
                 // Perform as many full fixed length time steps as we can.
                 while (_accumulatedElapsedTime >= TargetElapsedTime && !_shouldExit)
@@ -772,7 +780,7 @@ namespace Microsoft.Xna.Framework
         {
             AssertNotDisposed();
 
-            var platform = (GamePlatform)sender;
+            GamePlatform platform = (GamePlatform)sender;
             platform.AsyncRunLoopEnded -= Platform_AsyncRunLoopEnded;
             EndRun();
 			DoExiting();
@@ -1013,7 +1021,7 @@ namespace Microsoft.Xna.Framework
                 if (_addJournal.Remove(AddJournalEntry<T>.CreateKey(item)))
                     return true;
 
-                var index = _items.IndexOf(item);
+                int index = _items.IndexOf(item);
                 if (index >= 0)
                 {
                     UnsubscribeFromItemEvents(item);
@@ -1064,9 +1072,9 @@ namespace Microsoft.Xna.Framework
                 return _items.GetEnumerator();
             }
 
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                return ((System.Collections.IEnumerable)_items).GetEnumerator();
+                return ((IEnumerable)_items).GetEnumerator();
             }
 
             private static readonly Comparison<int> RemoveJournalSortComparison =
@@ -1099,7 +1107,7 @@ namespace Microsoft.Xna.Framework
 
                 while (iItems < _items.Count && iAddJournal < _addJournal.Count)
                 {
-                    var addJournalItem = _addJournal[iAddJournal].Item;
+                    T addJournalItem = _addJournal[iAddJournal].Item;
                     // If addJournalItem is less than (belongs before)
                     // _items[iItems], insert it.
                     if (_sort(addJournalItem, _items[iItems]) < 0)
@@ -1117,7 +1125,7 @@ namespace Microsoft.Xna.Framework
                 // If _addJournal had any "tail" items, append them all now.
                 for (; iAddJournal < _addJournal.Count; ++iAddJournal)
                 {
-                    var addJournalItem = _addJournal[iAddJournal].Item;
+                    T addJournalItem = _addJournal[iAddJournal].Item;
                     SubscribeToItemEvents(addJournalItem);
                     _items.Add(addJournalItem);
                 }
@@ -1149,8 +1157,8 @@ namespace Microsoft.Xna.Framework
 
             private void Item_SortPropertyChanged(object sender, EventArgs e)
             {
-                var item = (T)sender;
-                var index = _items.IndexOf(item);
+                T item = (T)sender;
+                int index = _items.IndexOf(item);
 
                 _addJournal.Add(new AddJournalEntry<T>(_addJournal.Count, item));
                 _removeJournal.Add(index);
@@ -1188,7 +1196,7 @@ namespace Microsoft.Xna.Framework
                 if (!(obj is AddJournalEntry<T>))
                     return false;
 
-                return object.Equals(Item, ((AddJournalEntry<T>)obj).Item);
+                return Equals(Item, ((AddJournalEntry<T>)obj).Item);
             }
         }
     }
