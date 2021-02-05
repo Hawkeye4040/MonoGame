@@ -15,7 +15,7 @@ namespace Microsoft.Xna.Framework
     {
         public override bool AllowUserResizing
         {
-            get { return !IsBorderless && _resizable; }
+            get => !IsBorderless && _resizable;
             set
             {
                 if (Sdl.Patch > 4)
@@ -55,24 +55,15 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        public override DisplayOrientation CurrentOrientation
-        {
-            get { return DisplayOrientation.Default; }
-        }
+        public override DisplayOrientation CurrentOrientation => DisplayOrientation.Default;
 
-        public override IntPtr Handle
-        {
-            get { return _handle; }
-        }
+        public override IntPtr Handle => _handle;
 
-        public override string ScreenDeviceName
-        {
-            get { return _screenDeviceName; }
-        }
+        public override string ScreenDeviceName => _screenDeviceName;
 
         public override bool IsBorderless
         {
-            get { return _borderless; }
+            get => _borderless;
             set
             {
                 Sdl.Window.SetBordered(_handle, value ? 0 : 1);

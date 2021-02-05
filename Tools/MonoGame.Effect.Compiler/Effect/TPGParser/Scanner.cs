@@ -908,46 +908,44 @@ namespace MonoGame.Effect.TPGParser
         private List<Token> skipped;
 
         public string File { 
-            get { return file; } 
-            set { file = value; }
+            get => file;
+            set => file = value;
         }
 
         public int Line { 
-            get { return line; } 
-            set { line = value; }
+            get => line;
+            set => line = value;
         }
 
         public int Column {
-            get { return column; } 
-            set { column = value; }
+            get => column;
+            set => column = value;
         }
 
         public int StartPos { 
-            get { return startpos;} 
-            set { startpos = value; }
+            get => startpos;
+            set => startpos = value;
         }
 
-        public int Length { 
-            get { return endpos - startpos;} 
-        }
+        public int Length => endpos - startpos;
 
         public int EndPos { 
-            get { return endpos;} 
-            set { endpos = value; }
+            get => endpos;
+            set => endpos = value;
         }
 
         public string Text { 
-            get { return text;} 
-            set { text = value; }
+            get => text;
+            set => text = value;
         }
 
         public List<Token> Skipped { 
-            get { return skipped;} 
-            set { skipped = value; }
+            get => skipped;
+            set => skipped = value;
         }
         public object Value { 
-            get { return value;} 
-            set { this.value = value; }
+            get => value;
+            set => this.value = value;
         }
 
         [XmlAttribute]

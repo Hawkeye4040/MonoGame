@@ -29,13 +29,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets the dimensions of the texture
         /// </summary>
-        public Rectangle Bounds
-        {
-            get
-            {
-				return new Rectangle(0, 0, width, height);
-            }
-        }
+        public Rectangle Bounds => new Rectangle(0, 0, width, height);
 
         /// <summary>
         /// Creates a new texture of the given size
@@ -122,24 +116,12 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Gets the width of the texture in pixels.
         /// </summary>
-        public int Width
-        {
-            get
-            {
-                return width;
-            }
-        }
+        public int Width => width;
 
         /// <summary>
         /// Gets the height of the texture in pixels.
         /// </summary>
-        public int Height
-        {
-            get
-            {
-                return height;
-            }
-        }
+        public int Height => height;
 
         /// <summary>
         /// Changes the pixels of the texture

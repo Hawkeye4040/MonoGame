@@ -210,10 +210,9 @@ namespace Microsoft.Xna.Framework.Audio
             _loopIndex = 0;
         }
 
-        public override void Pause() 
+        public override void Pause()
         {
-            if (_wav != null)
-                _wav.Pause();
+            _wav?.Pause();
         }
 
         public override void Resume()

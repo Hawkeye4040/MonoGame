@@ -79,11 +79,11 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </remarks>
         public void GetData<T> (int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride = 0) where T : struct
         {
-            var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
+            int elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             if (vertexStride == 0)
                 vertexStride = elementSizeInBytes;
 
-            var vertexByteSize = VertexCount * VertexDeclaration.VertexStride;
+            int vertexByteSize = VertexCount * VertexDeclaration.VertexStride;
             if (vertexStride > vertexByteSize)
                 throw new ArgumentOutOfRangeException("vertexStride", "Vertex stride can not be larger than the vertex buffer size.");
 
@@ -106,7 +106,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void GetData<T>(T[] data) where T : struct
         {
-            var elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
+            int elementSizeInByte = ReflectionHelpers.SizeOf<T>.Get();
             GetData<T>(0, data, 0, data.Length, elementSizeInByte);
         }
 
@@ -172,7 +172,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// must be within the <paramref name="data"/> array bounds.</param>
 		public void SetData<T>(T[] data, int startIndex, int elementCount) where T : struct
         {
-            var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
+            int elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, SetDataOptions.None);
 		}
 		
@@ -185,7 +185,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="data">Data array.</param>
         public void SetData<T>(T[] data) where T : struct
         {
-            var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
+            int elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             SetDataInternal<T>(0, data, 0, data.Length, elementSizeInBytes, SetDataOptions.None);
         }
 
@@ -194,13 +194,13 @@ namespace Microsoft.Xna.Framework.Graphics
             if (data == null)
                 throw new ArgumentNullException("data");
 
-            var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
-            var bufferSize = VertexCount * VertexDeclaration.VertexStride;
+            int elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
+            int bufferSize = VertexCount * VertexDeclaration.VertexStride;
 
             if (vertexStride == 0)
                 vertexStride = elementSizeInBytes;
 
-            var vertexByteSize = VertexCount * VertexDeclaration.VertexStride;
+            int vertexByteSize = VertexCount * VertexDeclaration.VertexStride;
             if (vertexStride > vertexByteSize)
                 throw new ArgumentOutOfRangeException("vertexStride", "Vertex stride can not be larger than the vertex buffer size.");
 

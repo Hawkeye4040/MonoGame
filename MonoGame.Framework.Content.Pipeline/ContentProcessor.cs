@@ -30,18 +30,12 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         /// <summary>
         /// Gets the expected object type of the input parameter to IContentProcessor.Process.
         /// </summary>
-        Type IContentProcessor.InputType
-        {
-            get { return typeof(TInput); }
-        }
+        Type IContentProcessor.InputType => typeof(TInput);
 
         /// <summary>
         /// Gets the object type returned by IContentProcessor.Process.
         /// </summary>
-        Type IContentProcessor.OutputType
-        {
-            get { return typeof(TOutput); }
-        }
+        Type IContentProcessor.OutputType => typeof(TOutput);
 
         /// <summary>
         /// Processes the specified input data and returns the result.
@@ -52,9 +46,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline
         object IContentProcessor.Process(object input, ContentProcessorContext context)
         {
             if (input == null)
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input));
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (!(input is TInput))
                 throw new InvalidOperationException("input is not of the expected type");
             return Process((TInput)input, context);

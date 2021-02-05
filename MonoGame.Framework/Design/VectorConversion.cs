@@ -35,7 +35,7 @@ namespace Microsoft.Xna.Framework.Design
                 return new Vector4(value.X, value.Y, value.Z, value.W);
             if (destinationType.GetInterface("IPackedVector") != null)
             {
-                var packedVec = (IPackedVector)Activator.CreateInstance(destinationType);
+                IPackedVector packedVec = (IPackedVector)Activator.CreateInstance(destinationType);
                 packedVec.PackFromVector4(value);
                 return packedVec;
             }            

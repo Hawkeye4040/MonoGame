@@ -11,13 +11,7 @@ namespace MonoGame.Tools.Pipeline
 {
     static partial class Global
     {
-        public static string NotAllowedCharacters
-        {
-            get
-            {
-                return "/?<>\\:*|\"";
-            }
-        }
+        public static string NotAllowedCharacters => "/?<>\\:*|\"";
 
         public static bool Linux { get; private set; }
         public static bool UseHeaderBar { get; set; }

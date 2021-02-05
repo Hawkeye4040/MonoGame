@@ -34,15 +34,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public uint PackedValue
         {
-            get
-            {
-                return short2Packed;
-            }
-            set
-            {
-                short2Packed = value;
-            }
-		}
+            get => short2Packed;
+            set => short2Packed = value;
+        }
 
 		public override bool Equals (object obj)
 		{
@@ -68,7 +62,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		{
             const float maxVal = 0x7FFF;
 
-			var v2 = new Vector2 ();
+			Vector2 v2 = new Vector2 ();
             v2.X = ((short)(short2Packed & 0xFFFF)) / maxVal;
             v2.Y = (short)(short2Packed >> 0x10) / maxVal;
 			return v2;
@@ -81,8 +75,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 			// clamp the value between min and max values
             // Round rather than truncate.
-            var word2 = (uint)((int)MathHelper.Clamp((float)Math.Round(vectorX * maxPos), minNeg, maxPos) & 0xFFFF);
-            var word1 = (uint)(((int)MathHelper.Clamp((float)Math.Round(vectorY * maxPos), minNeg, maxPos) & 0xFFFF) << 0x10);
+            uint word2 = (uint)((int)MathHelper.Clamp((float)Math.Round(vectorX * maxPos), minNeg, maxPos) & 0xFFFF);
+            uint word1 = (uint)(((int)MathHelper.Clamp((float)Math.Round(vectorY * maxPos), minNeg, maxPos) & 0xFFFF) << 0x10);
 
 			return (word2 | word1);
 		}
@@ -100,7 +94,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		{
             const float maxVal = 0x7FFF;
 
-			var v4 = new Vector4 (0,0,0,1);
+			Vector4 v4 = new Vector4 (0,0,0,1);
             v4.X = ((short)((short2Packed >> 0x00) & 0xFFFF)) / maxVal;
             v4.Y = ((short)((short2Packed >> 0x10) & 0xFFFF)) / maxVal;
 			return v4;

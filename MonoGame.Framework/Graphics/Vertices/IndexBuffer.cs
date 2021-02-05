@@ -22,11 +22,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		protected IndexBuffer(GraphicsDevice graphicsDevice, IndexElementSize indexElementSize, int indexCount, BufferUsage usage, bool dynamic)
         {
-			if (graphicsDevice == null)
-            {
-                throw new ArgumentNullException("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
-            }
-			GraphicsDevice = graphicsDevice;
+            GraphicsDevice = graphicsDevice ?? throw new ArgumentNullException("graphicsDevice", FrameworkResources.ResourceCreationWhenDeviceIsNull);
 			IndexElementSize = indexElementSize;	
             IndexCount = indexCount;
             BufferUsage = usage;

@@ -32,18 +32,15 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveContinuity Continuity
         {
-            get { return _continuity; }
-            set { _continuity = value; }
+            get => _continuity;
+            set => _continuity = value;
         }
 
         /// <summary>
         /// Gets a position of the key on the curve.
         /// </summary>
         [DataMember]
-        public float Position
-        {
-            get { return _position; }
-        }
+        public float Position => _position;
 
         /// <summary>
         /// Gets or sets a tangent when approaching this point from the previous point on the curve.
@@ -51,8 +48,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public float TangentIn
         {
-            get { return _tangentIn; }
-            set { _tangentIn = value; }
+            get => _tangentIn;
+            set => _tangentIn = value;
         }
 
         /// <summary>
@@ -61,8 +58,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public float TangentOut
         {
-            get { return _tangentOut; }
-            set { _tangentOut = value; }
+            get => _tangentOut;
+            set => _tangentOut = value;
         }
 
         /// <summary>
@@ -71,8 +68,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public float Value
         {
-            get { return _value; }
-            set { _value = value; }
+            get => _value;
+            set => _value = value;
         }
 
         #endregion

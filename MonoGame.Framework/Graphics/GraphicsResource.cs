@@ -120,10 +120,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		
 		public GraphicsDevice GraphicsDevice
 		{
-			get
-			{
-				return graphicsDevice;
-			}
+			get => graphicsDevice;
 
             internal set
             {
@@ -147,15 +144,9 @@ namespace Microsoft.Xna.Framework.Graphics
             }
 		}
 		
-		public bool IsDisposed
-		{
-			get
-			{
-				return disposed;
-			}
-		}
-		
-		public string Name { get; set; }
+		public bool IsDisposed => disposed;
+
+        public string Name { get; set; }
 		
 		public object Tag { get; set; }
 

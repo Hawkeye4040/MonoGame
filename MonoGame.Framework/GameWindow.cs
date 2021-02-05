@@ -32,7 +32,9 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Gets or sets a bool that enables usage of Alt+F4 for window closing on desktop platforms. Value is true by default.
         /// </summary>
-        public virtual bool AllowAltF4 { get { return _allowAltF4; } set { _allowAltF4 = value; } }
+        public virtual bool AllowAltF4 { get => _allowAltF4;
+            set => _allowAltF4 = value;
+        }
 
 #if (WINDOWS && !WINDOWS_UAP) || DESKTOPGL
         /// <summary>
@@ -70,8 +72,8 @@ namespace Microsoft.Xna.Framework
         /// set by using the DisplayName property found in the app manifest file.
         /// </remarks>
         public string Title {
-			get { return _title; }
-			set {
+			get => _title;
+            set {
 				if (_title != value) {
 					SetTitle(value);
 					_title = value;
@@ -87,14 +89,8 @@ namespace Microsoft.Xna.Framework
         /// </exception>
         public virtual bool IsBorderless
         {
-            get
-            {
-                return false;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get => false;
+            set => throw new NotImplementedException();
         }
 
         internal MouseState MouseState;
@@ -141,7 +137,7 @@ namespace Microsoft.Xna.Framework
 		/// </remarks>
 		public event EventHandler<TextInputEventArgs> TextInput;
 
-        internal bool IsTextInputHandled { get { return TextInput != null; } }
+        internal bool IsTextInputHandled => TextInput != null;
 
         /// <summary>
         /// Buffered keyboard KeyDown event.

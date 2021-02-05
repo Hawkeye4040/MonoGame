@@ -81,7 +81,7 @@ namespace Microsoft.Xna.Framework.Content
 				for(int i = 0, j = 0; i <= 50; i += 2)
 				{
 					extra_bits[i] = extra_bits[i+1] = (byte)j;
-					if ((i != 0) && (j < 17)) j++;
+					if (i != 0 && j < 17) j++;
 				}
 			}
 			if(position_base == null)
@@ -212,7 +212,7 @@ namespace Microsoft.Xna.Framework.Content
 				}
 				
 				/* buffer exhaustion check */
-				if(inData.Position > (startpos + inLen))
+				if(inData.Position > startpos + inLen)
 				{
 					/* it's possible to have a file where the next run is less than
 				     * 16 bits in size. In this case, the READ_HUFFSYM() macro used
@@ -224,7 +224,7 @@ namespace Microsoft.Xna.Framework.Content
 					 */
 					//Debug.WriteLine("WTF");
 
-					if(inData.Position > (startpos+inLen+2) || bitbuf.GetBitsLeft() < 16) return -1; //TODO throw proper exception
+					if(inData.Position > startpos+inLen+2 || bitbuf.GetBitsLeft() < 16) return -1; //TODO throw proper exception
 				}
 				
 				while((this_run = (int)m_state.block_remaining) > 0 && togo > 0)
@@ -236,7 +236,7 @@ namespace Microsoft.Xna.Framework.Content
 					/* apply 2^x-1 mask */
 					window_posn &= window_size - 1;
 					/* runs can't straddle the window wraparound */
-					if((window_posn + this_run) > window_size)
+					if(window_posn + this_run > window_size)
 						return -1; //TODO throw proper exception
 					
 					switch(m_state.block_type)
@@ -371,7 +371,7 @@ namespace Microsoft.Xna.Framework.Content
 										/* verbatim and aligned bits */
 										extra -= 3;
 										verbatim_bits = (int)bitbuf.ReadBits((byte)extra);
-										match_offset += (verbatim_bits << 3);
+										match_offset += verbatim_bits << 3;
 										aligned_bits = (int)ReadHuffSym(m_state.ALIGNED_table, m_state.ALIGNED_len,
 										                           LzxConstants.ALIGNED_MAXSYMBOLS, LzxConstants.ALIGNED_TABLEBITS,
 										                           bitbuf);
@@ -445,7 +445,7 @@ namespace Microsoft.Xna.Framework.Content
 						break;
 						
 					case LzxConstants.BLOCKTYPE.UNCOMPRESSED:
-						if((inData.Position + this_run) > endpos) return -1; //TODO throw proper exception
+						if(inData.Position + this_run > endpos) return -1; //TODO throw proper exception
 						byte[] temp_buffer = new byte[this_run];
 						inData.Read(temp_buffer, 0, this_run);
 						temp_buffer.CopyTo(window, (int)window_posn);
@@ -471,7 +471,7 @@ namespace Microsoft.Xna.Framework.Content
 			
 			// TODO finish intel E8 decoding
 			/* intel E8 decoding */
-			if((m_state.frames_read++ < 32768) && m_state.intel_filesize != 0)
+			if(m_state.frames_read++ < 32768 && m_state.intel_filesize != 0)
 			{
 				if(outLen <= 6 || m_state.intel_started == 0)
 				{
@@ -554,9 +554,9 @@ namespace Microsoft.Xna.Framework.Content
 								/* if this path hasn't been taken yet, 'allocate' two entries */
 								if(table[leaf] == 0)
 								{
-									table[(next_symbol << 1)] = 0;
+									table[next_symbol << 1] = 0;
 									table[(next_symbol << 1) + 1] = 0;
-									table[leaf] = (ushort)(next_symbol++);
+									table[leaf] = (ushort)next_symbol++;
 								}
 								/* follow the path and select either left or right for next bit */
 								leaf = (uint)(table[leaf] << 1);
@@ -632,7 +632,7 @@ namespace Microsoft.Xna.Framework.Content
 			bitbuf.EnsureBits(16);
 			if((i = table[bitbuf.PeekBits((byte)nbits)]) >= nsyms)
 			{
-				j = (uint)(1 << (int)((sizeof(uint)*8) - nbits));
+				j = (uint)(1 << (int)(sizeof(uint)*8 - nbits));
 				do
 				{
 					j >>= 1; i <<= 1; i |= (bitbuf.GetBuffer() & j) != 0 ? (uint)1 : 0;
@@ -677,7 +677,7 @@ namespace Microsoft.Xna.Framework.Content
 			
 			public uint PeekBits(byte bits)
 			{
-				return (buffer >> ((sizeof(uint)*8) - bits));
+				return buffer >> (sizeof(uint)*8 - bits);
 			}
 			
 			public void RemoveBits(byte bits)

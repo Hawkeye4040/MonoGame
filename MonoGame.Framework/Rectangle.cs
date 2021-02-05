@@ -54,64 +54,40 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Returns a <see cref="Rectangle"/> with X=0, Y=0, Width=0, Height=0.
         /// </summary>
-        public static Rectangle Empty
-        {
-            get { return emptyRectangle; }
-        }
+        public static Rectangle Empty => emptyRectangle;
 
         /// <summary>
         /// Returns the x coordinate of the left edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Left
-        {
-            get { return X; }
-        }
+        public int Left => X;
 
         /// <summary>
         /// Returns the x coordinate of the right edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Right
-        {
-            get { return X + Width; }
-        }
+        public int Right => X + Width;
 
         /// <summary>
         /// Returns the y coordinate of the top edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Top
-        {
-            get { return Y; }
-        }
+        public int Top => Y;
 
         /// <summary>
         /// Returns the y coordinate of the bottom edge of this <see cref="Rectangle"/>.
         /// </summary>
-        public int Bottom
-        {
-            get { return Y + Height; }
-        }
+        public int Bottom => Y + Height;
 
         /// <summary>
         /// Whether or not this <see cref="Rectangle"/> has a <see cref="Width"/> and
         /// <see cref="Height"/> of 0, and a <see cref="Location"/> of (0, 0).
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return Width == 0 && Height == 0 && X == 0 && Y == 0;
-            }
-        }
+        public bool IsEmpty => Width == 0 && Height == 0 && X == 0 && Y == 0;
 
         /// <summary>
         /// The top-left coordinates of this <see cref="Rectangle"/>.
         /// </summary>
         public Point Location
         {
-            get
-            {
-                return new Point(X, Y);
-            }
+            get => new Point(X, Y);
             set
             {
                 X = value.X;
@@ -124,10 +100,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Point Size
         {
-            get
-            {
-                return new Point(Width,Height);
-            }
+            get => new Point(Width,Height);
             set
             {
                 Width = value.X;
@@ -142,30 +115,19 @@ namespace Microsoft.Xna.Framework
         /// If <see cref="Width"/> or <see cref="Height"/> is an odd number,
         /// the center point will be rounded down.
         /// </remarks>
-        public Point Center
-        {
-            get
-            {
-                return new Point(X + Width / 2, Y + Height / 2);
-            }
-        }
+        public Point Center => new Point(X + Width / 2, Y + Height / 2);
 
         #endregion
 
         #region Internal Properties
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    X, "  ",
-                    Y, "  ",
-                    Width, "  ",
-                    Height
-                    );
-            }
-        }
+        internal string DebugDisplayString =>
+            string.Concat(
+                X, "  ",
+                Y, "  ",
+                Width, "  ",
+                Height
+            );
 
         #endregion
 

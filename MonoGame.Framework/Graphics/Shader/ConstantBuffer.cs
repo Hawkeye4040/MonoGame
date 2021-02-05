@@ -19,10 +19,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private ulong _stateKey;
 
         private bool _dirty;
-        private bool Dirty
-        {
-            get { return _dirty; }
-        }
+        private bool Dirty => _dirty;
 
         public ConstantBuffer(ConstantBuffer cloneSource)
         {
@@ -92,10 +89,10 @@ namespace Microsoft.Xna.Framework.Graphics
                 Buffer.BlockCopy(data as Array, 0, _buffer, offset, rows*columns*elementSize);
             } else
             {
-                var source = data as Array;
+                Array source = data as Array;
 
-                var stride = (columns*elementSize);
-                for (var y = 0; y < rows; y++)
+                int stride = (columns*elementSize);
+                for (int y = 0; y < rows; y++)
                     Buffer.BlockCopy(source, stride*y, _buffer, offset + (rowSize*y), columns*elementSize);
             }
         }
@@ -105,14 +102,14 @@ namespace Microsoft.Xna.Framework.Graphics
             const int elementSize = 4;
             const int rowSize = elementSize * 4;
 
-            var rowsUsed = 0;
+            int rowsUsed = 0;
 
-            var elements = param.Elements;
+            EffectParameterCollection elements = param.Elements;
             if (elements.Count > 0)
             {
-                for (var i=0; i < elements.Count; i++)
+                for (int i=0; i < elements.Count; i++)
                 {
-                    var rowsUsedSubParam = SetParameter(offset, elements[i]);
+                    int rowsUsedSubParam = SetParameter(offset, elements[i]);
                     offset += rowsUsedSubParam * rowSize;
                     rowsUsed += rowsUsedSubParam;
                 }
@@ -161,15 +158,15 @@ namespace Microsoft.Xna.Framework.Graphics
             if (_stateKey > EffectParameter.NextStateKey)
                 _stateKey = 0;
             
-            for (var p = 0; p < _parameters.Length; p++)
+            for (int p = 0; p < _parameters.Length; p++)
             {
-                var index = _parameters[p];
-                var param = parameters[index];
+                int index = _parameters[p];
+                EffectParameter param = parameters[index];
 
                 if (param.StateKey < _stateKey)
                     continue;
 
-                var offset = _offsets[p];
+                int offset = _offsets[p];
                 _dirty = true;
 
                 SetParameter(offset, param);

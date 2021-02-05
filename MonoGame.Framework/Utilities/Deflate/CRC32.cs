@@ -46,24 +46,12 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <summary>
         ///   Indicates the total number of bytes applied to the CRC.
         /// </summary>
-        public long TotalBytesRead
-        {
-            get
-            {
-                return _TotalBytesRead;
-            }
-        }
+        public long TotalBytesRead => _TotalBytesRead;
 
         /// <summary>
         /// Indicates the current CRC for all blocks slurped in.
         /// </summary>
-        public int Crc32Result
-        {
-            get
-            {
-                return unchecked((int)(~_register));
-            }
-        }
+        public int Crc32Result => unchecked((int)(~_register));
 
         /// <summary>
         /// Returns the CRC32 for the specified stream.
@@ -627,10 +615,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         ///   This is either the total number of bytes read, or the total number of
         ///   bytes written, depending on the direction of this stream.
         /// </remarks>
-        public long TotalBytesSlurped
-        {
-            get { return _Crc32.TotalBytesRead; }
-        }
+        public long TotalBytesSlurped => _Crc32.TotalBytesRead;
 
         /// <summary>
         ///   Provides the current CRC for all blocks slurped in.
@@ -642,10 +627,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         ///     get an accurate CRC for the entire stream.
         ///   </para>
         /// </remarks>
-        public int Crc
-        {
-            get { return _Crc32.Crc32Result; }
-        }
+        public int Crc => _Crc32.Crc32Result;
 
         /// <summary>
         ///   Indicates whether the underlying stream will be left open when the
@@ -658,8 +640,8 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public bool LeaveOpen
         {
-            get { return _leaveOpen; }
-            set { _leaveOpen = value; }
+            get => _leaveOpen;
+            set => _leaveOpen = value;
         }
 
         /// <summary>
@@ -707,10 +689,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <summary>
         /// Indicates whether the stream supports reading.
         /// </summary>
-        public override bool CanRead
-        {
-            get { return _innerStream.CanRead; }
-        }
+        public override bool CanRead => _innerStream.CanRead;
 
         /// <summary>
         ///   Indicates whether the stream supports seeking.
@@ -720,18 +699,12 @@ namespace MonoGame.Framework.Utilities.Deflate
         ///     Always returns false.
         ///   </para>
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
         /// <summary>
         /// Indicates whether the stream supports writing.
         /// </summary>
-        public override bool CanWrite
-        {
-            get { return _innerStream.CanWrite; }
-        }
+        public override bool CanWrite => _innerStream.CanWrite;
 
         /// <summary>
         /// Flush the stream.
@@ -761,8 +734,8 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </summary>
         public override long Position
         {
-            get { return _Crc32.TotalBytesRead; }
-            set { throw new NotSupportedException(); }
+            get => _Crc32.TotalBytesRead;
+            set => throw new NotSupportedException();
         }
 
         /// <summary>

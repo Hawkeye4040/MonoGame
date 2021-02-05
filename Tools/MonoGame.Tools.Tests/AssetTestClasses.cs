@@ -25,10 +25,7 @@ public class TheBasics
         set;
     }
 
-    public string GetOnlyProperty
-    {
-        get { return "Hello World"; }
-    }
+    public string GetOnlyProperty => "Hello World";
 
     public string SetOnlyProperty { set; private get; }
 
@@ -108,10 +105,7 @@ public class RenamingXmlElements
     [ContentSerializer(ElementName = "Dimensions")]
     private Vector2 dimensions;
 
-    public Vector2 Dimensions
-    {
-        get { return dimensions; }
-    }
+    public Vector2 Dimensions => dimensions;
 
     internal void SetDimensions(Vector2 value)
     {
@@ -194,8 +188,8 @@ public class Collections
     // Indexer - should be ignored by intermediate serializer.
     public Color this[int i]
     {
-        get { return ColorArray[i]; }
-        set { ColorArray[i] = value; }
+        get => ColorArray[i];
+        set => ColorArray[i] = value;
     }
 }
 #endregion
@@ -342,10 +336,7 @@ class ExtendedFontDescription : FontDescription
     }
 
     [ContentSerializer(Optional = true, CollectionItemName = "Item")]
-    public List<string> ExtendedListProperty
-    {
-        get { return _list; }
-    }
+    public List<string> ExtendedListProperty => _list;
 
     private List<string> _list = new List<string>();
 }
@@ -367,62 +358,35 @@ class GetterOnlyProperties
     private readonly AnotherClass[] _customClassArray;
     private readonly AnotherStruct _customStruct;
 
-    public int IntValue
-    {
-        get { return 0; }
-    }
+    public int IntValue => 0;
 
-    public Vector2 Dimensions
-    {
-        get { return new Vector2(16, 16); }
-    }
+    public Vector2 Dimensions => new Vector2(16, 16);
 
-    public List<int> IntList
-    {
-        get { return _intList; }
-    }
+    public List<int> IntList => _intList;
 
     public Dictionary<int, string> IntStringDictionaryWithPrivateSetter { get; private set; }
 
-    public Dictionary<int, string> IntStringDictionary
-    {
-        get { return _intStringDictionary; }
-    }
+    public Dictionary<int, string> IntStringDictionary => _intStringDictionary;
 
     public class AnotherClass
     {
         public int A;
     }
 
-    public AnotherClass CustomClass
-    {
-        get { return _customClass; }
-    }
+    public AnotherClass CustomClass => _customClass;
 
-    public object UntypedCustomClass
-    {
-        get { return _customClass; }
-    }
+    public object UntypedCustomClass => _customClass;
 
-    public AnotherClass[] CustomClassArray
-    {
-        get { return _customClassArray; }
-    }
+    public AnotherClass[] CustomClassArray => _customClassArray;
 
-    public object UntypedCustomClassArray
-    {
-        get { return _customClassArray; }
-    }
+    public object UntypedCustomClassArray => _customClassArray;
 
     public struct AnotherStruct
     {
         public int A;
     }
 
-    public AnotherStruct CustomStruct
-    {
-        get { return _customStruct; }
-    }
+    public AnotherStruct CustomStruct => _customStruct;
 
     public GetterOnlyProperties()
     {
@@ -446,10 +410,7 @@ class GetterOnlyPolymorphicArrayProperties
         public int A;
     }
 
-    public IList CustomClassArrayAsIList
-    {
-        get { return _customClassArray; }
-    }
+    public IList CustomClassArrayAsIList => _customClassArray;
 
     public GetterOnlyPolymorphicArrayProperties()
     {
@@ -482,10 +443,7 @@ public class ChildCollections
     private readonly ChildrenCollection _children;
 
     [ContentSerializer]
-    public ChildrenCollection Children
-    {
-        get { return _children; }
-    }
+    public ChildrenCollection Children => _children;
 
     public ChildCollections()
     {

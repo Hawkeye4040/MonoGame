@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using SharpDX.D3DCompiler;
+
 namespace MonoGame.Effect
 {
     partial class EffectObject
@@ -31,7 +33,7 @@ namespace MonoGame.Effect
                 }
 
                 // Compile the shader into bytecode.                
-                var result = SharpDX.D3DCompiler.ShaderBytecode.Compile(
+                CompilationResult result = SharpDX.D3DCompiler.ShaderBytecode.Compile(
                     shaderResult.FileContent,
                     shaderFunction,
                     shaderProfile,

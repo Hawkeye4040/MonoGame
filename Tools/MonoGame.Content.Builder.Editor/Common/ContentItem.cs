@@ -37,23 +37,11 @@ namespace MonoGame.Tools.Pipeline
 
         [Category("Common")]
         [Description("The file name of this item.")]
-        public string Name 
-        { 
-            get
-            {
-                return System.IO.Path.GetFileName(OriginalPath);
-            }
-        }
+        public string Name => System.IO.Path.GetFileName(OriginalPath);
 
         [Category("Common")]
         [Description("The folder where this item is located.")]
-        public string Location
-        {
-            get
-            {
-                return System.IO.Path.GetDirectoryName(OriginalPath);
-            }
-        }
+        public string Location => System.IO.Path.GetDirectoryName(OriginalPath);
 
         #endregion
 
@@ -62,7 +50,7 @@ namespace MonoGame.Tools.Pipeline
         [Description("The way to process this content item.")]
         public BuildAction BuildAction
         {
-            get { return _buildAction; }
+            get => _buildAction;
             set
             {
                 if (_buildAction == value)
@@ -80,7 +68,7 @@ namespace MonoGame.Tools.Pipeline
         [TypeConverter(typeof(ImporterConverter))]
         public ImporterTypeDescription Importer
         {
-            get { return _importer; }
+            get => _importer;
 
             set
             {
@@ -107,7 +95,7 @@ namespace MonoGame.Tools.Pipeline
         [TypeConverter(typeof(ProcessorConverter))]
         public ProcessorTypeDescription Processor
         {
-            get { return _processor; }
+            get => _processor;
 
             set
             {

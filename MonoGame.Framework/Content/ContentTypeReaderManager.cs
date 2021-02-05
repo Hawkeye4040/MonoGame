@@ -7,6 +7,9 @@ using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+
+using Microsoft.Xna.Framework.Graphics;
+
 using MonoGame.Framework.Utilities;
 
 namespace Microsoft.Xna.Framework.Content
@@ -53,49 +56,49 @@ namespace Microsoft.Xna.Framework.Content
             {
                 // Dummy variables required for it to work on iDevices ** DO NOT DELETE ** 
                 // This forces the classes not to be optimized out when deploying to iDevices
-                var hByteReader = new ByteReader();
-                var hSByteReader = new SByteReader();
-                var hDateTimeReader = new DateTimeReader();
-                var hDecimalReader = new DecimalReader();
-                var hBoundingSphereReader = new BoundingSphereReader();
-                var hBoundingFrustumReader = new BoundingFrustumReader();
-                var hRayReader = new RayReader();
-                var hCharListReader = new ListReader<char>();
-                var hRectangleListReader = new ListReader<Rectangle>();
-                var hRectangleArrayReader = new ArrayReader<Rectangle>();
-                var hVector3ListReader = new ListReader<Vector3>();
-                var hStringListReader = new ListReader<StringReader>();
-                var hIntListReader = new ListReader<int>();
-                var hSpriteFontReader = new SpriteFontReader();
-                var hTexture2DReader = new Texture2DReader();
-                var hCharReader = new CharReader();
-                var hRectangleReader = new RectangleReader();
-                var hStringReader = new StringReader();
-                var hVector2Reader = new Vector2Reader();
-                var hVector3Reader = new Vector3Reader();
-                var hVector4Reader = new Vector4Reader();
-                var hCurveReader = new CurveReader();
-                var hIndexBufferReader = new IndexBufferReader();
-                var hBoundingBoxReader = new BoundingBoxReader();
-                var hMatrixReader = new MatrixReader();
-                var hBasicEffectReader = new BasicEffectReader();
-                var hVertexBufferReader = new VertexBufferReader();
-                var hAlphaTestEffectReader = new AlphaTestEffectReader();
-                var hEnumSpriteEffectsReader = new EnumReader<Graphics.SpriteEffects>();
-                var hArrayFloatReader = new ArrayReader<float>();
-                var hArrayVector2Reader = new ArrayReader<Vector2>();
-                var hListVector2Reader = new ListReader<Vector2>();
-                var hArrayMatrixReader = new ArrayReader<Matrix>();
-                var hEnumBlendReader = new EnumReader<Graphics.Blend>();
-                var hNullableRectReader = new NullableReader<Rectangle>();
-                var hEffectMaterialReader = new EffectMaterialReader();
-                var hExternalReferenceReader = new ExternalReferenceReader();
-                var hSoundEffectReader = new SoundEffectReader();
-                var hSongReader = new SongReader();
-                var hModelReader = new ModelReader();
-                var hInt32Reader = new Int32Reader();
-                var hEffectReader = new EffectReader();
-                var hSingleReader = new SingleReader();
+                ByteReader hByteReader = new ByteReader();
+                SByteReader hSByteReader = new SByteReader();
+                DateTimeReader hDateTimeReader = new DateTimeReader();
+                DecimalReader hDecimalReader = new DecimalReader();
+                BoundingSphereReader hBoundingSphereReader = new BoundingSphereReader();
+                BoundingFrustumReader hBoundingFrustumReader = new BoundingFrustumReader();
+                RayReader hRayReader = new RayReader();
+                ListReader<char> hCharListReader = new ListReader<char>();
+                ListReader<Rectangle> hRectangleListReader = new ListReader<Rectangle>();
+                ArrayReader<Rectangle> hRectangleArrayReader = new ArrayReader<Rectangle>();
+                ListReader<Vector3> hVector3ListReader = new ListReader<Vector3>();
+                ListReader<StringReader> hStringListReader = new ListReader<StringReader>();
+                ListReader<int> hIntListReader = new ListReader<int>();
+                SpriteFontReader hSpriteFontReader = new SpriteFontReader();
+                Texture2DReader hTexture2DReader = new Texture2DReader();
+                CharReader hCharReader = new CharReader();
+                RectangleReader hRectangleReader = new RectangleReader();
+                StringReader hStringReader = new StringReader();
+                Vector2Reader hVector2Reader = new Vector2Reader();
+                Vector3Reader hVector3Reader = new Vector3Reader();
+                Vector4Reader hVector4Reader = new Vector4Reader();
+                CurveReader hCurveReader = new CurveReader();
+                IndexBufferReader hIndexBufferReader = new IndexBufferReader();
+                BoundingBoxReader hBoundingBoxReader = new BoundingBoxReader();
+                MatrixReader hMatrixReader = new MatrixReader();
+                BasicEffectReader hBasicEffectReader = new BasicEffectReader();
+                VertexBufferReader hVertexBufferReader = new VertexBufferReader();
+                AlphaTestEffectReader hAlphaTestEffectReader = new AlphaTestEffectReader();
+                EnumReader<SpriteEffects> hEnumSpriteEffectsReader = new EnumReader<Graphics.SpriteEffects>();
+                ArrayReader<float> hArrayFloatReader = new ArrayReader<float>();
+                ArrayReader<Vector2> hArrayVector2Reader = new ArrayReader<Vector2>();
+                ListReader<Vector2> hListVector2Reader = new ListReader<Vector2>();
+                ArrayReader<Matrix> hArrayMatrixReader = new ArrayReader<Matrix>();
+                EnumReader<Blend> hEnumBlendReader = new EnumReader<Graphics.Blend>();
+                NullableReader<Rectangle> hNullableRectReader = new NullableReader<Rectangle>();
+                EffectMaterialReader hEffectMaterialReader = new EffectMaterialReader();
+                ExternalReferenceReader hExternalReferenceReader = new ExternalReferenceReader();
+                SoundEffectReader hSoundEffectReader = new SoundEffectReader();
+                SongReader hSongReader = new SongReader();
+                ModelReader hModelReader = new ModelReader();
+                Int32Reader hInt32Reader = new Int32Reader();
+                EffectReader hEffectReader = new EffectReader();
+                SingleReader hSingleReader = new SingleReader();
 
                 // At the moment the Video class doesn't exist
                 // on all platforms... Allow it to compile anyway.
@@ -106,9 +109,9 @@ namespace Microsoft.Xna.Framework.Content
 #pragma warning restore 0219, 0649
 
             // The first content byte i read tells me the number of content readers in this XNB file
-            var numberOfReaders = reader.Read7BitEncodedInt();
-            var contentReaders = new ContentTypeReader[numberOfReaders];
-            var needsInitialize = new BitArray(numberOfReaders);
+            int numberOfReaders = reader.Read7BitEncodedInt();
+            ContentTypeReader[] contentReaders = new ContentTypeReader[numberOfReaders];
+            BitArray needsInitialize = new BitArray(numberOfReaders);
             _contentReaders = new Dictionary<Type, ContentTypeReader>(numberOfReaders);
 
             // Lock until we're done allocating and initializing any new
@@ -118,7 +121,7 @@ namespace Microsoft.Xna.Framework.Content
             {
                 // For each reader in the file, we read out the length of the string which contains the type of the reader,
                 // then we read out the string. Finally we instantiate an instance of that reader using reflection
-                for (var i = 0; i < numberOfReaders; i++)
+                for (int i = 0; i < numberOfReaders; i++)
                 {
                     // This string tells us what reader we need to decode the following data
                     // string readerTypeString = reader.ReadString();
@@ -139,7 +142,7 @@ namespace Microsoft.Xna.Framework.Content
 
                         readerTypeString = PrepareType(readerTypeString);
 
-                        var l_readerType = Type.GetType(readerTypeString);
+                        Type l_readerType = Type.GetType(readerTypeString);
                         if (l_readerType != null)
                         {
                             ContentTypeReader typeReader;
@@ -171,7 +174,7 @@ namespace Microsoft.Xna.Framework.Content
                                     originalReaderTypeString + " (" + readerTypeString + ")");
                     }
 
-                    var targetType = contentReaders[i].TargetType;
+                    Type targetType = contentReaders[i].TargetType;
                     if (targetType != null)
                         if (!_contentReaders.ContainsKey(targetType))
                             _contentReaders.Add(targetType, contentReaders[i]);
@@ -182,7 +185,7 @@ namespace Microsoft.Xna.Framework.Content
                 }
 
                 // Initialize any new readers.
-                for (var i = 0; i < contentReaders.Length; i++)
+                for (int i = 0; i < contentReaders.Length; i++)
                 {
                     if (needsInitialize.Get(i))
                         contentReaders[i].Initialize(this);

@@ -109,7 +109,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
                 rst = (uint)(((((uint)value & 0x8000) << 16) | ((((((uint)value >> 10) & 0x1f) - 15) + 127) << 23)) | (mantissa << 13));
             }
 
-            var uif = new uif();
+            uif uif = new uif();
             uif.u = rst;
             return uif.f;
         }

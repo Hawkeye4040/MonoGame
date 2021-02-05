@@ -19,25 +19,13 @@ namespace MonoGame.Tests.ContentPipeline
             _dependencies = new List<string>();
         }
 
-        public List<string> Dependencies
-        {
-            get { return _dependencies; }
-        }
+        public List<string> Dependencies => _dependencies;
 
-        public override string IntermediateDirectory
-        {
-            get { return _intermediateDirectory; }
-        }
+        public override string IntermediateDirectory => _intermediateDirectory;
 
-        public override ContentBuildLogger Logger
-        {
-            get { return _logger; }
-        }
+        public override ContentBuildLogger Logger => _logger;
 
-        public override string OutputDirectory
-        {
-            get { return _outputDirectory; }
-        }
+        public override string OutputDirectory => _outputDirectory;
 
         public override void AddDependency(string filename)
         {

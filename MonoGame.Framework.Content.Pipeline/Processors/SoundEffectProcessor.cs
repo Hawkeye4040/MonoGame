@@ -21,7 +21,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         /// Gets or sets the target format quality of the audio content.
         /// </summary>
         /// <value>The ConversionQuality of this audio data.</value>
-        public ConversionQuality Quality { get { return quality; } set { quality = value; } }
+        public ConversionQuality Quality { get => quality;
+            set => quality = value;
+        }
 
         /// <summary>
         /// Initializes a new instance of SoundEffectProcessor.

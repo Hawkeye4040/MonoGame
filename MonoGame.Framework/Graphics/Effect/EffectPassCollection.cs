@@ -14,24 +14,21 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal EffectPassCollection Clone(Effect effect)
         {
-            var passes = new EffectPass[_passes.Length];
-            for (var i = 0; i < _passes.Length; i++)
+            EffectPass[] passes = new EffectPass[_passes.Length];
+            for (int i = 0; i < _passes.Length; i++)
                 passes[i] = new EffectPass(effect, _passes[i]);
 
             return new EffectPassCollection(passes);
         }
 
-        public EffectPass this[int index]
-        {
-            get { return _passes[index]; }
-        }
+        public EffectPass this[int index] => _passes[index];
 
         public EffectPass this[string name]
         {
             get 
             {
                 // TODO: Add a name to pass lookup table.
-				foreach (var pass in _passes) 
+				foreach (EffectPass pass in _passes) 
                 {
 					if (pass.Name == name)
 						return pass;
@@ -40,10 +37,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		    }
         }
 
-        public int Count
-        {
-            get { return _passes.Length; }
-        }
+        public int Count => _passes.Length;
 
         public Enumerator GetEnumerator()
         {
@@ -86,10 +80,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 return false;
             }
 
-            public EffectPass Current
-            {
-                get { return _current; }
-            }
+            public EffectPass Current => _current;
 
             public void Dispose()
             {

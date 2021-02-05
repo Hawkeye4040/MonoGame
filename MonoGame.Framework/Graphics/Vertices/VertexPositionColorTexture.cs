@@ -17,19 +17,13 @@ namespace Microsoft.Xna.Framework.Graphics
             TextureCoordinate = textureCoordinate;
         }
 		
-        VertexDeclaration IVertexType.VertexDeclaration
-        {
-            get
-            {
-                return VertexDeclaration;
-            }
-        }
+        VertexDeclaration IVertexType.VertexDeclaration => VertexDeclaration;
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = Position.GetHashCode();
+                int hashCode = Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ Color.GetHashCode();
                 hashCode = (hashCode * 397) ^ TextureCoordinate.GetHashCode();
                 return hashCode;
@@ -64,7 +58,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         static VertexPositionColorTexture()
         {
-            var elements = new VertexElement[] 
+            VertexElement[] elements = new VertexElement[] 
             { 
                 new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0), 
                 new VertexElement(12, VertexElementFormat.Color, VertexElementUsage.Color, 0), 

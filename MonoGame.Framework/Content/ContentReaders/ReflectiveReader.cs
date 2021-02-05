@@ -27,10 +27,7 @@ namespace Microsoft.Xna.Framework.Content
         {
         }
 
-        public override bool CanDeserializeIntoExistingObject
-        {
-            get { return TargetType.IsClass(); }
-        }
+        public override bool CanDeserializeIntoExistingObject => TargetType.IsClass();
 
         protected internal override void Initialize(ContentTypeReaderManager manager)
         {
@@ -171,10 +168,9 @@ namespace Microsoft.Xna.Framework.Content
             if (existingInstance != null)
                 obj = (T)existingInstance;
             else
-                obj = (_constructor == null ? (T)Activator.CreateInstance(typeof(T)) : (T)_constructor.Invoke(null));
-		
-			if(_baseTypeReader != null)
-				_baseTypeReader.Read(input, obj);
+                obj = _constructor == null ? (T)Activator.CreateInstance(typeof(T)) : (T)_constructor.Invoke(null);
+
+            _baseTypeReader?.Read(input, obj);
 
             // Box the type.
             object boxed = (object)obj;

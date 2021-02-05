@@ -54,7 +54,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// </summary>
         public TimeSpan BufferDuration
         {
-            get { return _bufferDuration; }
+            get => _bufferDuration;
             set
             {
                 if (value.TotalMilliseconds < 100 || value.TotalMilliseconds > 1000)
@@ -76,10 +76,7 @@ namespace Microsoft.Xna.Framework.Audio
         /// Note: XNA could know if a headset microphone was plugged in an Xbox 360 controller but MonoGame can't.
         /// Hence, this is always true on mobile platforms, and always false otherwise.
         /// </summary>
-        public bool IsHeadset
-        {
-            get { return _isHeadset; }
-        }
+        public bool IsHeadset => _isHeadset;
 
         private int _sampleRate = 44100; // XNA default is 44100, don't know if it supports any other rates
 
@@ -87,20 +84,14 @@ namespace Microsoft.Xna.Framework.Audio
         /// Returns the sample rate of the captured audio.
         /// Note: default value is 44100hz
         /// </summary>
-        public int SampleRate
-        {
-            get { return _sampleRate; }
-        }
+        public int SampleRate => _sampleRate;
 
         private MicrophoneState _state = MicrophoneState.Stopped;
 
         /// <summary>
         /// Returns the state of the Microphone. 
         /// </summary>
-        public MicrophoneState State
-        {
-            get { return _state; }
-        }
+        public MicrophoneState State => _state;
 
         #endregion
 

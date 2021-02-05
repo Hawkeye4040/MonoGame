@@ -123,7 +123,7 @@ namespace Microsoft.Xna.Framework.Content
                                     {
                                         ushort pixel = BitConverter.ToUInt16(levelData, offset);
                                         pixel = (ushort)(((pixel & 0x7FFF) << 1) | ((pixel & 0x8000) >> 15));
-                                        levelData[offset] = (byte)(pixel);
+                                        levelData[offset] = (byte)pixel;
                                         levelData[offset + 1] = (byte)(pixel >> 8);
                                         offset += 2;
                                     }
@@ -142,7 +142,7 @@ namespace Microsoft.Xna.Framework.Content
 								    {
 									    ushort pixel = BitConverter.ToUInt16(levelData, offset);
 									    pixel = (ushort)(((pixel & 0x0FFF) << 4) | ((pixel & 0xF000) >> 12));
-									    levelData[offset] = (byte)(pixel);
+									    levelData[offset] = (byte)pixel;
 									    levelData[offset + 1] = (byte)(pixel >> 8);
 									    offset += 2;
 								    }
@@ -159,10 +159,10 @@ namespace Microsoft.Xna.Framework.Content
 								    for (int x = 0; x < levelWidth; x++)
 								    {
 									    int color = BitConverter.ToInt32(levelData, y * pitch + x * bytesPerPixel);
-									    levelData[y * pitch + x * 4] = (byte)(((color >> 16) & 0xff)); //R:=W
-									    levelData[y * pitch + x * 4 + 1] = (byte)(((color >> 8) & 0xff)); //G:=V
-									    levelData[y * pitch + x * 4 + 2] = (byte)(((color) & 0xff)); //B:=U
-									    levelData[y * pitch + x * 4 + 3] = (byte)(((color >> 24) & 0xff)); //A:=Q
+									    levelData[y * pitch + x * 4] = (byte)((color >> 16) & 0xff); //R:=W
+									    levelData[y * pitch + x * 4 + 1] = (byte)((color >> 8) & 0xff); //G:=V
+									    levelData[y * pitch + x * 4 + 2] = (byte)(color & 0xff); //B:=U
+									    levelData[y * pitch + x * 4 + 3] = (byte)((color >> 24) & 0xff); //A:=Q
 								    }
 							    }
 						    }

@@ -52,14 +52,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public uint PackedValue
         {
-            get
-            {
-                return packedValue;
-            }
-            set
-            {
-                packedValue = value;
-            }
+            get => packedValue;
+            set => packedValue = value;
         }
         public override string ToString()
         {

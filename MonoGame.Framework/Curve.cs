@@ -29,10 +29,7 @@ namespace Microsoft.Xna.Framework
         /// Returns <c>true</c> if this curve is constant (has zero or one points); <c>false</c> otherwise.
         /// </summary>
         [DataMember]
-        public bool IsConstant
-        {
-            get { return _keys.Count <= 1; }
-        }
+        public bool IsConstant => _keys.Count <= 1;
 
         /// <summary>
         /// Defines how to handle weighting values that are less than the first control point in the curve.
@@ -40,8 +37,8 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveLoopType PreLoop
         {
-            get { return _preLoop; }
-            set { _preLoop = value; }
+            get => _preLoop;
+            set => _preLoop = value;
         }
 
         /// <summary>
@@ -50,18 +47,15 @@ namespace Microsoft.Xna.Framework
         [DataMember]
         public CurveLoopType PostLoop
         {
-            get { return _postLoop; }
-            set { _postLoop = value; }
+            get => _postLoop;
+            set => _postLoop = value;
         }
 
         /// <summary>
         /// The collection of curve keys.
         /// </summary>
         [DataMember]
-        public CurveKeyCollection Keys
-        {
-            get { return _keys; }
-        }
+        public CurveKeyCollection Keys => _keys;
 
         #endregion
 

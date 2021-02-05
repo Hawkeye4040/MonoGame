@@ -27,23 +27,14 @@ namespace Microsoft.Xna.Framework.Media
         /// <summary>
         /// Gets the Artist of the Song.
         /// </summary>
-        public Artist Artist
-        {
-            get { return PlatformGetArtist(); }
-        }
+        public Artist Artist => PlatformGetArtist();
 
         /// <summary>
         /// Gets the Genre of the Song.
         /// </summary>
-        public Genre Genre
-        {
-            get { return PlatformGetGenre(); }
-        }
-        
-        public bool IsDisposed
-        {
-            get { return disposed; }
-        }
+        public Genre Genre => PlatformGetGenre();
+
+        public bool IsDisposed => disposed;
 
 #if ANDROID || OPENAL || WEB || IOS
         internal delegate void FinishedPlayingHandler(object sender, EventArgs args);
@@ -69,10 +60,7 @@ namespace Microsoft.Xna.Framework.Media
             Dispose(false);
         }
 
-        internal string FilePath
-		{
-			get { return _name; }
-		}
+        internal string FilePath => _name;
 
         /// <summary>
         /// Returns a song that can be played via <see cref="MediaPlayer"/>.
@@ -146,40 +134,19 @@ namespace Microsoft.Xna.Framework.Media
 		  return ! (song1 == song2);
 		}
 
-        public TimeSpan Duration
-        {
-            get { return PlatformGetDuration(); }
-        }	
+        public TimeSpan Duration => PlatformGetDuration();
 
-        public bool IsProtected
-        {
-            get { return PlatformIsProtected(); }
-        }
+        public bool IsProtected => PlatformIsProtected();
 
-        public bool IsRated
-        {
-            get { return PlatformIsRated(); }
-        }
+        public bool IsRated => PlatformIsRated();
 
-        public string Name
-        {
-            get { return PlatformGetName(); }
-        }
+        public string Name => PlatformGetName();
 
-        public int PlayCount
-        {
-            get { return PlatformGetPlayCount(); }
-        }
+        public int PlayCount => PlatformGetPlayCount();
 
-        public int Rating
-        {
-            get { return PlatformGetRating(); }
-        }
+        public int Rating => PlatformGetRating();
 
-        public int TrackNumber
-        {
-            get { return PlatformGetTrackNumber(); }
-        }
+        public int TrackNumber => PlatformGetTrackNumber();
     }
 }
 

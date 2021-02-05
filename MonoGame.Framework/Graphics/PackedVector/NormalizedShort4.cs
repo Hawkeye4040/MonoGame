@@ -34,15 +34,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public ulong PackedValue
         {
-            get
-            {
-                return short4Packed;
-            }
-            set
-            {
-                short4Packed = value;
-            }
-		}
+            get => short4Packed;
+            set => short4Packed = value;
+        }
 
         public override bool Equals(object obj)
         {
@@ -71,10 +65,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
             const long minNeg = -maxPos;
 
 			// clamp the value between min and max values
-            var word4 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorX * maxPos, minNeg, maxPos)) & mask);
-            var word3 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorY * maxPos, minNeg, maxPos)) & mask) << 0x10;
-            var word2 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorZ * maxPos, minNeg, maxPos)) & mask) << 0x20;
-            var word1 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorW * maxPos, minNeg, maxPos)) & mask) << 0x30;
+            ulong word4 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorX * maxPos, minNeg, maxPos)) & mask);
+            ulong word3 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorY * maxPos, minNeg, maxPos)) & mask) << 0x10;
+            ulong word2 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorZ * maxPos, minNeg, maxPos)) & mask) << 0x20;
+            ulong word1 = (ulong)((int)Math.Round(MathHelper.Clamp(vectorW * maxPos, minNeg, maxPos)) & mask) << 0x30;
 
 			return (word4 | word3 | word2 | word1);
 		}
@@ -88,7 +82,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		{
             const float maxVal = 0x7FFF;
 
-			var v4 = new Vector4 ();
+			Vector4 v4 = new Vector4 ();
             v4.X = ((short)((short4Packed >> 0x00) & 0xFFFF)) / maxVal;
             v4.Y = ((short)((short4Packed >> 0x10) & 0xFFFF)) / maxVal;
             v4.Z = ((short)((short4Packed >> 0x20) & 0xFFFF)) / maxVal;

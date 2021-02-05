@@ -1512,8 +1512,8 @@ namespace MonoGame.Framework.Utilities.Deflate
         private bool _WantRfc1950HeaderBytes = true;
         internal bool WantRfc1950HeaderBytes
         {
-            get { return _WantRfc1950HeaderBytes; }
-            set { _WantRfc1950HeaderBytes = value; }
+            get => _WantRfc1950HeaderBytes;
+            set => _WantRfc1950HeaderBytes = value;
         }
 
 

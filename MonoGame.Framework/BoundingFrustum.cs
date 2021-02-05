@@ -42,7 +42,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Matrix Matrix
         {
-            get { return _matrix; }
+            get => _matrix;
             set
             {
                 _matrix = value;
@@ -54,69 +54,46 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Gets the near plane of the frustum.
         /// </summary>
-        public Plane Near
-        {
-            get { return _planes[0]; }
-        }
+        public Plane Near => _planes[0];
 
         /// <summary>
         /// Gets the far plane of the frustum.
         /// </summary>
-        public Plane Far
-        {
-            get { return _planes[1]; }
-        }
+        public Plane Far => _planes[1];
 
         /// <summary>
         /// Gets the left plane of the frustum.
         /// </summary>
-        public Plane Left
-        {
-            get { return _planes[2]; }
-        }
+        public Plane Left => _planes[2];
 
         /// <summary>
         /// Gets the right plane of the frustum.
         /// </summary>
-        public Plane Right
-        {
-            get { return _planes[3]; }
-        }
+        public Plane Right => _planes[3];
 
         /// <summary>
         /// Gets the top plane of the frustum.
         /// </summary>
-        public Plane Top
-        {
-            get { return _planes[4]; }
-        }
+        public Plane Top => _planes[4];
 
         /// <summary>
         /// Gets the bottom plane of the frustum.
         /// </summary>
-        public Plane Bottom
-        {
-            get { return _planes[5]; }
-        }
+        public Plane Bottom => _planes[5];
 
         #endregion
 
         #region Internal Properties
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Near( ", _planes[0].DebugDisplayString, " )  \r\n",
-                    "Far( ", _planes[1].DebugDisplayString, " )  \r\n",
-                    "Left( ", _planes[2].DebugDisplayString, " )  \r\n",
-                    "Right( ", _planes[3].DebugDisplayString, " )  \r\n",
-                    "Top( ", _planes[4].DebugDisplayString, " )  \r\n",
-                    "Bottom( ", _planes[5].DebugDisplayString, " )  "
-                    );
-            }
-        }
+        internal string DebugDisplayString =>
+            string.Concat(
+                "Near( ", _planes[0].DebugDisplayString, " )  \r\n",
+                "Far( ", _planes[1].DebugDisplayString, " )  \r\n",
+                "Left( ", _planes[2].DebugDisplayString, " )  \r\n",
+                "Right( ", _planes[3].DebugDisplayString, " )  \r\n",
+                "Top( ", _planes[4].DebugDisplayString, " )  \r\n",
+                "Bottom( ", _planes[5].DebugDisplayString, " )  "
+            );
 
         #endregion
 

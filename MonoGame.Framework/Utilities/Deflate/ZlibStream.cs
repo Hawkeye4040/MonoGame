@@ -328,7 +328,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </summary>
         virtual public FlushType FlushMode
         {
-            get { return _baseStream._flushMode; }
+            get => _baseStream._flushMode;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
@@ -355,10 +355,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public int BufferSize
         {
-            get
-            {
-                return _baseStream._bufferSize;
-            }
+            get => _baseStream._bufferSize;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
@@ -371,16 +368,10 @@ namespace MonoGame.Framework.Utilities.Deflate
         }
 
         /// <summary> Returns the total number of bytes input so far.</summary>
-        virtual public long TotalIn
-        {
-            get { return _baseStream._z.TotalBytesIn; }
-        }
+        virtual public long TotalIn => _baseStream._z.TotalBytesIn;
 
         /// <summary> Returns the total number of bytes output so far.</summary>
-        virtual public long TotalOut
-        {
-            get { return _baseStream._z.TotalBytesOut; }
-        }
+        virtual public long TotalOut => _baseStream._z.TotalBytesOut;
 
         #endregion
 
@@ -448,10 +439,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <remarks>
         /// Always returns false.
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
         /// <summary>
         /// Indicates whether the stream can be written.
@@ -480,10 +468,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <summary>
         /// Reading this property always throws a <see cref="NotSupportedException"/>.
         /// </summary>
-        public override long Length
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public override long Length => throw new NotSupportedException();
 
         /// <summary>
         ///   The position of the stream pointer.
@@ -507,7 +492,7 @@ namespace MonoGame.Framework.Utilities.Deflate
                 return 0;
             }
 
-            set { throw new NotSupportedException(); }
+            set => throw new NotSupportedException();
         }
 
         /// <summary>

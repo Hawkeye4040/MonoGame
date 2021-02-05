@@ -14,20 +14,11 @@ namespace MonoGame.Tests.ContentPipeline
     {
         class ImporterContext : ContentImporterContext
         {
-            public override string IntermediateDirectory
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override string IntermediateDirectory => throw new NotImplementedException();
 
-            public override ContentBuildLogger Logger
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override ContentBuildLogger Logger => throw new NotImplementedException();
 
-            public override string OutputDirectory
-            {
-                get { throw new NotImplementedException(); }
-            }
+            public override string OutputDirectory => throw new NotImplementedException();
 
             public override void AddDependency(string filename)
             {

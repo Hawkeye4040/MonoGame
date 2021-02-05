@@ -68,10 +68,7 @@ namespace Microsoft.Xna.Framework.Input
             }
         }
 
-        private static int PlatformLastConnectedIndex
-        {
-            get { return _lastConnectedIndex; }
-        }
+        private static int PlatformLastConnectedIndex => _lastConnectedIndex;
 
         private const bool PlatformIsSupported = true;
 

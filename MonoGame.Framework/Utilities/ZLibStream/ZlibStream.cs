@@ -390,7 +390,7 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         virtual public FlushType FlushMode
         {
-            get { return _baseStream._flushMode; }
+            get => _baseStream._flushMode;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
@@ -417,10 +417,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         public int BufferSize
         {
-            get
-            {
-                return _baseStream._bufferSize;
-            }
+            get => _baseStream._bufferSize;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("ZlibStream");
@@ -433,16 +430,10 @@ namespace MonoGame.Framework.Utilities
         }
 
         /// <summary> Returns the total number of bytes input so far.</summary>
-        virtual public long TotalIn
-        {
-            get { return _baseStream._z.TotalBytesIn; }
-        }
+        virtual public long TotalIn => _baseStream._z.TotalBytesIn;
 
         /// <summary> Returns the total number of bytes output so far.</summary>
-        virtual public long TotalOut
-        {
-            get { return _baseStream._z.TotalBytesOut; }
-        }
+        virtual public long TotalOut => _baseStream._z.TotalBytesOut;
 
         #endregion
 
@@ -510,10 +501,7 @@ namespace MonoGame.Framework.Utilities
         /// <remarks>
         /// Always returns false.
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
         /// <summary>
         /// Indicates whether the stream can be written.
@@ -542,10 +530,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// Reading this property always throws a <see cref="NotSupportedException"/>.
         /// </summary>
-        public override long Length
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public override long Length => throw new NotSupportedException();
 
         /// <summary>
         ///   The position of the stream pointer.
@@ -569,7 +554,7 @@ namespace MonoGame.Framework.Utilities
                 return 0;
             }
 
-            set { throw new NotSupportedException(); }
+            set => throw new NotSupportedException();
         }
 
         /// <summary>
@@ -948,7 +933,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// The Adler32 checksum on the data transferred through the codec so far. You probably don't need to look at this.
         /// </summary>
-        internal int Adler32 { get { return (int)_Adler32; } }
+        internal int Adler32 => (int)_Adler32;
 
 
         /// <summary>
@@ -1534,13 +1519,7 @@ namespace MonoGame.Framework.Utilities
         }
 
 
-        protected internal bool _wantCompress
-        {
-            get
-            {
-                return _compressionMode == CompressionMode.Compress;
-            }
-        }
+        protected internal bool _wantCompress => _compressionMode == CompressionMode.Compress;
 
         private ZlibCodec z
         {
@@ -1964,30 +1943,18 @@ namespace MonoGame.Framework.Utilities
 
 
 
-        public override bool CanRead
-        {
-            get { return _stream.CanRead; }
-        }
+        public override bool CanRead => _stream.CanRead;
 
-        public override bool CanSeek
-        {
-            get { return _stream.CanSeek; }
-        }
+        public override bool CanSeek => _stream.CanSeek;
 
-        public override bool CanWrite
-        {
-            get { return _stream.CanWrite; }
-        }
+        public override bool CanWrite => _stream.CanWrite;
 
-        public override long Length
-        {
-            get { return _stream.Length; }
-        }
+        public override long Length => _stream.Length;
 
         public override long Position
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         internal enum StreamMode
@@ -4612,8 +4579,8 @@ namespace MonoGame.Framework.Utilities
         private bool _handleRfc1950HeaderBytes = true;
         internal bool HandleRfc1950HeaderBytes
         {
-            get { return _handleRfc1950HeaderBytes; }
-            set { _handleRfc1950HeaderBytes = value; }
+            get => _handleRfc1950HeaderBytes;
+            set => _handleRfc1950HeaderBytes = value;
         }
         internal int wbits; // log2(window size)  (8..15, defaults to 15)
 
@@ -5064,10 +5031,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         internal string Comment
         {
-            get
-            {
-                return _Comment;
-            }
+            get => _Comment;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -5100,7 +5064,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         internal string FileName
         {
-            get { return _FileName; }
+            get => _FileName;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -5138,7 +5102,7 @@ namespace MonoGame.Framework.Utilities
         /// <remarks>
         /// This is used for internal error checking. You probably don't need to look at this property.
         /// </remarks>
-        internal int Crc32 { get { return _Crc32; } }
+        internal int Crc32 => _Crc32;
 
         private int _headerByteCount;
         internal ZlibBaseStream _baseStream;
@@ -5467,7 +5431,7 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         virtual internal FlushType FlushMode
         {
-            get { return _baseStream._flushMode; }
+            get => _baseStream._flushMode;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -5494,10 +5458,7 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         internal int BufferSize
         {
-            get
-            {
-                return _baseStream._bufferSize;
-            }
+            get => _baseStream._bufferSize;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -5511,22 +5472,10 @@ namespace MonoGame.Framework.Utilities
 
 
         /// <summary> Returns the total number of bytes input so far.</summary>
-        virtual internal long TotalIn
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesIn;
-            }
-        }
+        virtual internal long TotalIn => _baseStream._z.TotalBytesIn;
 
         /// <summary> Returns the total number of bytes output so far.</summary>
-        virtual internal long TotalOut
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesOut;
-            }
-        }
+        virtual internal long TotalOut => _baseStream._z.TotalBytesOut;
 
         #endregion
 
@@ -5597,10 +5546,7 @@ namespace MonoGame.Framework.Utilities
         /// <remarks>
         /// Always returns false.
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
 
         /// <summary>
@@ -5630,10 +5576,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// Reading this property always throws a <see cref="NotImplementedException"/>.
         /// </summary>
-        public override long Length
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override long Length => throw new NotImplementedException();
 
         /// <summary>
         ///   The position of the stream pointer.
@@ -5657,7 +5600,7 @@ namespace MonoGame.Framework.Utilities
                 return 0;
             }
 
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         /// <summary>
@@ -7388,8 +7331,8 @@ namespace MonoGame.Framework.Utilities
         private bool _WantRfc1950HeaderBytes = true;
         internal bool WantRfc1950HeaderBytes
         {
-            get { return _WantRfc1950HeaderBytes; }
-            set { _WantRfc1950HeaderBytes = value; }
+            get => _WantRfc1950HeaderBytes;
+            set => _WantRfc1950HeaderBytes = value;
         }
 
 
@@ -7769,24 +7712,12 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         ///   Indicates the total number of bytes applied to the CRC.
         /// </summary>
-        internal long TotalBytesRead
-        {
-            get
-            {
-                return _TotalBytesRead;
-            }
-        }
+        internal long TotalBytesRead => _TotalBytesRead;
 
         /// <summary>
         /// Indicates the current CRC for all blocks slurped in.
         /// </summary>
-        internal int Crc32Result
-        {
-            get
-            {
-                return unchecked((int)(~_register));
-            }
-        }
+        internal int Crc32Result => unchecked((int)(~_register));
 
         /// <summary>
         /// Returns the CRC32 for the specified stream.
@@ -8352,10 +8283,7 @@ namespace MonoGame.Framework.Utilities
         ///   This is either the total number of bytes read, or the total number of
         ///   bytes written, depending on the direction of this stream.
         /// </remarks>
-        internal long TotalBytesSlurped
-        {
-            get { return _Crc32.TotalBytesRead; }
-        }
+        internal long TotalBytesSlurped => _Crc32.TotalBytesRead;
 
         /// <summary>
         ///   Provides the current CRC for all blocks slurped in.
@@ -8367,10 +8295,7 @@ namespace MonoGame.Framework.Utilities
         ///     get an accurate CRC for the entire stream.
         ///   </para>
         /// </remarks>
-        internal int Crc
-        {
-            get { return _Crc32.Crc32Result; }
-        }
+        internal int Crc => _Crc32.Crc32Result;
 
         /// <summary>
         ///   Indicates whether the underlying stream will be left open when the
@@ -8383,8 +8308,8 @@ namespace MonoGame.Framework.Utilities
         /// </remarks>
         internal bool LeaveOpen
         {
-            get { return _leaveOpen; }
-            set { _leaveOpen = value; }
+            get => _leaveOpen;
+            set => _leaveOpen = value;
         }
 
         /// <summary>
@@ -8432,10 +8357,7 @@ namespace MonoGame.Framework.Utilities
         /// <summary>
         /// Indicates whether the stream supports reading.
         /// </summary>
-        public override bool CanRead
-        {
-            get { return _innerStream.CanRead; }
-        }
+        public override bool CanRead => _innerStream.CanRead;
 
         /// <summary>
         ///   Indicates whether the stream supports seeking.
@@ -8445,18 +8367,12 @@ namespace MonoGame.Framework.Utilities
         ///     Always returns false.
         ///   </para>
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
         /// <summary>
         /// Indicates whether the stream supports writing.
         /// </summary>
-        public override bool CanWrite
-        {
-            get { return _innerStream.CanWrite; }
-        }
+        public override bool CanWrite => _innerStream.CanWrite;
 
         /// <summary>
         /// Flush the stream.
@@ -8486,8 +8402,8 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         public override long Position
         {
-            get { return _Crc32.TotalBytesRead; }
-            set { throw new NotSupportedException(); }
+            get => _Crc32.TotalBytesRead;
+            set => throw new NotSupportedException();
         }
 
         /// <summary>
@@ -8534,13 +8450,7 @@ namespace MonoGame.Framework.Utilities
         /// <returns>
         /// The IANA name for the current <see cref="System.Text.Encoding"/>.
         /// </returns>
-        public override string WebName
-        {
-            get
-            {
-                return "iso-8859-1";
-            }
-        }
+        public override string WebName => "iso-8859-1";
 
 
         private char? fallbackCharacter;
@@ -8553,7 +8463,7 @@ namespace MonoGame.Framework.Utilities
         /// </summary>
         public char? FallbackCharacter
         {
-            get { return fallbackCharacter; }
+            get => fallbackCharacter;
             set
             {
                 fallbackCharacter = value;
@@ -8764,10 +8674,7 @@ namespace MonoGame.Framework.Utilities
         /// This property returns a maximum value of 256, as the encoding class
         /// only supports single byte encodings (1 byte == 256 possible values).
         /// </summary>
-        public static int CharacterCount
-        {
-            get { return byteToChar.Length; }
-        }
+        public static int CharacterCount => byteToChar.Length;
 
         #region Character Table
 

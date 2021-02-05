@@ -44,7 +44,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Returns the platform specific shader profile identifier.
         /// </summary>
-        public static int Profile { get { return PlatformProfile(); } }
+        public static int Profile => PlatformProfile();
 
         /// <summary>
         /// A hash value which can be used to compare shaders.
@@ -63,15 +63,15 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             GraphicsDevice = device;
 
-            var isVertexShader = reader.ReadBoolean();
+            bool isVertexShader = reader.ReadBoolean();
             Stage = isVertexShader ? ShaderStage.Vertex : ShaderStage.Pixel;
 
-            var shaderLength = reader.ReadInt32();
-            var shaderBytecode = reader.ReadBytes(shaderLength);
+            int shaderLength = reader.ReadInt32();
+            byte[] shaderBytecode = reader.ReadBytes(shaderLength);
 
-            var samplerCount = (int)reader.ReadByte();
+            int samplerCount = (int)reader.ReadByte();
             Samplers = new SamplerInfo[samplerCount];
-            for (var s = 0; s < samplerCount; s++)
+            for (int s = 0; s < samplerCount; s++)
             {
                 Samplers[s].type = (SamplerType)reader.ReadByte();
                 Samplers[s].textureSlot = reader.ReadByte();
@@ -98,14 +98,14 @@ namespace Microsoft.Xna.Framework.Graphics
                 Samplers[s].parameter = reader.ReadByte();
             }
 
-            var cbufferCount = (int)reader.ReadByte();
+            int cbufferCount = (int)reader.ReadByte();
             CBuffers = new int[cbufferCount];
-            for (var c = 0; c < cbufferCount; c++)
+            for (int c = 0; c < cbufferCount; c++)
                 CBuffers[c] = reader.ReadByte();
 
-            var attributeCount = (int)reader.ReadByte();
+            int attributeCount = (int)reader.ReadByte();
             Attributes = new VertexAttribute[attributeCount];
-            for (var a = 0; a < attributeCount; a++)
+            for (int a = 0; a < attributeCount; a++)
             {
                 Attributes[a].name = reader.ReadString();
                 Attributes[a].usage = (VertexElementUsage)reader.ReadByte();

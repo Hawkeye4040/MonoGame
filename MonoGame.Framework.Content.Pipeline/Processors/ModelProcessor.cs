@@ -37,8 +37,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         [DefaultValue(true)]
         public virtual bool ColorKeyEnabled
         {
-            get { return _colorKeyEnabled; }
-            set { _colorKeyEnabled = value; }
+            get => _colorKeyEnabled;
+            set => _colorKeyEnabled = value;
         }
 
         public virtual MaterialProcessorDefaultEffect DefaultEffect { get; set; }
@@ -46,8 +46,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         [DefaultValue(true)]
         public virtual bool GenerateMipmaps
         {
-            get { return _generateMipmaps; }
-            set { _generateMipmaps = value; }
+            get => _generateMipmaps;
+            set => _generateMipmaps = value;
         }
 
         public virtual bool GenerateTangentFrames { get; set; }
@@ -55,15 +55,15 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         [DefaultValue(true)]
         public virtual bool PremultiplyTextureAlpha
         {
-            get { return _premultiplyTextureAlpha; }
-            set { _premultiplyTextureAlpha = value; }
+            get => _premultiplyTextureAlpha;
+            set => _premultiplyTextureAlpha = value;
         }
 
         [DefaultValue(true)]
         public virtual bool PremultiplyVertexColors
         {
-            get { return _premultiplyVertexColors; }
-            set { _premultiplyVertexColors = value; }
+            get => _premultiplyVertexColors;
+            set => _premultiplyVertexColors = value;
         }
 
         public virtual bool ResizeTexturesToPowerOfTwo { get; set; }
@@ -77,8 +77,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         [DefaultValue(1.0f)]
         public virtual float Scale
         {
-            get { return _scale; }
-            set { _scale = value; }
+            get => _scale;
+            set => _scale = value;
         }
 
         public virtual bool SwapWindingOrder { get; set; }
@@ -86,8 +86,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
 		[DefaultValue(typeof(TextureProcessorOutputFormat), "Compressed")]
         public virtual TextureProcessorOutputFormat TextureFormat
         {
-            get { return _textureFormat; }
-            set { _textureFormat = value; }
+            get => _textureFormat;
+            set => _textureFormat = value;
         }
 
         #endregion

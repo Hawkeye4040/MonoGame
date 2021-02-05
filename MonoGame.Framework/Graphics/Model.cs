@@ -78,9 +78,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void BuildHierarchy()
 		{
-			var globalScale = Matrix.CreateScale(0.01f);
+			Matrix globalScale = Matrix.CreateScale(0.01f);
 			
-			foreach(var node in Root.Children)
+			foreach(ModelBone node in Root.Children)
 			{
 				BuildHierarchy(node, Root.Transform * globalScale, 0);
 			}
@@ -90,7 +90,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			node.ModelTransform = node.Transform * parentTransform;
 			
-			foreach (var child in node.Children) 
+			foreach (ModelBone child in node.Children) 
 			{
 				BuildHierarchy(child, node.ModelTransform, level + 1);
 			}

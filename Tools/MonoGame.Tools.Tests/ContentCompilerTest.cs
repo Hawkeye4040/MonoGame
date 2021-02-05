@@ -261,7 +261,7 @@ namespace MonoGame.Tests.ContentPipeline
                     string value;
                     return _dictionary.TryGetValue(key, out value) ? value : null;
                 }
-                set { _dictionary[key] = value; }
+                set => _dictionary[key] = value;
             }
         }
     }

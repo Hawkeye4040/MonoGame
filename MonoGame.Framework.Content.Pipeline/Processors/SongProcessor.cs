@@ -23,8 +23,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         /// <value>The ConversionQuality of this audio data.</value>
         public ConversionQuality Quality 
         { 
-            get { return _quality; } 
-            set { _quality = value; } 
+            get => _quality;
+            set => _quality = value;
         }
 
         /// <summary>

@@ -181,7 +181,7 @@ namespace Microsoft.Xna.Framework.Audio
         float volume;
         public float Volume
         {
-            get { return volume; }
+            get => volume;
             set
             {
                 AL.Source(alSourceId, ALSourcef.Gain, volume = value);

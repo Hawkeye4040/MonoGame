@@ -24,29 +24,20 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
 
         public ModelBoneContentCollection Children
         {
-            get { return _children; }
-            internal set { _children = value; }
+            get => _children;
+            internal set => _children = value;
         }
 
-        public int Index
-        {
-            get { return _index; }
-        }
+        public int Index => _index;
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name => _name;
 
-        public ModelBoneContent Parent
-        {
-            get { return _parent; }
-        }
+        public ModelBoneContent Parent => _parent;
 
         public Matrix Transform
         {
-            get { return _transform; }
-            set { _transform = value; }
+            get => _transform;
+            set => _transform = value;
         }
     }
 }

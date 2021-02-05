@@ -31,7 +31,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <param name="w">Initial value for the w component.</param>
         public Short4(float x, float y, float z, float w)
         {
-            var vector = new Vector4(x, y, z, w);
+            Vector4 vector = new Vector4(x, y, z, w);
             packedValue = Pack(ref vector);
         }
 
@@ -64,14 +64,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public ulong PackedValue
         {
-            get
-            {
-                return packedValue;
-            }
-            set
-            {
-                packedValue = value;
-            }
+            get => packedValue;
+            set => packedValue = value;
         }
 
         /// <summary>
@@ -126,10 +120,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float minNeg = ~(int)maxPos; // two's complement
 
             // clamp the value between min and max values
-            var word4 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.X, minNeg, maxPos))) & mask);
-			var word3 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.Y, minNeg, maxPos)) & mask)) << 0x10;
-			var word2 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.Z, minNeg, maxPos)) & mask)) << 0x20;
-			var word1 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.W, minNeg, maxPos)) & mask)) << 0x30;
+            ulong word4 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.X, minNeg, maxPos))) & mask);
+			ulong word3 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.Y, minNeg, maxPos)) & mask)) << 0x10;
+			ulong word2 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.Z, minNeg, maxPos)) & mask)) << 0x20;
+			ulong word1 = ((ulong)((int) Math.Round(MathHelper.Clamp(vector.W, minNeg, maxPos)) & mask)) << 0x30;
 
             return word4 | word3 | word2 | word1;
         }

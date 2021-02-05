@@ -143,10 +143,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public string Comment
         {
-            get
-            {
-                return _Comment;
-            }
+            get => _Comment;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -179,7 +176,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public string FileName
         {
-            get { return _FileName; }
+            get => _FileName;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -217,7 +214,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <remarks>
         /// This is used for internal error checking. You probably don't need to look at this property.
         /// </remarks>
-        public int Crc32 { get { return _Crc32; } }
+        public int Crc32 => _Crc32;
 
         private int _headerByteCount;
         internal ZlibBaseStream _baseStream;
@@ -546,7 +543,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </summary>
         virtual public FlushType FlushMode
         {
-            get { return _baseStream._flushMode; }
+            get => _baseStream._flushMode;
             set {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
                 _baseStream._flushMode = value;
@@ -572,10 +569,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public int BufferSize
         {
-            get
-            {
-                return _baseStream._bufferSize;
-            }
+            get => _baseStream._bufferSize;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("GZipStream");
@@ -589,22 +583,10 @@ namespace MonoGame.Framework.Utilities.Deflate
 
 
         /// <summary> Returns the total number of bytes input so far.</summary>
-        virtual public long TotalIn
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesIn;
-            }
-        }
+        virtual public long TotalIn => _baseStream._z.TotalBytesIn;
 
         /// <summary> Returns the total number of bytes output so far.</summary>
-        virtual public long TotalOut
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesOut;
-            }
-        }
+        virtual public long TotalOut => _baseStream._z.TotalBytesOut;
 
         #endregion
 
@@ -675,10 +657,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <remarks>
         /// Always returns false.
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
 
         /// <summary>
@@ -708,10 +687,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <summary>
         /// Reading this property always throws a <see cref="NotImplementedException"/>.
         /// </summary>
-        public override long Length
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override long Length => throw new NotImplementedException();
 
         /// <summary>
         ///   The position of the stream pointer.
@@ -735,7 +711,7 @@ namespace MonoGame.Framework.Utilities.Deflate
                 return 0;
             }
 
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         /// <summary>

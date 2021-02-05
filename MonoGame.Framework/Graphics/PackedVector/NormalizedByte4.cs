@@ -34,14 +34,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public uint PackedValue
         {
-            get
-            {
-                return _packed;
-            }
-            set
-            {
-                _packed = value;
-            }
+            get => _packed;
+            set => _packed = value;
         }
 
         public override bool Equals(object obj)
@@ -67,10 +61,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
         private static uint Pack(float x, float y, float z, float w)
         {
-            var byte4 = (((uint) Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)) & 0xff) << 0;
-            var byte3 = (((uint) Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)) & 0xff) << 8;
-            var byte2 = (((uint) Math.Round(MathHelper.Clamp(z, -1.0f, 1.0f) * 127.0f)) & 0xff) << 16;
-            var byte1 = (((uint) Math.Round(MathHelper.Clamp(w, -1.0f, 1.0f) * 127.0f)) & 0xff) << 24;
+            uint byte4 = (((uint) Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)) & 0xff) << 0;
+            uint byte3 = (((uint) Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)) & 0xff) << 8;
+            uint byte2 = (((uint) Math.Round(MathHelper.Clamp(z, -1.0f, 1.0f) * 127.0f)) & 0xff) << 16;
+            uint byte1 = (((uint) Math.Round(MathHelper.Clamp(w, -1.0f, 1.0f) * 127.0f)) & 0xff) << 24;
 
             return byte4 | byte3 | byte2 | byte1;
         }

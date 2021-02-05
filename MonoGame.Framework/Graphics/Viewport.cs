@@ -28,13 +28,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public int Height
         {
-			get {
-				return height;
-			}
-			set {
-				height = value;
-			}
-		}
+			get => height;
+            set => height = value;
+        }
 
         /// <summary>
         /// The upper limit of depth of this viewport.
@@ -42,13 +38,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public float MaxDepth
         {
-			get {
-				return maxDepth;
-			}
-			set {
-				maxDepth = value;
-			}
-		}
+			get => maxDepth;
+            set => maxDepth = value;
+        }
 
         /// <summary>
         /// The lower limit of depth of this viewport.
@@ -56,13 +48,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public float MinDepth
         {
-			get {
-				return minDepth;
-			}
-			set {
-				minDepth = value;
-			}
-		}
+			get => minDepth;
+            set => minDepth = value;
+        }
 
         /// <summary>
         /// The width of the bounds in pixels.
@@ -70,13 +58,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public int Width
         {
-			get {
-				return width;
-			}
-			set {
-				width = value;
-			}
-		}
+			get => width;
+            set => width = value;
+        }
 
         /// <summary>
         /// The y coordinate of the beginning of this viewport.
@@ -84,14 +68,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public int Y
         {
-			get {
-				return y;
-
-			}
-			set {
-				y = value;
-			}
-		}
+			get => y;
+            set => y = value;
+        }
 
         /// <summary>
         /// The x coordinate of the beginning of this viewport.
@@ -99,9 +78,9 @@ namespace Microsoft.Xna.Framework.Graphics
         [DataMember]
         public int X 
 		{
-			get{ return x;}
-			set{ x = value;}
-		}
+			get => x;
+            set => x = value;
+        }
 
 		#endregion
 		
@@ -125,12 +104,9 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
 		public Rectangle Bounds 
 		{
-            get
-            {
-                return new Rectangle(x, y, width, height);
-            }
-				
-			set
+            get => new Rectangle(x, y, width, height);
+
+            set
 			{				
 				x = value.X;
 				y = value.Y;
@@ -142,10 +118,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <summary>
         /// Returns the subset of the viewport that is guaranteed to be visible on a lower quality display.
         /// </summary>
-		public Rectangle TitleSafeArea 
-		{
-			get { return GraphicsDevice.GetTitleSafeArea(x, y, width, height); }
-		}
+		public Rectangle TitleSafeArea => GraphicsDevice.GetTitleSafeArea(x, y, width, height);
 
         /// <summary>
         /// Constructs a viewport from the given values. The <see cref="MinDepth"/> will be 0.0 and <see cref="MaxDepth"/> will be 1.0.

@@ -9,7 +9,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private readonly ConstantBuffer[] _buffers;
 
         private ShaderStage _stage;
-        private ShaderStage Stage { get { return _stage; } }
+        private ShaderStage Stage => _stage;
 
         private int _valid;
 
@@ -22,7 +22,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public ConstantBuffer this[int index]
         {
-            get { return _buffers[index]; }
+            get => _buffers[index];
             set
             {
                 if (_buffers[index] == value)
@@ -43,7 +43,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void Clear()
         {
-            for (var i = 0; i < _buffers.Length; i++)
+            for (int i = 0; i < _buffers.Length; i++)
                 _buffers[i] = null;
 
             _valid = 0;
@@ -61,11 +61,11 @@ namespace Microsoft.Xna.Framework.Graphics
             if (_valid == 0)
                 return;
 
-            var valid = _valid;
+            int valid = _valid;
 
-            for (var i = 0; i < _buffers.Length; i++)
+            for (int i = 0; i < _buffers.Length; i++)
             {
-                var buffer = _buffers[i];
+                ConstantBuffer buffer = _buffers[i];
                 if (buffer != null && !buffer.IsDisposed)
                 {
 #if OPENGL || WEB

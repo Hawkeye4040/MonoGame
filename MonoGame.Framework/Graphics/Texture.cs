@@ -24,20 +24,11 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <para>The value is an implementation detail and may change between application launches or MonoGame versions.
         /// It is only guaranteed to stay consistent during application lifetime.</para>
         /// </remarks>
-        internal int SortingKey
-        {
-            get { return _sortingKey; }
-        }
+        internal int SortingKey => _sortingKey;
 
-		public SurfaceFormat Format
-		{
-			get { return _format; }
-		}
-		
-		public int LevelCount
-		{
-			get { return _levelCount; }
-		}
+        public SurfaceFormat Format => _format;
+
+        public int LevelCount => _levelCount;
 
         internal static int CalculateMipLevels(int width, int height = 0, int depth = 0)
         {

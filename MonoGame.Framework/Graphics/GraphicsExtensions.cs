@@ -507,16 +507,16 @@ namespace Microsoft.Xna.Framework.Graphics
 			glFormat = PixelFormat.Rgba;
 			glType = PixelType.UnsignedByte;
 
-		    var supportsSRgb = graphicsDevice.GraphicsCapabilities.SupportsSRgb;
-            var supportsS3tc = graphicsDevice.GraphicsCapabilities.SupportsS3tc;
-            var supportsPvrtc = graphicsDevice.GraphicsCapabilities.SupportsPvrtc;
-            var supportsEtc1 = graphicsDevice.GraphicsCapabilities.SupportsEtc1;
-            var supportsEtc2 = graphicsDevice.GraphicsCapabilities.SupportsEtc2;
-            var supportsAtitc = graphicsDevice.GraphicsCapabilities.SupportsAtitc;
-            var supportsFloat = graphicsDevice.GraphicsCapabilities.SupportsFloatTextures;
-            var supportsHalfFloat = graphicsDevice.GraphicsCapabilities.SupportsHalfFloatTextures;
-            var supportsNormalized = graphicsDevice.GraphicsCapabilities.SupportsNormalized;
-            var isGLES2 = GL.BoundApi == GL.RenderApi.ES && graphicsDevice.glMajorVersion == 2;
+		    bool supportsSRgb = graphicsDevice.GraphicsCapabilities.SupportsSRgb;
+            bool supportsS3tc = graphicsDevice.GraphicsCapabilities.SupportsS3tc;
+            bool supportsPvrtc = graphicsDevice.GraphicsCapabilities.SupportsPvrtc;
+            bool supportsEtc1 = graphicsDevice.GraphicsCapabilities.SupportsEtc1;
+            bool supportsEtc2 = graphicsDevice.GraphicsCapabilities.SupportsEtc2;
+            bool supportsAtitc = graphicsDevice.GraphicsCapabilities.SupportsAtitc;
+            bool supportsFloat = graphicsDevice.GraphicsCapabilities.SupportsFloatTextures;
+            bool supportsHalfFloat = graphicsDevice.GraphicsCapabilities.SupportsHalfFloatTextures;
+            bool supportsNormalized = graphicsDevice.GraphicsCapabilities.SupportsNormalized;
+            bool isGLES2 = GL.BoundApi == GL.RenderApi.ES && graphicsDevice.glMajorVersion == 2;
 
 			switch (format) {
 			case SurfaceFormat.Color:
@@ -954,7 +954,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public static int GetBoundTexture2D()
         {
-            var prevTexture = 0;
+            int prevTexture = 0;
             GL.GetInteger(GetPName.TextureBinding2D, out prevTexture);
             GraphicsExtensions.LogGLError("GraphicsExtensions.GetBoundTexture2D() GL.GetInteger");
             return prevTexture;
@@ -964,7 +964,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		[DebuggerHidden]
         public static void CheckGLError()
         {
-           var error = GL.GetError();
+           ErrorCode error = GL.GetError();
             //Console.WriteLine(error);
             if (error != ErrorCode.NoError)
                 throw new MonoGameGLException("GL.GetError() returned " + error.ToString());

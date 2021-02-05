@@ -51,9 +51,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
 	        // Summary:
 	        //     Gets the current element in the ModelEffectCollection.
-	        public Effect Current { get { return enumerator.Current; } }
+	        public Effect Current => enumerator.Current;
 
-	        // Summary:
+            // Summary:
 	        //     Immediately releases the unmanaged resources used by this object.
 	        public void Dispose()
             {
@@ -70,12 +70,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
 	        #region IEnumerator Members
 
-	        object IEnumerator.Current
-	        {
-	            get { return Current; }
-	        }
+	        object IEnumerator.Current => Current;
 
-	        void IEnumerator.Reset()
+            void IEnumerator.Reset()
 	        {
 				IEnumerator resetEnumerator = enumerator;
 				resetEnumerator.Reset ();

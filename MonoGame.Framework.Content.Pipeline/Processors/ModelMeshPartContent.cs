@@ -30,42 +30,24 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
             _primitiveCount = primitiveCount;
         }
 
-        public IndexCollection IndexBuffer
-        {
-            get { return _indexBuffer; }
-        }
+        public IndexCollection IndexBuffer => _indexBuffer;
 
         public MaterialContent Material
         {
-            get { return _material; }
-            set { _material = value; }
+            get => _material;
+            set => _material = value;
         }
 
-        public int NumVertices
-        {
-            get { return _numVertices; }
-        }
+        public int NumVertices => _numVertices;
 
-        public int PrimitiveCount
-        {
-            get { return _primitiveCount; }
-        }
+        public int PrimitiveCount => _primitiveCount;
 
-        public int StartIndex
-        {
-            get { return _startIndex; }
-        }
+        public int StartIndex => _startIndex;
 
         public object Tag { get; set; }
 
-        public VertexBufferContent VertexBuffer
-        {
-            get { return _vertexBuffer; }
-        }
+        public VertexBufferContent VertexBuffer => _vertexBuffer;
 
-        public int VertexOffset
-        {
-            get { return _vertexOffset; }
-        }
+        public int VertexOffset => _vertexOffset;
     }
 }

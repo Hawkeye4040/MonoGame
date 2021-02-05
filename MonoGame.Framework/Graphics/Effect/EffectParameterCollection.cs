@@ -32,24 +32,18 @@ namespace Microsoft.Xna.Framework.Graphics
             if (_parameters.Length == 0)
                 return Empty;
 
-            var parameters = new EffectParameter[_parameters.Length];
-            for (var i = 0; i < _parameters.Length; i++)
+            EffectParameter[] parameters = new EffectParameter[_parameters.Length];
+            for (int i = 0; i < _parameters.Length; i++)
                 parameters[i] = new EffectParameter(_parameters[i]);
 
             return new EffectParameterCollection(parameters, _indexLookup);
         }
 
-        public int Count
-        {
-            get { return _parameters.Length; }
-        }
-		
-		public EffectParameter this[int index]
-		{
-			get { return _parameters[index]; }
-		}
-		
-		public EffectParameter this[string name]
+        public int Count => _parameters.Length;
+
+        public EffectParameter this[int index] => _parameters[index];
+
+        public EffectParameter this[string name]
         {
             get
             {
@@ -71,3 +65,4 @@ namespace Microsoft.Xna.Framework.Graphics
         }
     }
 }
+

@@ -14,7 +14,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         internal int UserOffset;
 
-        public bool IsContentLost { get { return false; } }
+        public bool IsContentLost => false;
 
         public DynamicVertexBuffer(GraphicsDevice graphicsDevice, VertexDeclaration vertexDeclaration, int vertexCount, BufferUsage bufferUsage)
             : base(graphicsDevice, vertexDeclaration, vertexCount, bufferUsage, true)
@@ -33,7 +33,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void SetData<T>(T[] data, int startIndex, int elementCount, SetDataOptions options) where T : struct
         {
-            var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
+            int elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, options);
         }
     }

@@ -83,14 +83,8 @@ namespace MonoGame.Tools.Pipeline
  
             public Property this[int index]
             {
-                get
-                {
-                    return _properties[index];
-                }
-                set
-                {
-                    _properties[index] = value;
-                }
+                get => _properties[index];
+                set => _properties[index] = value;
             }
 
             public Property this[string name]

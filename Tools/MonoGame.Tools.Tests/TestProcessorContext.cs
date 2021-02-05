@@ -19,52 +19,25 @@ namespace MonoGame.Tests.ContentPipeline
             _logger = new TestContentBuildLogger();
         }
 
-        public override string BuildConfiguration
-        {
-            get { return "Debug"; }
-        }
+        public override string BuildConfiguration => "Debug";
 
-        public override string IntermediateDirectory
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override string IntermediateDirectory => throw new NotImplementedException();
 
-        public override ContentBuildLogger Logger
-        {
-            get { return _logger; }
-        }
+        public override ContentBuildLogger Logger => _logger;
 
-        public override string OutputDirectory
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override string OutputDirectory => throw new NotImplementedException();
 
-        public override string OutputFilename
-        {
-            get { return _outputFilename; }
-        }
+        public override string OutputFilename => _outputFilename;
 
-        public override OpaqueDataDictionary Parameters
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override OpaqueDataDictionary Parameters => throw new NotImplementedException();
 
 #if !XNA
-        public override ContentIdentity SourceIdentity
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override ContentIdentity SourceIdentity => throw new NotImplementedException();
 #endif
 
-        public override TargetPlatform TargetPlatform
-        {
-            get { return _targetPlatform; }
-        }
+        public override TargetPlatform TargetPlatform => _targetPlatform;
 
-        public override GraphicsProfile TargetProfile
-        {
-            get { return GraphicsProfile.HiDef; }
-        }
+        public override GraphicsProfile TargetProfile => GraphicsProfile.HiDef;
 
         public override void AddDependency(string filename)
         {

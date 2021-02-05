@@ -35,8 +35,8 @@ namespace MonoGame.Content.Builder
         // The actual handling of '/@' is done in the preprocess step.
         public List<string> ResponseFiles
         {
-            get { throw new InvalidOperationException(); }
-            set { throw new InvalidOperationException(); }
+            get => throw new InvalidOperationException();
+            set => throw new InvalidOperationException();
         }
 
         [CommandLineParameter(
@@ -265,10 +265,7 @@ namespace MonoGame.Content.Builder
 
         private PipelineManager _manager;
 
-        public bool HasWork
-        {
-            get { return _content.Count > 0 || _copyItems.Count > 0 || Clean; }    
-        }
+        public bool HasWork => _content.Count > 0 || _copyItems.Count > 0 || Clean;
 
         string ReplaceSymbols(string parameter)
         {

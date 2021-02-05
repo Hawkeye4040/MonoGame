@@ -66,7 +66,7 @@ namespace Microsoft.Xna.Framework
 
             // Assume the window client size as the default back 
             // buffer resolution in the landscape orientation.
-            var clientBounds = _game.Window.ClientBounds;
+            Rectangle clientBounds = _game.Window.ClientBounds;
             if (clientBounds.Width >= clientBounds.Height)
             {
                 _preferredBackBufferWidth = clientBounds.Width;
@@ -108,7 +108,7 @@ namespace Microsoft.Xna.Framework
 
             try
             {
-                var gdi = DoPreparingDeviceSettings();
+                GraphicsDeviceInformation gdi = DoPreparingDeviceSettings();
 
                 if (!_initialized)
                     Initialize(gdi);
@@ -238,14 +238,14 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         private GraphicsDeviceInformation DoPreparingDeviceSettings()
         {
-            var gdi = new GraphicsDeviceInformation();
+            GraphicsDeviceInformation gdi = new GraphicsDeviceInformation();
             PrepareGraphicsDeviceInformation(gdi);
-            var preparingDeviceSettingsHandler = PreparingDeviceSettings;
+            EventHandler<PreparingDeviceSettingsEventArgs> preparingDeviceSettingsHandler = PreparingDeviceSettings;
 
             if (preparingDeviceSettingsHandler != null)
             {
                 // this allows users to overwrite settings through the argument
-                var args = new PreparingDeviceSettingsEventArgs(gdi);
+                PreparingDeviceSettingsEventArgs args = new PreparingDeviceSettingsEventArgs(gdi);
                 preparingDeviceSettingsHandler(this, args);
 
                 if (gdi.PresentationParameters == null || gdi.Adapter == null)
@@ -321,7 +321,7 @@ namespace Microsoft.Xna.Framework
         {
             gdi.Adapter = GraphicsAdapter.DefaultAdapter;
             gdi.GraphicsProfile = GraphicsProfile;
-            var pp = new PresentationParameters();
+            PresentationParameters pp = new PresentationParameters();
             PreparePresentationParameters(pp);
             gdi.PresentationParameters = pp;
         }
@@ -347,7 +347,7 @@ namespace Microsoft.Xna.Framework
 
             // populates a gdi with settings in this gdm and allows users to override them with
             // PrepareDeviceSettings event this information should be applied to the GraphicsDevice
-            var gdi = DoPreparingDeviceSettings();
+            GraphicsDeviceInformation gdi = DoPreparingDeviceSettings();
 
             if (gdi.GraphicsProfile != GraphicsDevice.GraphicsProfile)
             {
@@ -408,10 +408,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public GraphicsProfile GraphicsProfile
         {
-            get
-            {
-                return _graphicsProfile;
-            }
+            get => _graphicsProfile;
             set
             {
                 _shouldApplyChanges = true;
@@ -422,13 +419,7 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Returns the graphics device for this manager.
         /// </summary>
-        public GraphicsDevice GraphicsDevice
-        {
-            get
-            {
-                return _graphicsDevice;
-            }
-        }
+        public GraphicsDevice GraphicsDevice => _graphicsDevice;
 
         /// <summary>
         /// Indicates the desire to switch into fullscreen mode.
@@ -440,7 +431,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public bool IsFullScreen
         {
-            get { return _wantFullScreen; }
+            get => _wantFullScreen;
             set
             {
                 _shouldApplyChanges = true;
@@ -455,7 +446,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public bool HardwareModeSwitch
         {
-            get { return _hardwareModeSwitch;}
+            get => _hardwareModeSwitch;
             set
             {
                 _shouldApplyChanges = true;
@@ -479,7 +470,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public bool PreferHalfPixelOffset
         {
-            get { return _preferHalfPixelOffset; }
+            get => _preferHalfPixelOffset;
             set
             {
                 if (GraphicsDevice != null)
@@ -497,10 +488,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public bool PreferMultiSampling
         {
-            get
-            {
-                return _preferMultiSampling;
-            }
+            get => _preferMultiSampling;
             set
             {
                 _shouldApplyChanges = true;
@@ -517,10 +505,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public SurfaceFormat PreferredBackBufferFormat
         {
-            get
-            {
-                return _preferredBackBufferFormat;
-            }
+            get => _preferredBackBufferFormat;
             set
             {
                 _shouldApplyChanges = true;
@@ -537,10 +522,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public int PreferredBackBufferHeight
         {
-            get
-            {
-                return _preferredBackBufferHeight;
-            }
+            get => _preferredBackBufferHeight;
             set
             {
                 _shouldApplyChanges = true;
@@ -557,10 +539,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public int PreferredBackBufferWidth
         {
-            get
-            {
-                return _preferredBackBufferWidth;
-            }
+            get => _preferredBackBufferWidth;
             set
             {
                 _shouldApplyChanges = true;
@@ -578,10 +557,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public DepthFormat PreferredDepthStencilFormat
         {
-            get
-            {
-                return _preferredDepthStencilFormat;
-            }
+            get => _preferredDepthStencilFormat;
             set
             {
                 _shouldApplyChanges = true;
@@ -599,10 +575,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public bool SynchronizeWithVerticalRetrace
         {
-            get
-            {
-                return _synchronizedWithVerticalRetrace;
-            }
+            get => _synchronizedWithVerticalRetrace;
             set
             {
                 _shouldApplyChanges = true;
@@ -620,10 +593,7 @@ namespace Microsoft.Xna.Framework
         /// </remarks>
         public DisplayOrientation SupportedOrientations
         {
-            get
-            {
-                return _supportedOrientations;
-            }
+            get => _supportedOrientations;
             set
             {
                 _shouldApplyChanges = true;

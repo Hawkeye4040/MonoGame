@@ -64,7 +64,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             // Set/get the correct shader handle/cleanups.
 
-            var current = _effect.CurrentTechnique;
+            EffectTechnique current = _effect.CurrentTechnique;
             _effect.OnApply();
             if (_effect.CurrentTechnique != current)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 return;
             }
 
-            var device = _effect.GraphicsDevice;
+            GraphicsDevice device = _effect.GraphicsDevice;
 
             if (_vertexShader != null)
             {
@@ -82,9 +82,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 SetShaderSamplers(_vertexShader, device.VertexTextures, device.VertexSamplerStates);
 
                 // Update the constant buffers.
-                for (var c = 0; c < _vertexShader.CBuffers.Length; c++)
+                for (int c = 0; c < _vertexShader.CBuffers.Length; c++)
                 {
-                    var cb = _effect.ConstantBuffers[_vertexShader.CBuffers[c]];
+                    ConstantBuffer cb = _effect.ConstantBuffers[_vertexShader.CBuffers[c]];
                     cb.Update(_effect.Parameters);
                     device.SetConstantBuffer(ShaderStage.Vertex, c, cb);
                 }
@@ -98,9 +98,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 SetShaderSamplers(_pixelShader, device.Textures, device.SamplerStates);
                 
                 // Update the constant buffers.
-                for (var c = 0; c < _pixelShader.CBuffers.Length; c++)
+                for (int c = 0; c < _pixelShader.CBuffers.Length; c++)
                 {
-                    var cb = _effect.ConstantBuffers[_pixelShader.CBuffers[c]];
+                    ConstantBuffer cb = _effect.ConstantBuffers[_pixelShader.CBuffers[c]];
                     cb.Update(_effect.Parameters);
                     device.SetConstantBuffer(ShaderStage.Pixel, c, cb);
                 }
@@ -117,10 +117,10 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private void SetShaderSamplers(Shader shader, TextureCollection textures, SamplerStateCollection samplerStates)
         {
-            foreach (var sampler in shader.Samplers)
+            foreach (SamplerInfo sampler in shader.Samplers)
             {
-                var param = _effect.Parameters[sampler.parameter];
-                var texture = param.Data as Texture;
+                EffectParameter param = _effect.Parameters[sampler.parameter];
+                Texture texture = param.Data as Texture;
 
                 textures[sampler.textureSlot] = texture;
 

@@ -56,8 +56,8 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         public SurfaceFormat BackBufferFormat
         {
-            get { return backBufferFormat; }
-            set { backBufferFormat = value; }
+            get => backBufferFormat;
+            set => backBufferFormat = value;
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         public int BackBufferHeight
         {
-            get { return backBufferHeight; }
-            set { backBufferHeight = value; }
+            get => backBufferHeight;
+            set => backBufferHeight = value;
         }
 
         /// <summary>
@@ -74,25 +74,22 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         public int BackBufferWidth
         {
-            get { return backBufferWidth; }
-            set { backBufferWidth = value; }
+            get => backBufferWidth;
+            set => backBufferWidth = value;
         }
 
         /// <summary>
         /// Get the bounds of the back buffer.
         /// </summary>
-        public Rectangle Bounds 
-        {
-            get { return new Rectangle(0, 0, backBufferWidth, backBufferHeight); }
-        }
+        public Rectangle Bounds => new Rectangle(0, 0, backBufferWidth, backBufferHeight);
 
         /// <summary>
         /// Get or set the handle of the window that will present the back buffer.
         /// </summary>
         public IntPtr DeviceWindowHandle
         {
-            get { return deviceWindowHandle; }
-            set { deviceWindowHandle = value; }
+            get => deviceWindowHandle;
+            set => deviceWindowHandle = value;
         }
 
 #if WINDOWS_UAP
@@ -105,8 +102,8 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
 		public DepthFormat DepthStencilFormat
         {
-            get { return depthStencilFormat; }
-            set { depthStencilFormat = value; }
+            get => depthStencilFormat;
+            set => depthStencilFormat = value;
         }
 
         /// <summary>
@@ -135,8 +132,8 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         public bool HardwareModeSwitch
         {
-            get { return hardwareModeSwitch; }
-            set { hardwareModeSwitch = value; }
+            get => hardwareModeSwitch;
+            set => hardwareModeSwitch = value;
         }
 
         /// <summary>
@@ -144,8 +141,8 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         public int MultiSampleCount
         {
-            get { return multiSampleCount; }
-            set { multiSampleCount = value; }
+            get => multiSampleCount;
+            set => multiSampleCount = value;
         }
 		
         /// <summary>

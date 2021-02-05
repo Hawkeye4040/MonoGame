@@ -127,7 +127,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		
 		void Setup() 
         {
-            var gd = GraphicsDevice;
+            GraphicsDevice gd = GraphicsDevice;
 			gd.BlendState = _blendState;
 			gd.DepthStencilState = _depthStencilState;
 			gd.RasterizerState = _rasterizerState;
@@ -188,7 +188,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(texture);
 
-            var item = _batcher.CreateBatchItem();
+            SpriteBatchItem item = _batcher.CreateBatchItem();
             item.Texture = texture;
 
             // set SortKey based on SpriteSortMode.
@@ -213,7 +213,7 @@ namespace Microsoft.Xna.Framework.Graphics
             float w, h;
             if (sourceRectangle.HasValue)
             {
-                var srcRect = sourceRectangle.GetValueOrDefault();
+                Rectangle srcRect = sourceRectangle.GetValueOrDefault();
                 w = srcRect.Width * scale.X;
                 h = srcRect.Height * scale.Y;
                 _texCoordTL.X = srcRect.X * texture.TexelWidth;
@@ -231,13 +231,13 @@ namespace Microsoft.Xna.Framework.Graphics
             
             if ((effects & SpriteEffects.FlipVertically) != 0)
             {
-                var temp = _texCoordBR.Y;
+                float temp = _texCoordBR.Y;
 				_texCoordBR.Y = _texCoordTL.Y;
 				_texCoordTL.Y = temp;
             }
             if ((effects & SpriteEffects.FlipHorizontally) != 0)
             {
-                var temp = _texCoordBR.X;
+                float temp = _texCoordBR.X;
 				_texCoordBR.X = _texCoordTL.X;
 				_texCoordTL.X = temp;
             }
@@ -294,7 +294,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				SpriteEffects effects,
                 float layerDepth)
 		{
-            var scaleVec = new Vector2(scale, scale);
+            Vector2 scaleVec = new Vector2(scale, scale);
             Draw(texture, position, sourceRectangle, color, rotation, origin, scaleVec, effects, layerDepth);
 		}
 
@@ -320,7 +320,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(texture);
             
-            var item = _batcher.CreateBatchItem();
+            SpriteBatchItem item = _batcher.CreateBatchItem();
             item.Texture = texture;
 
             // set SortKey based on SpriteSortMode.
@@ -342,7 +342,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             if (sourceRectangle.HasValue)
             {
-                var srcRect = sourceRectangle.GetValueOrDefault();
+                Rectangle srcRect = sourceRectangle.GetValueOrDefault();
                 _texCoordTL.X = srcRect.X * texture.TexelWidth;
                 _texCoordTL.Y = srcRect.Y * texture.TexelHeight;
                 _texCoordBR.X = (srcRect.X + srcRect.Width) * texture.TexelWidth;
@@ -368,13 +368,13 @@ namespace Microsoft.Xna.Framework.Graphics
             
 			if ((effects & SpriteEffects.FlipVertically) != 0)
             {
-                var temp = _texCoordBR.Y;
+                float temp = _texCoordBR.Y;
 				_texCoordBR.Y = _texCoordTL.Y;
 				_texCoordTL.Y = temp;
 			}
 			if ((effects & SpriteEffects.FlipHorizontally) != 0)
             {
-                var temp = _texCoordBR.X;
+                float temp = _texCoordBR.X;
 				_texCoordBR.X = _texCoordTL.X;
 				_texCoordTL.X = temp;
 			}
@@ -429,7 +429,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			CheckValid(texture);
             
-			var item = _batcher.CreateBatchItem();
+			SpriteBatchItem item = _batcher.CreateBatchItem();
 			item.Texture = texture;
             
             // set SortKey based on SpriteSortMode.
@@ -439,7 +439,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             if (sourceRectangle.HasValue)
             {
-                var srcRect = sourceRectangle.GetValueOrDefault();
+                Rectangle srcRect = sourceRectangle.GetValueOrDefault();
                 size = new Vector2(srcRect.Width, srcRect.Height);
                 _texCoordTL.X = srcRect.X * texture.TexelWidth;
                 _texCoordTL.Y = srcRect.Y * texture.TexelHeight;
@@ -476,7 +476,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(texture);
             
-			var item = _batcher.CreateBatchItem();
+			SpriteBatchItem item = _batcher.CreateBatchItem();
 			item.Texture = texture;
             
             // set SortKey based on SpriteSortMode.
@@ -484,7 +484,7 @@ namespace Microsoft.Xna.Framework.Graphics
             
             if (sourceRectangle.HasValue)
             {
-                var srcRect = sourceRectangle.GetValueOrDefault();
+                Rectangle srcRect = sourceRectangle.GetValueOrDefault();
                 _texCoordTL.X = srcRect.X * texture.TexelWidth;
                 _texCoordTL.Y = srcRect.Y * texture.TexelHeight;
                 _texCoordBR.X = (srcRect.X + srcRect.Width) * texture.TexelWidth;
@@ -518,7 +518,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			CheckValid(texture);
             
-			var item = _batcher.CreateBatchItem();
+			SpriteBatchItem item = _batcher.CreateBatchItem();
 			item.Texture = texture;
             
             // set SortKey based on SpriteSortMode.
@@ -546,7 +546,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
             CheckValid(texture);
             
-            var item = _batcher.CreateBatchItem();
+            SpriteBatchItem item = _batcher.CreateBatchItem();
             item.Texture = texture;
             
             // set SortKey based on SpriteSortMode.
@@ -577,13 +577,13 @@ namespace Microsoft.Xna.Framework.Graphics
             
             float sortKey = _sortMode == SpriteSortMode.Texture ? spriteFont.Texture.SortingKey : 0;
 
-            var offset = Vector2.Zero;
-            var firstGlyphOfLine = true;
+            Vector2 offset = Vector2.Zero;
+            bool firstGlyphOfLine = true;
 
             fixed (SpriteFont.Glyph* pGlyphs = spriteFont.Glyphs)
-            for (var i = 0; i < text.Length; ++i)
+            for (int i = 0; i < text.Length; ++i)
             {
-                var c = text[i];
+                char c = text[i];
 
                 if (c == '\r')
                     continue;
@@ -596,8 +596,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     continue;
                 }
  
-                var currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
-                var pCurrentGlyph = pGlyphs + currentGlyphIndex;
+                int currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
+                SpriteFont.Glyph* pCurrentGlyph = pGlyphs + currentGlyphIndex;
 
                 // The first character on a line might have a negative left side bearing.
                 // In this scenario, SpriteBatch/SpriteFont normally offset the text to the right,
@@ -612,12 +612,12 @@ namespace Microsoft.Xna.Framework.Graphics
                     offset.X += spriteFont.Spacing + pCurrentGlyph->LeftSideBearing;
                 }
 
-                var p = offset;                
+                Vector2 p = offset;                
                 p.X += pCurrentGlyph->Cropping.X;
                 p.Y += pCurrentGlyph->Cropping.Y;
                 p += position;
 
-                var item = _batcher.CreateBatchItem();
+                SpriteBatchItem item = _batcher.CreateBatchItem();
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;
             
@@ -658,7 +658,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			SpriteFont spriteFont, string text, Vector2 position, Color color,
             float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
 		{
-			var scaleVec = new Vector2(scale, scale);
+			Vector2 scaleVec = new Vector2(scale, scale);
             DrawString(spriteFont, text, position, color, rotation, origin, scaleVec, effects, layerDepth);
 		}
 
@@ -698,16 +698,16 @@ namespace Microsoft.Xna.Framework.Graphics
                         break;
             }
 
-            var flipAdjustment = Vector2.Zero;
+            Vector2 flipAdjustment = Vector2.Zero;
 
-            var flippedVert = (effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically;
-            var flippedHorz = (effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally;
+            bool flippedVert = (effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically;
+            bool flippedHorz = (effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally;
 
             if (flippedVert || flippedHorz)
             {
                 Vector2 size;
                 
-                var source = new SpriteFont.CharacterSource(text);
+                SpriteFont.CharacterSource source = new SpriteFont.CharacterSource(text);
                 spriteFont.MeasureString(ref source, out size);
 
                 if (flippedHorz)
@@ -744,13 +744,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 transformation.M42 = (flipAdjustment.X - origin.X) * transformation.M12 + (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y; 
             }
 
-            var offset = Vector2.Zero;
-            var firstGlyphOfLine = true;
+            Vector2 offset = Vector2.Zero;
+            bool firstGlyphOfLine = true;
 
             fixed (SpriteFont.Glyph* pGlyphs = spriteFont.Glyphs)
-            for (var i = 0; i < text.Length; ++i)
+            for (int i = 0; i < text.Length; ++i)
             {
-                var c = text[i];
+                char c = text[i];
 
                 if (c == '\r')
                     continue;
@@ -763,8 +763,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     continue;
                 }
 
-                var currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
-                var pCurrentGlyph = pGlyphs + currentGlyphIndex;
+                int currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
+                SpriteFont.Glyph* pCurrentGlyph = pGlyphs + currentGlyphIndex;
 
                 // The first character on a line might have a negative left side bearing.
                 // In this scenario, SpriteBatch/SpriteFont normally offset the text to the right,
@@ -779,7 +779,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     offset.X += spriteFont.Spacing + pCurrentGlyph->LeftSideBearing;
                 }
 
-                var p = offset;
+                Vector2 p = offset;
 
                 if (flippedHorz)
                     p.X += pCurrentGlyph->BoundsInTexture.Width;
@@ -791,7 +791,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 Vector2.Transform(ref p, ref transformation, out p);
 
-                var item = _batcher.CreateBatchItem();               
+                SpriteBatchItem item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;
                 
@@ -802,13 +802,13 @@ namespace Microsoft.Xna.Framework.Graphics
                             
                 if ((effects & SpriteEffects.FlipVertically) != 0)
                 {
-                    var temp = _texCoordBR.Y;
+                    float temp = _texCoordBR.Y;
 				    _texCoordBR.Y = _texCoordTL.Y;
 				    _texCoordTL.Y = temp;
 			    }
                 if ((effects & SpriteEffects.FlipHorizontally) != 0)
                 {
-                    var temp = _texCoordBR.X;
+                    float temp = _texCoordBR.X;
 				    _texCoordBR.X = _texCoordTL.X;
 				    _texCoordTL.X = temp;
 			    }
@@ -860,13 +860,13 @@ namespace Microsoft.Xna.Framework.Graphics
             
             float sortKey =  _sortMode == SpriteSortMode.Texture ? spriteFont.Texture.SortingKey : 0;
 
-            var offset = Vector2.Zero;
-            var firstGlyphOfLine = true;
+            Vector2 offset = Vector2.Zero;
+            bool firstGlyphOfLine = true;
 
             fixed (SpriteFont.Glyph* pGlyphs = spriteFont.Glyphs)
-            for (var i = 0; i < text.Length; ++i)
+            for (int i = 0; i < text.Length; ++i)
             {
-                var c = text[i];
+                char c = text[i];
 
                 if (c == '\r')
                     continue;
@@ -879,8 +879,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     continue;
                 }
 
-                var currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
-                var pCurrentGlyph = pGlyphs + currentGlyphIndex;
+                int currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
+                SpriteFont.Glyph* pCurrentGlyph = pGlyphs + currentGlyphIndex;
 
                 // The first character on a line might have a negative left side bearing.
                 // In this scenario, SpriteBatch/SpriteFont normally offset the text to the right,
@@ -895,12 +895,12 @@ namespace Microsoft.Xna.Framework.Graphics
                     offset.X += spriteFont.Spacing + pCurrentGlyph->LeftSideBearing;
                 }
 
-                var p = offset;                
+                Vector2 p = offset;                
                 p.X += pCurrentGlyph->Cropping.X;
                 p.Y += pCurrentGlyph->Cropping.Y;
                 p += position;
                 
-                var item = _batcher.CreateBatchItem();
+                SpriteBatchItem item = _batcher.CreateBatchItem();
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;
             
@@ -941,7 +941,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			SpriteFont spriteFont, StringBuilder text, Vector2 position, Color color,
             float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
 		{
-			var scaleVec = new Vector2 (scale, scale);
+			Vector2 scaleVec = new Vector2 (scale, scale);
             DrawString(spriteFont, text, position, color, rotation, origin, scaleVec, effects, layerDepth);
 		}
 
@@ -981,14 +981,14 @@ namespace Microsoft.Xna.Framework.Graphics
                         break;
             }
 
-            var flipAdjustment = Vector2.Zero;
+            Vector2 flipAdjustment = Vector2.Zero;
 
-            var flippedVert = (effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically;
-            var flippedHorz = (effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally;
+            bool flippedVert = (effects & SpriteEffects.FlipVertically) == SpriteEffects.FlipVertically;
+            bool flippedHorz = (effects & SpriteEffects.FlipHorizontally) == SpriteEffects.FlipHorizontally;
 
             if (flippedVert || flippedHorz)
             {
-                var source = new SpriteFont.CharacterSource(text);
+                SpriteFont.CharacterSource source = new SpriteFont.CharacterSource(text);
                 Vector2 size;
                 spriteFont.MeasureString(ref source, out size);
 
@@ -1026,13 +1026,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 transformation.M42 = (flipAdjustment.X - origin.X) * transformation.M12 + (flipAdjustment.Y - origin.Y) * transformation.M22 + position.Y; 
             }
 
-            var offset = Vector2.Zero;
-            var firstGlyphOfLine = true;
+            Vector2 offset = Vector2.Zero;
+            bool firstGlyphOfLine = true;
 
             fixed (SpriteFont.Glyph* pGlyphs = spriteFont.Glyphs)
-            for (var i = 0; i < text.Length; ++i)
+            for (int i = 0; i < text.Length; ++i)
             {
-                var c = text[i];
+                char c = text[i];
 
                 if (c == '\r')
                     continue;
@@ -1045,8 +1045,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     continue;
                 }
 
-                var currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
-                var pCurrentGlyph = pGlyphs + currentGlyphIndex;
+                int currentGlyphIndex = spriteFont.GetGlyphIndexOrDefault(c);
+                SpriteFont.Glyph* pCurrentGlyph = pGlyphs + currentGlyphIndex;
 
                 // The first character on a line might have a negative left side bearing.
                 // In this scenario, SpriteBatch/SpriteFont normally offset the text to the right,
@@ -1061,7 +1061,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     offset.X += spriteFont.Spacing + pCurrentGlyph->LeftSideBearing;
                 }
 
-                var p = offset;
+                Vector2 p = offset;
 
                 if (flippedHorz)
                     p.X += pCurrentGlyph->BoundsInTexture.Width;
@@ -1073,7 +1073,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 Vector2.Transform(ref p, ref transformation, out p);
                 
-                var item = _batcher.CreateBatchItem();               
+                SpriteBatchItem item = _batcher.CreateBatchItem();               
                 item.Texture = spriteFont.Texture;
                 item.SortKey = sortKey;
                 
@@ -1084,13 +1084,13 @@ namespace Microsoft.Xna.Framework.Graphics
                             
                 if ((effects & SpriteEffects.FlipVertically) != 0)
                 {
-                    var temp = _texCoordBR.Y;
+                    float temp = _texCoordBR.Y;
 				    _texCoordBR.Y = _texCoordTL.Y;
 				    _texCoordTL.Y = temp;
 			    }
                 if ((effects & SpriteEffects.FlipHorizontally) != 0)
                 {
-                    var temp = _texCoordBR.X;
+                    float temp = _texCoordBR.X;
 				    _texCoordBR.X = _texCoordTL.X;
 				    _texCoordTL.X = temp;
 			    }

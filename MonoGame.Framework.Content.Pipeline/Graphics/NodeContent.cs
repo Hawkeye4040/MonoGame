@@ -31,38 +31,20 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// <summary>
         /// Gets the set of animations belonging to this node.
         /// </summary>
-        public AnimationContentDictionary Animations
-        {
-            get
-            {
-                return animations;
-            }
-        }
+        public AnimationContentDictionary Animations => animations;
 
         /// <summary>
         /// Gets the children of the NodeContent object.
         /// </summary>
-        public NodeContentCollection Children
-        {
-            get
-            {
-                return children;
-            }
-        }
+        public NodeContentCollection Children => children;
 
         /// <summary>
         /// Gets the parent of this NodeContent object.
         /// </summary>
         public NodeContent Parent
         {
-            get
-            {
-                return parent;
-            }
-            set
-            {
-                parent = value;
-            }
+            get => parent;
+            set => parent = value;
         }
 
         /// <summary>
@@ -71,14 +53,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         /// </summary>
         public Matrix Transform
         {
-            get
-            {
-                return transform;
-            }
-            set
-            {
-                transform = value;
-            }
+            get => transform;
+            set => transform = value;
         }
 
         /// <summary>

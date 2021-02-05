@@ -19,14 +19,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public byte PackedValue
         {
-            get
-            {
-                return packedValue;
-            }
-            set
-            {
-                packedValue = value;
-            }
+            get => packedValue;
+            set => packedValue = value;
         }
 
         /// <summary>
@@ -77,7 +71,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <returns>True if the object is equal to the packed vector.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is Alpha8) && Equals((Alpha8) obj);
+            return obj is Alpha8 && Equals((Alpha8) obj);
         }
 
         /// <summary>

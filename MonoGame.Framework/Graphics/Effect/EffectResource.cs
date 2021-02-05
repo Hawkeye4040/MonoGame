@@ -3,6 +3,8 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System.IO;
+using System.Reflection;
+
 using MonoGame.Framework.Utilities;
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -39,10 +41,10 @@ namespace Microsoft.Xna.Framework.Graphics
                         if (_bytecode != null)
                             return _bytecode;
 
-                        var assembly = ReflectionHelpers.GetAssembly(typeof(EffectResource));
+                        Assembly assembly = ReflectionHelpers.GetAssembly(typeof(EffectResource));
 
-                        var stream = assembly.GetManifestResourceStream(_name);
-                        using (var ms = new MemoryStream())
+                        Stream stream = assembly.GetManifestResourceStream(_name);
+                        using (MemoryStream ms = new MemoryStream())
                         {
                             stream.CopyTo(ms);
                             _bytecode = ms.ToArray();

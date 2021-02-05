@@ -319,7 +319,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         virtual public FlushType FlushMode
         {
-            get { return _baseStream._flushMode; }
+            get => _baseStream._flushMode;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("DeflateStream");
@@ -346,10 +346,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public int BufferSize
         {
-            get
-            {
-                return _baseStream._bufferSize;
-            }
+            get => _baseStream._bufferSize;
             set
             {
                 if (_disposed) throw new ObjectDisposedException("DeflateStream");
@@ -371,10 +368,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// </remarks>
         public CompressionStrategy Strategy
         {
-            get
-            {
-                return _baseStream.Strategy;
-            }
+            get => _baseStream.Strategy;
             set
             {
             if (_disposed) throw new ObjectDisposedException("DeflateStream");
@@ -383,22 +377,10 @@ namespace MonoGame.Framework.Utilities.Deflate
         }
 
         /// <summary> Returns the total number of bytes input so far.</summary>
-        virtual public long TotalIn
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesIn;
-            }
-        }
+        virtual public long TotalIn => _baseStream._z.TotalBytesIn;
 
         /// <summary> Returns the total number of bytes output so far.</summary>
-        virtual public long TotalOut
-        {
-            get
-            {
-                return _baseStream._z.TotalBytesOut;
-            }
-        }
+        virtual public long TotalOut => _baseStream._z.TotalBytesOut;
 
         #endregion
 
@@ -467,10 +449,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <remarks>
         /// Always returns false.
         /// </remarks>
-        public override bool CanSeek
-        {
-            get { return false; }
-        }
+        public override bool CanSeek => false;
 
 
         /// <summary>
@@ -500,10 +479,7 @@ namespace MonoGame.Framework.Utilities.Deflate
         /// <summary>
         /// Reading this property always throws a <see cref="NotImplementedException"/>.
         /// </summary>
-        public override long Length
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public override long Length => throw new NotImplementedException();
 
         /// <summary>
         /// The position of the stream pointer.
@@ -526,7 +502,7 @@ namespace MonoGame.Framework.Utilities.Deflate
                     return _baseStream._z.TotalBytesIn;
                 return 0;
             }
-            set { throw new NotImplementedException(); }
+            set => throw new NotImplementedException();
         }
 
         /// <summary>

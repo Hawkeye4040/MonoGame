@@ -25,13 +25,13 @@ namespace MonoGame.Effect.TPGParser
         private int pos;
         private int length;
 
-        public string File { get { return file; } }
-        public int Code { get { return code; } }
-        public int Line { get { return line; } }
-        public int Column { get { return col; } }
-        public int Position { get { return pos; } }
-        public int Length { get { return length; } }
-        public string Message { get { return message; } }
+        public string File => file;
+        public int Code => code;
+        public int Line => line;
+        public int Column => col;
+        public int Position => pos;
+        public int Length => length;
+        public string Message => message;
 
         // just for the sake of serialization
         public ParseError()
@@ -115,16 +115,16 @@ namespace MonoGame.Effect.TPGParser
         protected string text;
         protected List<ParseNode> nodes;
         
-        public List<ParseNode> Nodes { get {return nodes;} }
-        
+        public List<ParseNode> Nodes => nodes;
+
         [XmlIgnore] // avoid circular references when serializing
         public ParseNode Parent;
         public Token Token; // the token/rule
 
         [XmlIgnore] // skip redundant text (is part of Token)
         public string Text { // text to display in parse tree 
-            get { return text;} 
-            set { text = value; }
+            get => text;
+            set => text = value;
         } 
 
         public virtual ParseNode CreateNode(Token token, string text)

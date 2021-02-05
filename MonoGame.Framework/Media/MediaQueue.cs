@@ -31,41 +31,17 @@ namespace Microsoft.Xna.Framework.Media
 		
 		public int ActiveSongIndex
 		{
-		    get
-		    {
-		        return _activeSongIndex;
-		    }
-		    set
-		    {
-		        _activeSongIndex = value;
-		    }
-		}
-
-        internal int Count
-        {
-            get
-            {
-                return songs.Count;
-            }
+		    get => _activeSongIndex;
+            set => _activeSongIndex = value;
         }
 
-        public Song this[int index]
-        {
-            get
-            {
-                return songs[index];
-            }
-        }
+        internal int Count => songs.Count;
 
-        internal IEnumerable<Song> Songs
-        {
-            get
-            {
-                return songs;
-            }
-        }
+        public Song this[int index] => songs[index];
 
-		internal Song GetNextSong(int direction, bool shuffle)
+        internal IEnumerable<Song> Songs => songs;
+
+        internal Song GetNextSong(int direction, bool shuffle)
 		{
 			if (shuffle)
 				_activeSongIndex = random.Next(songs.Count);

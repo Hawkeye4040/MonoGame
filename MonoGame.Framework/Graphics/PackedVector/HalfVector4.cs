@@ -22,7 +22,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <param name="w">Initial value for the q component.</param>
         public HalfVector4(float x, float y, float z, float w)
         {
-            var vector = new Vector4(x, y, z, w);
+            Vector4 vector = new Vector4(x, y, z, w);
             packedValue = PackHelper(ref vector);
         }
 
@@ -78,14 +78,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public ulong PackedValue
         {
-            get
-            {
-                return packedValue;
-            }
-            set
-            {
-                packedValue = value;
-            }
+            get => packedValue;
+            set => packedValue = value;
         }
 
         /// <summary>

@@ -28,28 +28,13 @@ namespace Microsoft.Xna.Framework.Media
             return innerlist.GetEnumerator();
         }
 
-        public int Count
-        {
-            get
-            {
-				return innerlist.Count;
-            }
-        }
-		
-		public bool IsReadOnly
-        {
-            get { return isReadOnly; }
-        }
+        public int Count => innerlist.Count;
 
-        public Playlist this[int index]
-        {
-            get
-            {
-				return innerlist[index];
-            }
-        }
-		
-		public void Add(Playlist item)
+        public bool IsReadOnly => isReadOnly;
+
+        public Playlist this[int index] => innerlist[index];
+
+        public void Add(Playlist item)
         {
             if (item == null)
                 throw new ArgumentNullException();

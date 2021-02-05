@@ -335,16 +335,11 @@ namespace Microsoft.Xna.Framework
             return a.Equals(b);
         }
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    "Pos( ", Position.DebugDisplayString, " )  \r\n",
-                    "Dir( ", Direction.DebugDisplayString, " )"
-                );
-            }
-        }
+        internal string DebugDisplayString =>
+            string.Concat(
+                "Pos( ", Position.DebugDisplayString, " )  \r\n",
+                "Dir( ", Direction.DebugDisplayString, " )"
+            );
 
         /// <summary>
         ///     Get a <see cref="String" /> representation of this <see cref="Ray" />.

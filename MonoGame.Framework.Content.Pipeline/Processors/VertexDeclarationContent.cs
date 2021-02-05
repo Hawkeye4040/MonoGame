@@ -20,7 +20,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         /// Gets the VertexElement object of the vertex declaration.
         /// </summary>
         /// <value>The VertexElement object of the vertex declaration.</value>
-        public Collection<VertexElement> VertexElements { get { return vertexElements; } }
+        public Collection<VertexElement> VertexElements => vertexElements;
 
         /// <summary>
         /// The number of bytes from one vertex to the next.
@@ -28,8 +28,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         /// <value>The stride (in bytes).</value>
         public int? VertexStride
         {
-            get { return vertexStride; }
-            set { vertexStride = value; }
+            get => vertexStride;
+            set => vertexStride = value;
         }
 
         /// <summary>

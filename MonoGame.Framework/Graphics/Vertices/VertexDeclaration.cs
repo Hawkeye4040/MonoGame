@@ -100,7 +100,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             lock (_vertexDeclarationCache)
             {
-                var data = new Data(vertexStride, elements);
+                Data data = new Data(vertexStride, elements);
                 VertexDeclaration vertexDeclaration;
                 if (!_vertexDeclarationCache.TryGetValue(data, out vertexDeclaration))
                 {
@@ -130,10 +130,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Gets the internal vertex elements array.
         /// </summary>
         /// <value>The internal vertex elements array.</value>
-        internal VertexElement[] InternalVertexElements
-        {
-            get { return _data.Elements; }
-        }
+        internal VertexElement[] InternalVertexElements => _data.Elements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VertexDeclaration"/> class.
@@ -162,7 +159,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             lock (_vertexDeclarationCache)
             {
-                var data = new Data(vertexStride, elements);
+                Data data = new Data(vertexStride, elements);
                 VertexDeclaration vertexDeclaration;
                 if (_vertexDeclarationCache.TryGetValue(data, out vertexDeclaration))
                 {
@@ -182,9 +179,9 @@ namespace Microsoft.Xna.Framework.Graphics
         private static int GetVertexStride(VertexElement[] elements)
 		{
 			int max = 0;
-			for (var i = 0; i < elements.Length; i++)
+			for (int i = 0; i < elements.Length; i++)
 			{
-                var start = elements[i].Offset + elements[i].VertexElementFormat.GetSize();
+                int start = elements[i].Offset + elements[i].VertexElementFormat.GetSize();
 				if (max < start)
 					max = start;
 			}
@@ -211,13 +208,13 @@ namespace Microsoft.Xna.Framework.Graphics
 				throw new ArgumentException("Must be value type", "vertexType");
 			}
 
-            var type = Activator.CreateInstance(vertexType) as IVertexType;
+            IVertexType type = Activator.CreateInstance(vertexType) as IVertexType;
 			if (type == null)
 			{
 				throw new ArgumentException("vertexData does not inherit IVertexType");
 			}
 
-            var vertexDeclaration = type.VertexDeclaration;
+            VertexDeclaration vertexDeclaration = type.VertexDeclaration;
 			if (vertexDeclaration == null)
 			{
 				throw new Exception("VertexDeclaration cannot be null");
@@ -239,10 +236,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Gets the size of a vertex (including padding) in bytes.
         /// </summary>
         /// <value>The size of a vertex (including padding) in bytes.</value>
-        public int VertexStride
-		{
-			get { return _data.VertexStride; }
-		}
+        public int VertexStride => _data.VertexStride;
 
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to this instance.

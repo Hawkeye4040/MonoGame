@@ -34,14 +34,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public ushort PackedValue
         {
-            get
-            {
-                return _packed;
-            }
-            set
-            {
-                _packed = value;
-            }
+            get => _packed;
+            set => _packed = value;
         }
 
         public override bool Equals(object obj)
@@ -67,8 +61,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
         private static ushort Pack(float x, float y)
         {
-            var byte2 = (((ushort) Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)) & 0xFF) << 0;
-            var byte1 = (((ushort) Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)) & 0xFF) << 8;
+            int byte2 = (((ushort) Math.Round(MathHelper.Clamp(x, -1.0f, 1.0f) * 127.0f)) & 0xFF) << 0;
+            int byte1 = (((ushort) Math.Round(MathHelper.Clamp(y, -1.0f, 1.0f) * 127.0f)) & 0xFF) << 8;
 
             return (ushort)(byte2 | byte1);
         }

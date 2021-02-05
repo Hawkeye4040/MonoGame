@@ -31,10 +31,7 @@ namespace MonoGame.Effect
         /// <summary>
         /// Returns all the loaded shader profiles.
         /// </summary>
-        public static IEnumerable<ShaderProfile> All
-        {
-            get { return _profiles; }
-        }
+        public static IEnumerable<ShaderProfile> All => _profiles;
 
         /// <summary>
         /// Returns the name of the shader profile.

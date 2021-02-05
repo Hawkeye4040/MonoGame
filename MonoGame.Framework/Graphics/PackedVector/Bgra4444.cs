@@ -48,14 +48,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public ushort PackedValue
         {
-            get
-            {
-                return _packedValue;
-            }
-            set
-            {
-                _packedValue = value;
-            }
+            get => _packedValue;
+            set => _packedValue = value;
         }
 
         /// <summary>

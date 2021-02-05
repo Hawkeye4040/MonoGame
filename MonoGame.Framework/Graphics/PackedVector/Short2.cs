@@ -34,15 +34,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
 		public uint PackedValue
         {
-			get
-            {
-				return _short2Packed;
-			}
-			set
-            {
-				_short2Packed = value;
-			}
-		}
+			get => _short2Packed;
+            set => _short2Packed = value;
+        }
 
 		public override bool Equals (object obj)
 		{
@@ -68,7 +62,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 
 		public Vector2 ToVector2 ()
 		{
-			var v2 = new Vector2 ();
+			Vector2 v2 = new Vector2 ();
 			v2.X = (short)(_short2Packed & 0xFFFF);
 			v2.Y = (short)(_short2Packed >> 0x10);
 			return v2;
@@ -80,8 +74,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 			const float minNeg = ~(int)maxPos; // two's complement
 
             // clamp the value between min and max values
-            var word2 = ((uint) Math.Round(MathHelper.Clamp(vectorX, minNeg, maxPos)) & 0xFFFF);
-            var word1 = (((uint) Math.Round(MathHelper.Clamp(vectorY, minNeg, maxPos)) & 0xFFFF) << 0x10);
+            uint word2 = ((uint) Math.Round(MathHelper.Clamp(vectorX, minNeg, maxPos)) & 0xFFFF);
+            uint word1 = (((uint) Math.Round(MathHelper.Clamp(vectorY, minNeg, maxPos)) & 0xFFFF) << 0x10);
 
             return (word2 | word1);
 		}
@@ -97,7 +91,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <returns>The packed vector in Vector4 format</returns>
 		public Vector4 ToVector4 ()
 		{
-			var v4 = new Vector4 (0,0,0,1);
+			Vector4 v4 = new Vector4 (0,0,0,1);
 			v4.X = (short)(_short2Packed & 0xFFFF);
 			v4.Y = (short)(_short2Packed >> 0x10);
 			return v4;

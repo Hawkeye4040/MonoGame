@@ -58,7 +58,7 @@ namespace Microsoft.Xna.Framework.Graphics
             StructureMembers = cloneSource.StructureMembers.Clone();
 
             // The data is mutable, so we have to clone it.
-            var array = cloneSource.Data as Array;
+            Array array = cloneSource.Data as Array;
             if (array != null)
                 Data = array.Clone();
             StateKey = unchecked(NextStateKey++);
@@ -102,7 +102,7 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             get
             {
-                var semanticStr = string.Empty;
+                string semanticStr = string.Empty;
                 if (!string.IsNullOrEmpty(Semantic))                
                     semanticStr = string.Concat(" <", Semantic, ">");
 
@@ -146,10 +146,10 @@ namespace Microsoft.Xna.Framework.Graphics
                         // Vector types are stored as an Array<Type>.
                         // Display the string value of each array element.
                     case EffectParameterClass.Vector:
-                        var array = Data as Array;
-                        var arrayStr = new string[array.Length];
-                        var idx = 0;
-                        foreach (var e in array)
+                        Array array = Data as Array;
+                        string[] arrayStr = new string[array.Length];
+                        int idx = 0;
+                        foreach (object e in array)
                         {
                             arrayStr[idx] = array.GetValue(idx).ToString();
                             idx++;
@@ -205,11 +205,11 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             if (Elements != null && Elements.Count > 0)
             {
-                var ret = new int[RowCount * ColumnCount * Elements.Count];
+                int[] ret = new int[RowCount * ColumnCount * Elements.Count];
                 for (int i = 0; i < Elements.Count; i++)
                 {
-                    var elmArray = Elements[i].GetValueInt32Array();
-                    for (var j = 0; j < elmArray.Length; j++)
+                    int[] elmArray = Elements[i].GetValueInt32Array();
+                    for (int j = 0; j < elmArray.Length; j++)
                         ret[RowCount * ColumnCount * i + j] = elmArray[j];
                 }
                 return ret;
@@ -232,7 +232,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (RowCount != 4 || ColumnCount != 4)
                 throw new InvalidCastException();
 
-            var floatData = (float[])Data;
+            float[] floatData = (float[])Data;
 
             return new Matrix(  floatData[0], floatData[4], floatData[8], floatData[12],
                                 floatData[1], floatData[5], floatData[9], floatData[13],
@@ -245,8 +245,8 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Matrix || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var ret = new Matrix[count];
-            for (var i = 0; i < count; i++)
+            Matrix[] ret = new Matrix[count];
+            for (int i = 0; i < count; i++)
                 ret[i] = Elements[i].GetValueMatrix();
 
 		    return ret;
@@ -257,7 +257,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var vecInfo = (float[])Data;
+            float[] vecInfo = (float[])Data;
             return new Quaternion(vecInfo[0], vecInfo[1], vecInfo[2], vecInfo[3]);
         }
 
@@ -281,11 +281,11 @@ namespace Microsoft.Xna.Framework.Graphics
 		{
 			if (Elements != null && Elements.Count > 0)
             {
-                var ret = new float[RowCount * ColumnCount * Elements.Count];
+                float[] ret = new float[RowCount * ColumnCount * Elements.Count];
 				for (int i=0; i<Elements.Count; i++)
                 {
-                    var elmArray = Elements[i].GetValueSingleArray();
-                    for (var j = 0; j < elmArray.Length; j++)
+                    float[] elmArray = Elements[i].GetValueSingleArray();
+                    for (int j = 0; j < elmArray.Length; j++)
 						ret[RowCount*ColumnCount*i+j] = elmArray[j];
 				}
 				return ret;
@@ -345,7 +345,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var vecInfo = (float[])Data;
+            float[] vecInfo = (float[])Data;
 			return new Vector2(vecInfo[0],vecInfo[1]);
 		}
 
@@ -358,7 +358,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				Vector2[] result = new Vector2[Elements.Count];
 				for (int i = 0; i < Elements.Count; i++)
 				{
-					var v = Elements[i].GetValueSingleArray();
+					float[] v = Elements[i].GetValueSingleArray();
 					result[i] = new Vector2(v[0], v[1]);
 				}
 			return result;
@@ -372,7 +372,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var vecInfo = (float[])Data;
+            float[] vecInfo = (float[])Data;
 			return new Vector3(vecInfo[0],vecInfo[1],vecInfo[2]);
 		}
 
@@ -386,7 +386,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 Vector3[] result = new Vector3[Elements.Count];
                 for (int i = 0; i < Elements.Count; i++)
                 {
-                    var v = Elements[i].GetValueSingleArray();
+                    float[] v = Elements[i].GetValueSingleArray();
                     result[i] = new Vector3(v[0], v[1], v[2]);
                 }
                 return result;
@@ -400,7 +400,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var vecInfo = (float[])Data;
+            float[] vecInfo = (float[])Data;
 			return new Vector4(vecInfo[0],vecInfo[1],vecInfo[2],vecInfo[3]);
 		}
         
@@ -414,7 +414,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 Vector4[] result = new Vector4[Elements.Count];
                 for (int i = 0; i < Elements.Count; i++)
                 {
-                    var v = Elements[i].GetValueSingleArray();
+                    float[] v = Elements[i].GetValueSingleArray();
                     result[i] = new Vector4(v[0], v[1],v[2], v[3]);
                 }
                 return result;
@@ -460,7 +460,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void SetValue(int[] value)
         {
-            for (var i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length; i++)
                 Elements[i].SetValue(value[i]);
 
             StateKey = unchecked(NextStateKey++);
@@ -475,7 +475,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // These unrolled loops do the transpose during assignment.
             if (RowCount == 4 && ColumnCount == 4)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M21;
@@ -499,7 +499,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 4 && ColumnCount == 3)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M21;
@@ -518,7 +518,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 4)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M21;
@@ -538,7 +538,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 3)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M21;
@@ -554,7 +554,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 2)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M21;
@@ -577,7 +577,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // from the in-memory version effectively transposes them back to row-major.
             if (RowCount == 4 && ColumnCount == 4)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M12;
@@ -601,7 +601,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 4 && ColumnCount == 3)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M12;
@@ -621,7 +621,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 4)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M12;
@@ -640,7 +640,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 3)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M12;
@@ -656,7 +656,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 2)
             {
-                var fData = (float[])Data;
+                float[] fData = (float[])Data;
 
                 fData[0] = value.M11;
                 fData[1] = value.M12;
@@ -677,9 +677,9 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		    if (RowCount == 4 && ColumnCount == 4)
 		    {
-		        for (var i = 0; i < value.Length; i++)
+		        for (int i = 0; i < value.Length; i++)
 		        {
-		            var fData = (float[])Elements[i].Data;
+		            float[] fData = (float[])Elements[i].Data;
 
 		            fData[0] = value[i].M11;
 		            fData[1] = value[i].M21;
@@ -704,9 +704,9 @@ namespace Microsoft.Xna.Framework.Graphics
 		    }
 		    else if (RowCount == 4 && ColumnCount == 3)
             {
-                for (var i = 0; i < value.Length; i++)
+                for (int i = 0; i < value.Length; i++)
                 {
-                    var fData = (float[])Elements[i].Data;
+                    float[] fData = (float[])Elements[i].Data;
 
                     fData[0] = value[i].M11;
                     fData[1] = value[i].M21;
@@ -726,9 +726,9 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 4)
             {
-                for (var i = 0; i < value.Length; i++)
+                for (int i = 0; i < value.Length; i++)
                 {
-                    var fData = (float[])Elements[i].Data;
+                    float[] fData = (float[])Elements[i].Data;
 
                     fData[0] = value[i].M11;
                     fData[1] = value[i].M21;
@@ -749,9 +749,9 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 3)
             {
-                for (var i = 0; i < value.Length; i++)
+                for (int i = 0; i < value.Length; i++)
                 {
-                    var fData = (float[])Elements[i].Data;
+                    float[] fData = (float[])Elements[i].Data;
 
                     fData[0] = value[i].M11;
                     fData[1] = value[i].M21;
@@ -768,9 +768,9 @@ namespace Microsoft.Xna.Framework.Graphics
             }
             else if (RowCount == 3 && ColumnCount == 2)
             {
-                for (var i = 0; i < value.Length; i++)
+                for (int i = 0; i < value.Length; i++)
                 {
-                    var fData = (float[])Elements[i].Data;
+                    float[] fData = (float[])Elements[i].Data;
 
                     fData[0] = value[i].M11;
                     fData[1] = value[i].M21;
@@ -790,7 +790,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var fData = (float[])Data;
+            float[] fData = (float[])Data;
             fData[0] = value.X;
             fData[1] = value.Y;
             fData[2] = value.Z;
@@ -815,7 +815,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue (float[] value)
 		{
-			for (var i=0; i<value.Length; i++)
+			for (int i=0; i<value.Length; i++)
 				Elements[i].SetValue (value[i]);
 
             StateKey = unchecked(NextStateKey++);
@@ -848,7 +848,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var fData = (float[])Data;
+            float[] fData = (float[])Data;
             fData[0] = value.X;
             fData[1] = value.Y;
             StateKey = unchecked(NextStateKey++);
@@ -856,7 +856,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue (Vector2[] value)
 		{
-            for (var i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length; i++)
 				Elements[i].SetValue (value[i]);
             StateKey = unchecked(NextStateKey++);
 		}
@@ -866,7 +866,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-            var fData = (float[])Data;
+            float[] fData = (float[])Data;
             fData[0] = value.X;
             fData[1] = value.Y;
             fData[2] = value.Z;
@@ -875,7 +875,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue (Vector3[] value)
 		{
-            for (var i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length; i++)
 				Elements[i].SetValue (value[i]);
             StateKey = unchecked(NextStateKey++);
 		}
@@ -885,7 +885,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (ParameterClass != EffectParameterClass.Vector || ParameterType != EffectParameterType.Single)
                 throw new InvalidCastException();
 
-			var fData = (float[])Data;
+			float[] fData = (float[])Data;
             fData[0] = value.X;
             fData[1] = value.Y;
             fData[2] = value.Z;
@@ -895,7 +895,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue (Vector4[] value)
 		{
-            for (var i = 0; i < value.Length; i++)
+            for (int i = 0; i < value.Length; i++)
 				Elements[i].SetValue (value[i]);
             StateKey = unchecked(NextStateKey++);
 		}

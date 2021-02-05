@@ -28,27 +28,27 @@ namespace Microsoft.Xna.Framework.Media
 
         #region Properties
 
-        public static MediaQueue Queue { get { return _queue; } }
-		
-		public static bool IsMuted
+        public static MediaQueue Queue => _queue;
+
+        public static bool IsMuted
         {
-            get { return PlatformGetIsMuted(); }
-            set { PlatformSetIsMuted(value); }
+            get => PlatformGetIsMuted();
+            set => PlatformSetIsMuted(value);
         }
 
         public static bool IsRepeating 
         {
-            get { return PlatformGetIsRepeating(); }
-            set { PlatformSetIsRepeating(value); }
+            get => PlatformGetIsRepeating();
+            set => PlatformSetIsRepeating(value);
         }
 
         public static bool IsShuffled
         {
-            get { return PlatformGetIsShuffled(); }
-            set { PlatformSetIsShuffled(value); }
+            get => PlatformGetIsShuffled();
+            set => PlatformSetIsShuffled(value);
         }
 
-        public static bool IsVisualizationEnabled { get { return false; } }
+        public static bool IsVisualizationEnabled => false;
 
         public static TimeSpan PlayPosition
         {
@@ -60,7 +60,7 @@ namespace Microsoft.Xna.Framework.Media
 
         public static MediaState State
         {
-            get { return PlatformGetState(); }
+            get => PlatformGetState();
             private set
             {
                 if (_state != value)
@@ -71,18 +71,12 @@ namespace Microsoft.Xna.Framework.Media
             }
         }
 
-        public static bool GameHasControl
-        {
-            get
-            {
-                return PlatformGetGameHasControl();
-            }
-        }
-		
+        public static bool GameHasControl => PlatformGetGameHasControl();
+
 
         public static float Volume
         {
-            get { return PlatformGetVolume(); }
+            get => PlatformGetVolume();
             set
             {
                 var volume = MathHelper.Clamp(value, 0, 1);

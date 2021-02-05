@@ -17,15 +17,9 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
 		[CLSCompliant(false)]
 		public ulong PackedValue
 		{
-			get
-			{
-				return packedValue;
-			}
-			set
-			{
-				packedValue = value;
-			}
-		}
+			get => packedValue;
+            set => packedValue = value;
+        }
 
 		private ulong packedValue;
 

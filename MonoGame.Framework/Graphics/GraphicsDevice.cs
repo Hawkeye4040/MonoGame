@@ -98,29 +98,23 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Get or set the color a <see cref="RenderTarget2D"/> is cleared to when it is set.
         /// </summary>
         public static Color DiscardColor {
-			get { return _discardColor; }
-			set { _discardColor = value; }
-		}
+			get => _discardColor;
+            set => _discardColor = value;
+        }
 
         /// <summary>
         /// The active vertex shader.
         /// </summary>
         private Shader _vertexShader;
         private bool _vertexShaderDirty;
-        private bool VertexShaderDirty
-        {
-            get { return _vertexShaderDirty; }
-        }
+        private bool VertexShaderDirty => _vertexShaderDirty;
 
         /// <summary>
         /// The active pixel shader.
         /// </summary>
         private Shader _pixelShader;
         private bool _pixelShaderDirty;
-        private bool PixelShaderDirty
-        {
-            get { return _pixelShaderDirty; }
-        }
+        private bool PixelShaderDirty => _pixelShaderDirty;
 
         private readonly ConstantBufferCollection _vertexConstantBuffers = new ConstantBufferCollection(ShaderStage.Vertex, 16);
         private readonly ConstantBufferCollection _pixelConstantBuffers = new ConstantBufferCollection(ShaderStage.Pixel, 16);
@@ -152,39 +146,19 @@ namespace Microsoft.Xna.Framework.Graphics
         internal int MaxTextureSlots;
         internal int MaxVertexTextureSlots;
 
-        public bool IsDisposed
-        {
-            get
-            {
-                return _isDisposed;
-            }
-        }
+        public bool IsDisposed => _isDisposed;
 
-		public bool IsContentLost {
-			get {
-				// We will just return IsDisposed for now
-				// as that is the only case I can see for now
-				return IsDisposed;
-			}
-		}
+        public bool IsContentLost =>
+            // We will just return IsDisposed for now
+            // as that is the only case I can see for now
+            IsDisposed;
 
-        internal bool IsRenderTargetBound
-        {
-            get
-            {
-                return _currentRenderTargetCount > 0;
-            }
-        }
+        internal bool IsRenderTargetBound => _currentRenderTargetCount > 0;
 
-        internal DepthFormat ActiveDepthFormat
-        {
-            get
-            {
-                return IsRenderTargetBound
-                    ? _currentRenderTargetBindings[0].DepthFormat
-                    : PresentationParameters.DepthStencilFormat;
-            }
-        }
+        internal DepthFormat ActiveDepthFormat =>
+            IsRenderTargetBound
+                ? _currentRenderTargetBindings[0].DepthFormat
+                : PresentationParameters.DepthStencilFormat;
 
         public GraphicsAdapter Adapter
         {
@@ -198,14 +172,18 @@ namespace Microsoft.Xna.Framework.Graphics
         /// The rendering information for debugging and profiling.
         /// The metrics are reset every frame after draw within <see cref="GraphicsDevice.Present"/>. 
         /// </summary>
-        public GraphicsMetrics Metrics { get { return _graphicsMetrics; } set { _graphicsMetrics = value; } }
+        public GraphicsMetrics Metrics { get => _graphicsMetrics;
+            set => _graphicsMetrics = value;
+        }
 
         private GraphicsDebug _graphicsDebug;
 
         /// <summary>
         /// Access debugging APIs for the graphics subsystem.
         /// </summary>
-        public GraphicsDebug GraphicsDebug { get { return _graphicsDebug; } set { _graphicsDebug = value; } }
+        public GraphicsDebug GraphicsDebug { get => _graphicsDebug;
+            set => _graphicsDebug = value;
+        }
 
         internal GraphicsDevice()
 		{
@@ -338,7 +316,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 // Note: this will return an incorrect, but large value
                 // for very large numbers. That doesn't matter because
                 // the number will get clamped below anyway in this case.
-                var msc = multiSampleCount;
+                int msc = multiSampleCount;
                 msc = msc | (msc >> 1);
                 msc = msc | (msc >> 2);
                 msc = msc | (msc >> 4);
@@ -390,10 +368,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public RasterizerState RasterizerState
         {
-            get
-            {
-                return _rasterizerState;
-            }
+            get => _rasterizerState;
 
             set
             {
@@ -411,7 +386,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 // Static state properties never actually get bound;
                 // instead we use our GraphicsDevice-specific version of them.
-                var newRasterizerState = _rasterizerState;
+                RasterizerState newRasterizerState = _rasterizerState;
                 if (ReferenceEquals(_rasterizerState, RasterizerState.CullClockwise))
                     newRasterizerState = _rasterizerStateCullClockwise;
                 else if (ReferenceEquals(_rasterizerState, RasterizerState.CullCounterClockwise))
@@ -436,7 +411,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </remarks>
         public Color BlendFactor
         {
-            get { return _blendFactor; }
+            get => _blendFactor;
             set
             {
                 if (_blendFactor == value)
@@ -448,8 +423,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public BlendState BlendState
         {
-			get { return _blendState; }
-			set
+			get => _blendState;
+            set
             {
                 if (value == null)
                     throw new ArgumentNullException("value");
@@ -462,7 +437,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 // Static state properties never actually get bound;
                 // instead we use our GraphicsDevice-specific version of them.
-                var newBlendState = _blendState;
+                BlendState newBlendState = _blendState;
                 if (ReferenceEquals(_blendState, BlendState.Additive))
                     newBlendState = _blendStateAdditive;
                 else if (ReferenceEquals(_blendState, BlendState.AlphaBlend))
@@ -489,7 +464,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public DepthStencilState DepthStencilState
         {
-            get { return _depthStencilState; }
+            get => _depthStencilState;
             set
             {
                 if (value == null)
@@ -503,7 +478,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 // Static state properties never actually get bound;
                 // instead we use our GraphicsDevice-specific version of them.
-                var newDepthStencilState = _depthStencilState;
+                DepthStencilState newDepthStencilState = _depthStencilState;
                 if (ReferenceEquals(_depthStencilState, DepthStencilState.Default))
                     newDepthStencilState = _depthStencilStateDefault;
                 else if (ReferenceEquals(_depthStencilState, DepthStencilState.DepthRead))
@@ -542,7 +517,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public void Clear(Color color)
         {
-            var options = ClearOptions.Target;
+            ClearOptions options = ClearOptions.Target;
             options |= ClearOptions.DepthBuffer;
             options |= ClearOptions.Stencil;
             PlatformClear(options, color.ToVector4(), _viewport.MaxDepth, 0);
@@ -588,11 +563,10 @@ namespace Microsoft.Xna.Framework.Graphics
                     // Dispose of all remaining graphics resources before disposing of the graphics device
                     lock (_resourcesLock)
                     {
-                        foreach (var resource in _resources.ToArray())
+                        foreach (WeakReference resource in _resources.ToArray())
                         {
-                            var target = resource.Target as IDisposable;
-                            if (target != null)
-                                target.Dispose();
+                            IDisposable target = resource.Target as IDisposable;
+                            target?.Dispose();
                         }
                         _resources.Clear();
                     }
@@ -694,11 +668,10 @@ namespace Microsoft.Xna.Framework.Graphics
 
             lock (_resourcesLock)
             {
-                foreach (var resource in _resources)
+                foreach (WeakReference resource in _resources)
                 {
-                    var target = resource.Target as GraphicsResource;
-                    if (target != null)
-                        target.GraphicsDeviceResetting();
+                    GraphicsResource target = resource.Target as GraphicsResource;
+                    target?.GraphicsDeviceResetting();
                 }
 
                 // Remove references to resources that have been garbage collected.
@@ -715,21 +688,9 @@ namespace Microsoft.Xna.Framework.Graphics
             EventHelpers.Raise(this, DeviceReset, EventArgs.Empty);
         }
 
-        public DisplayMode DisplayMode
-        {
-            get
-            {
-                return Adapter.CurrentDisplayMode;
-            }
-        }
+        public DisplayMode DisplayMode => Adapter.CurrentDisplayMode;
 
-        public GraphicsDeviceStatus GraphicsDeviceStatus
-        {
-            get
-            {
-                return GraphicsDeviceStatus.Normal;
-            }
-        }
+        public GraphicsDeviceStatus GraphicsDeviceStatus => GraphicsDeviceStatus.Normal;
 
         public PresentationParameters PresentationParameters
         {
@@ -739,10 +700,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public Viewport Viewport
         {
-            get
-            {
-                return _viewport;
-            }
+            get => _viewport;
 
             set
             {
@@ -752,17 +710,11 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         private readonly GraphicsProfile _graphicsProfile;
-        public GraphicsProfile GraphicsProfile
-        {
-            get { return _graphicsProfile; }
-        }
+        public GraphicsProfile GraphicsProfile => _graphicsProfile;
 
         public Rectangle ScissorRectangle
         {
-            get
-            {
-                return _scissorRectangle;
-            }
+            get => _scissorRectangle;
 
             set
             {
@@ -774,15 +726,9 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        public int RenderTargetCount
-        {
-            get
-            {
-                return _currentRenderTargetCount;
-            }
-        }
+        public int RenderTargetCount => _currentRenderTargetCount;
 
-		public void SetRenderTarget(RenderTarget2D renderTarget)
+        public void SetRenderTarget(RenderTarget2D renderTarget)
 		{
 			if (renderTarget == null)
 		    {
@@ -811,7 +757,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		public void SetRenderTargets(params RenderTargetBinding[] renderTargets)
 		{
             // Avoid having to check for null and zero length.
-            var renderTargetCount = 0;
+            int renderTargetCount = 0;
             if (renderTargets != null)
             {
                 renderTargetCount = renderTargets.Length;
@@ -824,8 +770,8 @@ namespace Microsoft.Xna.Framework.Graphics
             // Try to early out if the current and new bindings are equal.
             if (_currentRenderTargetCount == renderTargetCount)
             {
-                var isEqual = true;
-                for (var i = 0; i < _currentRenderTargetCount; i++)
+                bool isEqual = true;
+                for (int i = 0; i < _currentRenderTargetCount; i++)
                 {
                     if (_currentRenderTargetBindings[i].RenderTarget != renderTargets[i].RenderTarget ||
                         _currentRenderTargetBindings[i].ArraySlice != renderTargets[i].ArraySlice)
@@ -859,7 +805,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal void ApplyRenderTargets(RenderTargetBinding[] renderTargets)
         {
-            var clearTarget = false;
+            bool clearTarget = false;
 
             PlatformResolveRenderTargets();
 
@@ -884,7 +830,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 Array.Copy(renderTargets, _currentRenderTargetBindings, renderTargets.Length);
                 _currentRenderTargetCount = renderTargets.Length;
 
-                var renderTarget = PlatformApplyRenderTargets();
+                IRenderTarget renderTarget = PlatformApplyRenderTargets();
 
                 // We clear the render target if asked.
                 clearTarget = renderTarget.RenderTargetUsage == RenderTargetUsage.DiscardContents;
@@ -909,7 +855,7 @@ namespace Microsoft.Xna.Framework.Graphics
 		public RenderTargetBinding[] GetRenderTargets()
 		{
             // Return a correctly sized copy our internal array.
-            var bindings = new RenderTargetBinding[_currentRenderTargetCount];
+            RenderTargetBinding[] bindings = new RenderTargetBinding[_currentRenderTargetCount];
             Array.Copy(_currentRenderTargetBindings, bindings, _currentRenderTargetCount);
             return bindings;
 		}
@@ -952,7 +898,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 if (vertexBuffers.Length > _maxVertexBufferSlots)
                 {
-                    var message = string.Format(CultureInfo.InvariantCulture, "Max number of vertex buffers is {0}.", _maxVertexBufferSlots);
+                    string message = string.Format(CultureInfo.InvariantCulture, "Max number of vertex buffers is {0}.", _maxVertexBufferSlots);
                     throw new ArgumentOutOfRangeException("vertexBuffers", message);
                 }
 
@@ -969,11 +915,13 @@ namespace Microsoft.Xna.Framework.Graphics
             _indexBufferDirty = true;
         }
 
-        public IndexBuffer Indices { set { SetIndexBuffer(value); } get { return _indexBuffer; } }
+        public IndexBuffer Indices { set => SetIndexBuffer(value);
+            get => _indexBuffer;
+        }
 
         internal Shader VertexShader
         {
-            get { return _vertexShader; }
+            get => _vertexShader;
 
             set
             {
@@ -988,7 +936,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         internal Shader PixelShader
         {
-            get { return _pixelShader; }
+            get => _pixelShader;
 
             set
             {
@@ -1095,7 +1043,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (primitiveCount <= 0)
                 throw new ArgumentOutOfRangeException("primitiveCount");
 
-            var vertexCount = GetElementCountArray(primitiveType, primitiveCount);
+            int vertexCount = GetElementCountArray(primitiveType, primitiveCount);
 
             if (vertexOffset + vertexCount > vertexData.Length)
                 throw new ArgumentOutOfRangeException("primitiveCount");
@@ -1129,7 +1077,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (primitiveCount <= 0)
                 throw new ArgumentOutOfRangeException("primitiveCount");
 
-            var vertexCount = GetElementCountArray(primitiveType, primitiveCount);
+            int vertexCount = GetElementCountArray(primitiveType, primitiveCount);
 
             PlatformDrawPrimitives(primitiveType, vertexStart, vertexCount);
 
@@ -1391,7 +1339,7 @@ namespace Microsoft.Xna.Framework.Graphics
             int width, height;
             if (rect.HasValue)
             {
-                var rectangle = rect.Value;
+                Rectangle rectangle = rect.Value;
                 width = rectangle.Width;
                 height = rectangle.Height;
 
@@ -1405,15 +1353,15 @@ namespace Microsoft.Xna.Framework.Graphics
                 height = PresentationParameters.BackBufferHeight;
             }
 
-            var tSize = ReflectionHelpers.SizeOf<T>.Get();
-            var fSize = PresentationParameters.BackBufferFormat.GetSize();
+            int tSize = ReflectionHelpers.SizeOf<T>.Get();
+            int fSize = PresentationParameters.BackBufferFormat.GetSize();
             if (tSize > fSize || fSize % tSize != 0)
                 throw new ArgumentException("Type T is of an invalid size for the format of this texture.", "T");
             if (startIndex < 0 || startIndex >= data.Length)
                 throw new ArgumentException("startIndex must be at least zero and smaller than data.Length.", "startIndex");
             if (data.Length < startIndex + elementCount)
                 throw new ArgumentException("The data array is too small.");
-            var dataByteSize = width * height * fSize;
+            int dataByteSize = width * height * fSize;
 
             if (elementCount * tSize != dataByteSize)
                 throw new ArgumentException(string.Format("elementCount is not the right size, " +
@@ -1443,8 +1391,8 @@ namespace Microsoft.Xna.Framework.Graphics
         // uniformly scales down the given rectangle by 10%
         internal static Rectangle GetDefaultTitleSafeArea(int x, int y, int width, int height)
         {
-            var marginX = (width + 19) / 20;
-            var marginY = (height + 19) / 20;
+            int marginX = (width + 19) / 20;
+            int marginY = (height + 19) / 20;
             x += marginX;
             y += marginY;
 

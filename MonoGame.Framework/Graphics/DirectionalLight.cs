@@ -72,67 +72,48 @@ namespace Microsoft.Xna.Framework.Graphics
 		}
 		
 		public Vector3 DiffuseColor {
-			get {
-				return diffuseColor;
-			}
-			set {
+			get => diffuseColor;
+            set {
 				diffuseColor = value;
-				if (enabled && diffuseColorParameter != null)
-					diffuseColorParameter.SetValue (diffuseColor);
+				if (enabled)
+					diffuseColorParameter?.SetValue (diffuseColor);
 			}
 		}
 		
 		public Vector3 Direction {
-			get {
-				return direction;
-			}
-			set {
+			get => direction;
+            set {
 				direction = value;
-				if (directionParameter != null)
-					directionParameter.SetValue (direction);
-			}
+                directionParameter?.SetValue (direction);
+            }
 		}
 		
 		public Vector3 SpecularColor {
-			get {
-				return specularColor;
-			}
-			set {
+			get => specularColor;
+            set {
 				specularColor = value;
-				if (enabled && specularColorParameter != null)
-					specularColorParameter.SetValue (specularColor);
+				if (enabled)
+					specularColorParameter?.SetValue (specularColor);
 			}
 		}
 		public bool Enabled 
 		{
-			get { return enabled; }
-			set 
+			get => enabled;
+            set 
 			{
 				if (enabled != value)
 				{
 				    enabled = value;
 				    if (enabled)
 				    {
-				        if (diffuseColorParameter != null)
-				        {
-				            diffuseColorParameter.SetValue(diffuseColor);
-				        }
-				        if (specularColorParameter != null)
-				        {
-				            specularColorParameter.SetValue(specularColor);
-				        }
-				    }
+                        diffuseColorParameter?.SetValue(diffuseColor);
+                        specularColorParameter?.SetValue(specularColor);
+                    }
 				    else
 				    {
-				        if (diffuseColorParameter != null)
-				        {
-				            diffuseColorParameter.SetValue(Vector3.Zero);
-				        }
-				        if (specularColorParameter != null)
-				        {
-				            specularColorParameter.SetValue(Vector3.Zero);
-				        }
-				    }
+                        diffuseColorParameter?.SetValue(Vector3.Zero);
+                        specularColorParameter?.SetValue(Vector3.Zero);
+                    }
 				}
 
 			}

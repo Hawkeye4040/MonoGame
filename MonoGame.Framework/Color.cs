@@ -325,10 +325,7 @@ namespace Microsoft.Xna.Framework
                     return (byte) (_packedValue >> 16);
                 }
             }
-            set
-            {
-                _packedValue = (_packedValue & 0xff00ffff) | ((uint)value << 16);
-            }
+            set => _packedValue = (_packedValue & 0xff00ffff) | ((uint)value << 16);
         }
 
         /// <summary>
@@ -344,10 +341,7 @@ namespace Microsoft.Xna.Framework
                     return (byte)(_packedValue >> 8);
                 }
             }
-            set
-            {
-                _packedValue = (_packedValue & 0xffff00ff) | ((uint)value << 8);
-            }
+            set => _packedValue = (_packedValue & 0xffff00ff) | ((uint)value << 8);
         }
 
         /// <summary>
@@ -363,10 +357,7 @@ namespace Microsoft.Xna.Framework
                     return (byte) _packedValue;
                 }
             }
-            set
-            {
-                _packedValue = (_packedValue & 0xffffff00) | value;
-            }
+            set => _packedValue = (_packedValue & 0xffffff00) | value;
         }
 
         /// <summary>
@@ -382,10 +373,7 @@ namespace Microsoft.Xna.Framework
                     return (byte)(_packedValue >> 24);
                 }
             }
-            set
-            {
-                _packedValue = (_packedValue & 0x00ffffff) | ((uint)value << 24);
-            }
+            set => _packedValue = (_packedValue & 0x00ffffff) | ((uint)value << 24);
         }
 		
 	/// <summary>
@@ -1800,23 +1788,18 @@ namespace Microsoft.Xna.Framework
         [CLSCompliant(false)]
         public uint PackedValue
         {
-            get { return _packedValue; }
-            set { _packedValue = value; }
+            get => _packedValue;
+            set => _packedValue = value;
         }
 
 
-        internal string DebugDisplayString
-        {
-            get
-            {
-                return string.Concat(
-                    R.ToString(), "  ",
-                    G.ToString(), "  ",
-                    B.ToString(), "  ",
-                    A.ToString()
-                );
-            }
-        }
+        internal string DebugDisplayString =>
+            string.Concat(
+                R.ToString(), "  ",
+                G.ToString(), "  ",
+                B.ToString(), "  ",
+                A.ToString()
+            );
 
 
         /// <summary>

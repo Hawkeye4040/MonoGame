@@ -256,15 +256,9 @@ namespace Microsoft.Xna.Framework
         /// </exception>
         public float this[int row, int column]
         {
-            get
-            {
-                return this[row * 4 + column];
-            }
+            get => this[row * 4 + column];
 
-            set
-            {
-                this[row * 4 + column] = value;
-            }
+            set => this[row * 4 + column] = value;
         }
 
         #endregion
@@ -283,10 +277,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Backward
         {
-            get
-            {
-                return new Vector3(M31, M32, M33);
-            }
+            get => new Vector3(M31, M32, M33);
             set
             {
                 M31 = value.X;
@@ -300,10 +291,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Down
         {
-            get
-            {
-                return new Vector3(-M21, -M22, -M23);
-            }
+            get => new Vector3(-M21, -M22, -M23);
             set
             {
                 M21 = -value.X;
@@ -317,10 +305,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Forward
         {
-            get
-            {
-                return new Vector3(-M31, -M32, -M33);
-            }
+            get => new Vector3(-M31, -M32, -M33);
             set
             {
                 M31 = -value.X;
@@ -332,20 +317,14 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Returns the identity matrix.
         /// </summary>
-        public static Matrix Identity
-        {
-            get { return identity; }
-        }
+        public static Matrix Identity => identity;
 
         /// <summary>
         /// The left vector formed from the first row -M11, -M12, -M13 elements.
         /// </summary>
         public Vector3 Left
         {
-            get
-            {
-                return new Vector3(-M11, -M12, -M13);
-            }
+            get => new Vector3(-M11, -M12, -M13);
             set
             {
                 M11 = -value.X;
@@ -359,10 +338,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Right
         {
-            get
-            {
-                return new Vector3(M11, M12, M13);
-            }
+            get => new Vector3(M11, M12, M13);
             set
             {
                 M11 = value.X;
@@ -376,10 +352,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Translation
         {
-            get
-            {
-                return new Vector3(M41, M42, M43);
-            }
+            get => new Vector3(M41, M42, M43);
             set
             {
                 M41 = value.X;
@@ -393,10 +366,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public Vector3 Up
         {
-            get
-            {
-                return new Vector3(M21, M22, M23);
-            }
+            get => new Vector3(M21, M22, M23);
             set
             {
                 M21 = value.X;

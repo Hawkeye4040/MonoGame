@@ -186,7 +186,7 @@ namespace Microsoft.Xna.Framework
         public static AndroidGameActivity Activity { get; internal set; }
 #endif
         private static Game _instance;
-        internal static Game Instance { get { return _instance; } }
+        internal static Game Instance => _instance;
 
         /// <summary>
         /// The start up parameters for this <see cref="Game"/>.
@@ -196,14 +196,11 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// A collection of game components attached to this <see cref="Game"/>.
         /// </summary>
-        public GameComponentCollection Components
-        {
-            get { return _components; }
-        }
+        public GameComponentCollection Components => _components;
 
         public TimeSpan InactiveSleepTime
         {
-            get { return _inactiveSleepTime; }
+            get => _inactiveSleepTime;
             set
             {
                 if (value < TimeSpan.Zero)
@@ -219,7 +216,7 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public TimeSpan MaxElapsedTime
         {
-            get { return _maxElapsedTime; }
+            get => _maxElapsedTime;
             set
             {
                 if (value < TimeSpan.Zero)
@@ -234,18 +231,15 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Indicates if the game is the focused application.
         /// </summary>
-        public bool IsActive
-        {
-            get { return Platform.IsActive; }
-        }
+        public bool IsActive => Platform.IsActive;
 
         /// <summary>
         /// Indicates if the mouse cursor is visible on the game screen.
         /// </summary>
         public bool IsMouseVisible
         {
-            get { return Platform.IsMouseVisible; }
-            set { Platform.IsMouseVisible = value; }
+            get => Platform.IsMouseVisible;
+            set => Platform.IsMouseVisible = value;
         }
 
         /// <summary>
@@ -254,7 +248,7 @@ namespace Microsoft.Xna.Framework
         /// <exception cref="ArgumentOutOfRangeException">Target elapsed time must be strictly larger than zero.</exception>
         public TimeSpan TargetElapsedTime
         {
-            get { return _targetElapsedTime; }
+            get => _targetElapsedTime;
             set
             {
                 // Give GamePlatform implementations an opportunity to override
@@ -282,16 +276,14 @@ namespace Microsoft.Xna.Framework
         /// </summary>
         public bool IsFixedTimeStep
         {
-            get { return _isFixedTimeStep; }
-            set { _isFixedTimeStep = value; }
+            get => _isFixedTimeStep;
+            set => _isFixedTimeStep = value;
         }
 
         /// <summary>
         /// Get a container holding service providers attached to this <see cref="Game"/>.
         /// </summary>
-        public GameServiceContainer Services {
-            get { return _services; }
-        }
+        public GameServiceContainer Services => _services;
 
 
         /// <summary>
@@ -300,7 +292,7 @@ namespace Microsoft.Xna.Framework
         /// <exception cref="ArgumentNullException">If Content is set to <code>null</code>.</exception>
         public ContentManager Content
         {
-            get { return _content; }
+            get => _content;
             set
             {
                 if (value == null)
@@ -336,10 +328,7 @@ namespace Microsoft.Xna.Framework
         /// The system window that this game is displayed on.
         /// </summary>
         [CLSCompliant(false)]
-        public GameWindow Window
-        {
-            get { return Platform.Window; }
-        }
+        public GameWindow Window => Platform.Window;
 
         #endregion Properties
 
@@ -349,10 +338,7 @@ namespace Microsoft.Xna.Framework
         // Currently Game.Initialized is used by the Mac game window class to
         // determine whether to raise DeviceResetting and DeviceReset on
         // GraphicsDeviceManager.
-        internal bool Initialized
-        {
-            get { return _initialized; }
-        }
+        internal bool Initialized => _initialized;
 
         #endregion Internal Properties
 
@@ -803,7 +789,7 @@ namespace Microsoft.Xna.Framework
                 Platform.EnterFullScreen();
             else
                 Platform.ExitFullScreen();
-            var viewport = new Viewport(0, 0,
+            Viewport viewport = new Viewport(0, 0,
 			                            GraphicsDevice.PresentationParameters.BackBufferWidth,
 			                            GraphicsDevice.PresentationParameters.BackBufferHeight);
 
@@ -1057,15 +1043,9 @@ namespace Microsoft.Xna.Framework
                 _items.CopyTo(array, arrayIndex);
             }
 
-            public int Count
-            {
-                get { return _items.Count; }
-            }
+            public int Count => _items.Count;
 
-            public bool IsReadOnly
-            {
-                get { return false; }
-            }
+            public bool IsReadOnly => false;
 
             public IEnumerator<T> GetEnumerator()
             {

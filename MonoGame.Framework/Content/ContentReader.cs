@@ -20,13 +20,7 @@ namespace Microsoft.Xna.Framework.Content
 		internal int version;
 		internal int sharedResourceCount;
 
-        internal ContentTypeReader[] TypeReaders
-        {
-            get
-            {
-                return typeReaders;
-            }
-        }
+        internal ContentTypeReader[] TypeReaders => typeReaders;
 
         internal ContentReader(ContentManager manager, Stream stream, string assetName, int version, Action<IDisposable> recordDisposableObject)
             : base(stream)
@@ -37,21 +31,9 @@ namespace Microsoft.Xna.Framework.Content
 			this.version = version;
         }
 
-        public ContentManager ContentManager
-        {
-            get
-            {
-                return contentManager;
-            }
-        }
-        
-        public string AssetName
-        {
-            get
-            {
-                return assetName;
-            }
-        }
+        public ContentManager ContentManager => contentManager;
+
+        public string AssetName => assetName;
 
         internal object ReadAsset<T>()
         {
@@ -92,18 +74,18 @@ namespace Microsoft.Xna.Framework.Content
             if (sharedResourceCount <= 0)
                 return;
 
-            var sharedResources = new object[sharedResourceCount];
-            for (var i = 0; i < sharedResourceCount; ++i)
+            object[] sharedResources = new object[sharedResourceCount];
+            for (int i = 0; i < sharedResourceCount; ++i)
                 sharedResources[i] = InnerReadObject<object>(null);
 
             // Fixup shared resources by calling each registered action
-            foreach (var fixup in sharedResourceFixups)
+            foreach (KeyValuePair<int, Action<object>> fixup in sharedResourceFixups)
                 fixup.Value(sharedResources[fixup.Key]);
         }
 
         public T ReadExternalReference<T>()
         {
-            var externalReference = ReadString();
+            string externalReference = ReadString();
 
             if (!string.IsNullOrEmpty(externalReference))
             {
@@ -137,7 +119,7 @@ namespace Microsoft.Xna.Framework.Content
             
         private void RecordDisposable<T>(T result)
         {
-            var disposable = result as IDisposable;
+            IDisposable disposable = result as IDisposable;
             if (disposable == null)
                 return;
 
@@ -154,7 +136,7 @@ namespace Microsoft.Xna.Framework.Content
 
         public T ReadObject<T>(ContentTypeReader typeReader)
         {
-            var result = (T)typeReader.Read(this, default(T));            
+            T result = (T)typeReader.Read(this, default(T));            
             RecordDisposable(result);
             return result;
         }
@@ -166,15 +148,15 @@ namespace Microsoft.Xna.Framework.Content
 
         private T InnerReadObject<T>(T existingInstance)
         {
-            var typeReaderIndex = Read7BitEncodedInt();
+            int typeReaderIndex = Read7BitEncodedInt();
             if (typeReaderIndex == 0)
                 return existingInstance;
 
             if (typeReaderIndex > typeReaders.Length)
                 throw new ContentLoadException("Incorrect type reader index found!");
 
-            var typeReader = typeReaders[typeReaderIndex - 1];
-            var result = (T)typeReader.Read(this, existingInstance);
+            ContentTypeReader typeReader = typeReaders[typeReaderIndex - 1];
+            T result = (T)typeReader.Read(this, existingInstance);
 
             RecordDisposable(result);
 
@@ -186,7 +168,7 @@ namespace Microsoft.Xna.Framework.Content
             if (!ReflectionHelpers.IsValueType(typeReader.TargetType))
                 return ReadObject(existingInstance);
 
-            var result = (T)typeReader.Read(this, existingInstance);
+            T result = (T)typeReader.Read(this, existingInstance);
 
             RecordDisposable(result);
 
@@ -289,8 +271,8 @@ namespace Microsoft.Xna.Framework.Content
 		
 		internal BoundingSphere ReadBoundingSphere()
 		{
-			var position = ReadVector3();
-            var radius = ReadSingle();
+			Vector3 position = ReadVector3();
+            float radius = ReadSingle();
             return new BoundingSphere(position, radius);
 		}
     }

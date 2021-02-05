@@ -156,7 +156,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <returns>The vertex buffer bindings.</returns>
         public VertexBufferBinding[] Get()
         {
-            var bindings = new VertexBufferBinding[Count];
+            VertexBufferBinding[] bindings = new VertexBufferBinding[Count];
             for (int i = 0; i < bindings.Length; i++)
                 bindings[i] = new VertexBufferBinding(
                     _vertexBuffers[i],

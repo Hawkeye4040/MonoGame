@@ -32,35 +32,17 @@ namespace Microsoft.Xna.Framework.Media
         private Android.Net.Uri thumbnail;
 #endif
 
-        public Artist Artist
-        {
-            get
-            {
-                return artist;
-            }
-        }
+        public Artist Artist => artist;
 
         /// <summary>
         /// Gets the duration of the Album.
         /// </summary>
-        public TimeSpan Duration
-        {
-            get
-            {
-                return TimeSpan.Zero; // Not implemented
-            }
-        }
+        public TimeSpan Duration => TimeSpan.Zero; // Not implemented
 
         /// <summary>
         /// Gets the Genre of the Album.
         /// </summary>
-        public Genre Genre
-        {
-            get
-            {
-                return genre;
-            }
-        }
+        public Genre Genre => genre;
 
         /// <summary>
         /// Gets a value indicating whether the Album has associated album art.
@@ -85,37 +67,19 @@ namespace Microsoft.Xna.Framework.Media
         /// <summary>
         /// Gets a value indicating whether the object is disposed.
         /// </summary>
-        public bool IsDisposed
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsDisposed => false;
 
         /// <summary>
         /// Gets the name of the Album.
         /// </summary>
-        public string Name
-        {
-            get
-            {
-                return album;
-            }
-        }
+        public string Name => album;
 
         /// <summary>
         /// Gets a SongCollection that contains the songs on the album.
         /// </summary>
-        public SongCollection Songs
-        {
-            get
-            {
-                return songCollection;
-            }
-        }
+        public SongCollection Songs => songCollection;
 
-       private Album(SongCollection songCollection, string name, Artist artist, Genre genre)
+        private Album(SongCollection songCollection, string name, Artist artist, Genre genre)
         {
             this.songCollection = songCollection;
             album = name;

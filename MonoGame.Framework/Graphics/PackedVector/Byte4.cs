@@ -31,7 +31,7 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         /// <param name="w">Initial value for the w component.</param>
         public Byte4(float x, float y, float z, float w)
         {
-            var vector = new Vector4(x, y, z, w);
+            Vector4 vector = new Vector4(x, y, z, w);
             packedValue = Pack(ref vector);
         }
 
@@ -64,14 +64,8 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
         [CLSCompliant(false)]
         public uint PackedValue
         {
-            get
-            {
-                return packedValue;
-            }
-            set
-            {
-                packedValue = value;
-            }
+            get => packedValue;
+            set => packedValue = value;
         }
 
         /// <summary>
@@ -125,10 +119,10 @@ namespace Microsoft.Xna.Framework.Graphics.PackedVector
             const float min = 0.0f;
 
             // clamp the value between min and max values
-            var byte4 = (uint) Math.Round(MathHelper.Clamp(vector.X, min, max)) & 0xFF;
-            var byte3 = ((uint) Math.Round(MathHelper.Clamp(vector.Y, min, max)) & 0xFF) << 0x8;
-            var byte2 = ((uint) Math.Round(MathHelper.Clamp(vector.Z, min, max)) & 0xFF) << 0x10;
-            var byte1 = ((uint) Math.Round(MathHelper.Clamp(vector.W, min, max)) & 0xFF) << 0x18;
+            uint byte4 = (uint) Math.Round(MathHelper.Clamp(vector.X, min, max)) & 0xFF;
+            uint byte3 = ((uint) Math.Round(MathHelper.Clamp(vector.Y, min, max)) & 0xFF) << 0x8;
+            uint byte2 = ((uint) Math.Round(MathHelper.Clamp(vector.Z, min, max)) & 0xFF) << 0x10;
+            uint byte1 = ((uint) Math.Round(MathHelper.Clamp(vector.W, min, max)) & 0xFF) << 0x18;
 
             return byte4 | byte3 | byte2 | byte1;
         }

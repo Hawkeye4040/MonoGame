@@ -85,7 +85,7 @@ namespace Microsoft.Xna.Framework.Content
                 bool contains = false;
                 for (int i = ContentManagers.Count - 1; i >= 0; --i)
                 {
-                    var contentRef = ContentManagers[i];
+                    WeakReference contentRef = ContentManagers[i];
                     if (ReferenceEquals(contentRef.Target, contentManager))
                         contains = true;
                     if (!contentRef.IsAlive)
@@ -104,7 +104,7 @@ namespace Microsoft.Xna.Framework.Content
                 // take the opportunity to prune the list of any finalized content managers.
                 for (int i = ContentManagers.Count - 1; i >= 0; --i)
                 {
-                    var contentRef = ContentManagers[i];
+                    WeakReference contentRef = ContentManagers[i];
                     if (!contentRef.IsAlive || ReferenceEquals(contentRef.Target, contentManager))
                         ContentManagers.RemoveAt(i);
                 }
@@ -119,12 +119,11 @@ namespace Microsoft.Xna.Framework.Content
                 // opportunity to prune the list of any finalized content managers.
                 for (int i = ContentManagers.Count - 1; i >= 0; --i)
                 {
-                    var contentRef = ContentManagers[i];
+                    WeakReference contentRef = ContentManagers[i];
                     if (contentRef.IsAlive)
                     {
-                        var contentManager = (ContentManager)contentRef.Target;
-                        if (contentManager != null)
-                            contentManager.ReloadGraphicsAssets();
+                        ContentManager contentManager = (ContentManager)contentRef.Target;
+                        contentManager?.ReloadGraphicsAssets();
                     }
                     else
                     {
@@ -149,26 +148,14 @@ namespace Microsoft.Xna.Framework.Content
 
 		public ContentManager(IServiceProvider serviceProvider)
 		{
-			if (serviceProvider == null)
-			{
-				throw new ArgumentNullException("serviceProvider");
-			}
-			this.serviceProvider = serviceProvider;
+            this.serviceProvider = serviceProvider ?? throw new ArgumentNullException("serviceProvider");
             AddContentManager(this);
 		}
 
 		public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
 		{
-			if (serviceProvider == null)
-			{
-				throw new ArgumentNullException("serviceProvider");
-			}
-			if (rootDirectory == null)
-			{
-				throw new ArgumentNullException("rootDirectory");
-			}
-			RootDirectory = rootDirectory;
-			this.serviceProvider = serviceProvider;
+            RootDirectory = rootDirectory ?? throw new ArgumentNullException("rootDirectory");
+			this.serviceProvider = serviceProvider ?? throw new ArgumentNullException("serviceProvider");
             AddContentManager(this);
 		}
 
@@ -239,7 +226,7 @@ namespace Microsoft.Xna.Framework.Content
             // loading "content/asset1.xnb" and "content\\ASSET1.xnb" as if they were two 
             // different files. This matches stock XNA behavior.
             // The dictionary will ignore case differences
-            var key = assetName.Replace('\\', '/');
+            string key = assetName.Replace('\\', '/');
 
             // Check for a previously loaded asset first
             object asset = null;
@@ -263,7 +250,7 @@ namespace Microsoft.Xna.Framework.Content
 			Stream stream;
 			try
             {
-                var assetPath = Path.Combine(RootDirectory, assetName) + ".xnb";
+                string assetPath = Path.Combine(RootDirectory, assetName) + ".xnb";
 
                 // This is primarily for editor support. 
                 // Setting the RootDirectory to an absolute path is useful in editor
@@ -316,10 +303,10 @@ namespace Microsoft.Xna.Framework.Content
 			object result = null;
 
             // Try to load as XNB file
-            var stream = OpenStream(assetName);
-            using (var xnbReader = new BinaryReader(stream))
+            Stream stream = OpenStream(assetName);
+            using (BinaryReader xnbReader = new BinaryReader(stream))
             {
-                using (var reader = GetContentReaderFromXnb(assetName, stream, xnbReader, recordDisposableObject))
+                using (ContentReader reader = GetContentReaderFromXnb(assetName, stream, xnbReader, recordDisposableObject))
                 {
                     result = reader.ReadAsset<T>();
                     if (result is GraphicsResource)
@@ -342,7 +329,7 @@ namespace Microsoft.Xna.Framework.Content
             byte platform = xnbReader.ReadByte();
 
             if (x != 'X' || n != 'N' || b != 'B' ||
-                !(targetPlatformIdentifiers.Contains((char)platform)))
+                !targetPlatformIdentifiers.Contains((char)platform))
             {
                 throw new ContentLoadException("Asset does not appear to be a valid XNB file. Did you process your content for Windows?");
             }
@@ -381,7 +368,7 @@ namespace Microsoft.Xna.Framework.Content
                 decompressedStream = stream;
             }
 
-            var reader = new ContentReader(this, decompressedStream,
+            ContentReader reader = new ContentReader(this, decompressedStream,
                                                         originalAssetName, version, recordDisposableObject);
             
             return reader;
@@ -400,22 +387,19 @@ namespace Microsoft.Xna.Framework.Content
         /// <summary>
         /// Virtual property to allow a derived ContentManager to have it's assets reloaded
         /// </summary>
-        protected virtual Dictionary<string, object> LoadedAssets
-        {
-            get { return loadedAssets; }
-        }
+        protected virtual Dictionary<string, object> LoadedAssets => loadedAssets;
 
-		protected virtual void ReloadGraphicsAssets()
+        protected virtual void ReloadGraphicsAssets()
         {
-            foreach (var asset in LoadedAssets)
+            foreach (KeyValuePair<string, object> asset in LoadedAssets)
             {
                 // This never executes as asset.Key is never null.  This just forces the 
                 // linker to include the ReloadAsset function when AOT compiled.
                 if (asset.Key == null)
                     ReloadAsset(asset.Key, Convert.ChangeType(asset.Value, asset.Value.GetType()));
 
-                var methodInfo = ReflectionHelpers.GetMethodInfo(typeof(ContentManager), "ReloadAsset");
-                var genericMethod = methodInfo.MakeGenericMethod(asset.Value.GetType());
+                MethodInfo methodInfo = ReflectionHelpers.GetMethodInfo(typeof(ContentManager), "ReloadAsset");
+                MethodInfo genericMethod = methodInfo.MakeGenericMethod(asset.Value.GetType());
                 genericMethod.Invoke(this, new object[] { asset.Key, Convert.ChangeType(asset.Value, asset.Value.GetType()) }); 
             }
         }
@@ -432,10 +416,10 @@ namespace Microsoft.Xna.Framework.Content
 				throw new ObjectDisposedException("ContentManager");
 			}
 
-            var stream = OpenStream(assetName);
-            using (var xnbReader = new BinaryReader(stream))
+            Stream stream = OpenStream(assetName);
+            using (BinaryReader xnbReader = new BinaryReader(stream))
             {
-                using (var reader = GetContentReaderFromXnb(assetName, stream, xnbReader, null))
+                using (ContentReader reader = GetContentReaderFromXnb(assetName, stream, xnbReader, null))
                 {
                     reader.ReadAsset<T>(currentAsset);
                 }
@@ -445,41 +429,22 @@ namespace Microsoft.Xna.Framework.Content
 		public virtual void Unload()
 		{
 		    // Look for disposable assets.
-		    foreach (var disposable in disposableAssets)
-		    {
-		        if (disposable != null)
-		            disposable.Dispose();
-		    }
+		    foreach (IDisposable disposable in disposableAssets)
+            {
+                disposable?.Dispose();
+            }
 			disposableAssets.Clear();
 		    loadedAssets.Clear();
 		}
 
 		public string RootDirectory
 		{
-			get
-			{
-				return _rootDirectory;
-			}
-			set
-			{
-				_rootDirectory = value;
-			}
-		}
-
-        internal string RootDirectoryFullPath
-        {
-            get
-            {
-                return Path.Combine(TitleContainer.Location, RootDirectory);
-            }
+			get => _rootDirectory;
+            set => _rootDirectory = value;
         }
-		
-		public IServiceProvider ServiceProvider
-		{
-			get
-			{
-				return serviceProvider;
-			}
-		}
+
+        internal string RootDirectoryFullPath => Path.Combine(TitleContainer.Location, RootDirectory);
+
+        public IServiceProvider ServiceProvider => serviceProvider;
     }
 }

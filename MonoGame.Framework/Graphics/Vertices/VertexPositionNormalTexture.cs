@@ -16,19 +16,13 @@ namespace Microsoft.Xna.Framework.Graphics
             TextureCoordinate = textureCoordinate;
         }
 
-        VertexDeclaration IVertexType.VertexDeclaration
-        {
-            get
-            {
-                return VertexDeclaration;
-            }
-        }
+        VertexDeclaration IVertexType.VertexDeclaration => VertexDeclaration;
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = Position.GetHashCode();
+                int hashCode = Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ Normal.GetHashCode();
                 hashCode = (hashCode * 397) ^ TextureCoordinate.GetHashCode();
                 return hashCode;

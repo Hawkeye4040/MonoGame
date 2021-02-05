@@ -47,15 +47,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
             _items.CopyTo(array, arrayIndex);
         }
 
-        public int Count
-        {
-            get { return _items.Count; }
-        }
+        public int Count => _items.Count;
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         public bool Remove(char item)
         {
@@ -102,11 +96,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         [ContentSerializer(AllowNull = false)]
 		public string FontName
 		{
-			get
-			{
-				return fontName;
-			}
-			set
+			get => fontName;
+            set
 			{
 				if (string.IsNullOrEmpty(value))
 					throw new ArgumentNullException("FontName is null or an empty string.");
@@ -119,11 +110,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 		/// </summary>
 		public float Size
 		{
-			get
-			{
-				return size;
-			}
-			set
+			get => size;
+            set
 			{
 				if (value <= 0.0f)
 					throw new ArgumentOutOfRangeException("Size must be greater than zero.");
@@ -137,15 +125,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         [ContentSerializer(Optional = true)]
 		public float Spacing
 		{
-			get
-			{
-				return spacing;
-			}
-			set
-			{
-				spacing = value;
-			}
-		}
+			get => spacing;
+            set => spacing = value;
+        }
 
         /// <summary>
         /// Indicates if kerning information is used when drawing characters.
@@ -153,14 +135,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         [ContentSerializer(Optional = true)]
         public bool UseKerning
         {
-            get
-            {
-                return useKerning;
-            }
-            set
-            {
-                useKerning = value;
-            }
+            get => useKerning;
+            set => useKerning = value;
         }
 
 		/// <summary>
@@ -168,15 +144,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 		/// </summary>
 		public FontDescriptionStyle Style
 		{
-			get
-			{
-				return style;
-			}
-			set
-			{
-				style = value;
-			}
-		}
+			get => style;
+            set => style = value;
+        }
 
         /// <summary>
         /// Gets or sets the default character for the font.
@@ -184,14 +154,8 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
         [ContentSerializer(Optional = true)]
         public Nullable<char> DefaultCharacter
         {
-            get
-            {
-                return defaultCharacter;
-            }
-            set
-            {
-                defaultCharacter = value;
-            }
+            get => defaultCharacter;
+            set => defaultCharacter = value;
         }
 
         [ContentSerializer(CollectionItemName = "CharacterRegion")]
@@ -238,9 +202,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 	    [ContentSerializerIgnore]
 	    public ICollection<char> Characters
 	    {
-	        get { return characters; } 
-            internal set { characters = new CharacterCollection(value); }
-	    }
+	        get => characters;
+            internal set => characters = new CharacterCollection(value);
+        }
 
         internal FontDescription()
         {
